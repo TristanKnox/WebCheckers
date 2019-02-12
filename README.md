@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Jacob Jirinec
-- MEMBER2
+- Andrew Bado
 - Collin Bolles
 - Tristan Knox
 - Evan Nolan
