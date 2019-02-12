@@ -10,6 +10,7 @@ a web micro-framework.
 - MEMBER2
 - MEMBER3
 - MEMBER4
+-Evan Nolan
 
 
 ## Prerequisites
