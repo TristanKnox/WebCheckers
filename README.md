@@ -6,10 +6,11 @@ a web micro-framework.
 
 ## Team
 
-- MEMBER1
+- Jacob Jirinec
 - MEMBER2
 - Collin Bolles
 - MEMBER4
+-Evan Nolan
 
 
 ## Prerequisites
