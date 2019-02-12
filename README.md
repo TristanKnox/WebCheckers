@@ -10,7 +10,7 @@ a web micro-framework.
 - MEMBER2
 - Collin Bolles
 - MEMBER4
--Evan Nolan
+- Evan Nolan
 
 
 ## Prerequisites
