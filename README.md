@@ -9,7 +9,7 @@ a web micro-framework.
 - Jacob Jirinec
 - MEMBER2
 - Collin Bolles
-- MEMBER4
+- Tristan Knox
 - Evan Nolan
 
 
