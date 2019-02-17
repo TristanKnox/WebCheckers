@@ -1,14 +1,13 @@
 package com.webcheckers.appl;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This Class holds all of the current userers loged into the WebCheckers App
  */
 public class PlayerLoby {
 
-    Map<String, PlayerServices> curentUsers;
+    private Map<String, PlayerServices> curentUsers;
 
 
     //Constructor
@@ -27,6 +26,35 @@ public class PlayerLoby {
             return false;   //User name already in use
         curentUsers.put(username,new PlayerServices());     //username added as Key and a new PlayerService created as Value
         return true;
+    }
+
+    /**
+     * Creates a list of usernames repersenting all curently loged in users
+     * @return the list of usernames
+     */
+    public List<String> getAllUserNames(){
+        Set<String> userSet = curentUsers.keySet();
+        List<String> users = new ArrayList<>(userSet);
+        return users;
+    }
+
+    /**
+     * This will start a game for the two given players
+     * @param player1 the username of player1
+     * @param player2 the username of player2
+     */
+    public void startGame(String player1, String player2){
+        //TODO
+    }
+
+    /**
+     * This will remove the given user from currentUsers
+     * @param username the user name
+     * @return true if successful
+     * @return false if unsuccessful
+     */
+    public boolean logout(String username){
+        //TODO
     }
 
 
