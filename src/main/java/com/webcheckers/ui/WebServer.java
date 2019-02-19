@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.PlayerLoby;
 import spark.TemplateEngine;
 
 
@@ -60,6 +61,7 @@ public class WebServer {
 
   private final TemplateEngine templateEngine;
   private final Gson gson;
+  private final PlayerLoby playerLoby;
 
   //
   // Constructor
@@ -83,6 +85,7 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
+    this.playerLoby = new PlayerLoby();
   }
 
   //

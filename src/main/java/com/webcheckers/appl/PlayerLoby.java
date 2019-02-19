@@ -55,6 +55,7 @@ public class PlayerLoby {
      */
     public boolean logout(String username){
         //TODO
+        return false;
     }
 
 
