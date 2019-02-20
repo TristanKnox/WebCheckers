@@ -21,7 +21,8 @@ import com.webcheckers.util.Message;
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  static final String PLAYER_LOBBY_ATTR = "playerLobby";
 
   private final TemplateEngine templateEngine;
 
