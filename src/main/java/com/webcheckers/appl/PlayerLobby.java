@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class PlayerLobby {
 
-    private Map<String, PlayerServices> currentUsers;
+    private Map<String, Player> currentUsers;
 
 
     //Constructor
@@ -24,7 +24,7 @@ public class PlayerLobby {
     public synchronized boolean addPlayer(String username){
         if (currentUsers.containsKey(username))
             return false;   //User name already in use
-        currentUsers.put(username,new PlayerServices());     //username added as Key and a new PlayerService created as Value
+        currentUsers.put(username,new Player(username));     //username added as Key and a new PlayerService created as Value
         return true;
     }
 
@@ -43,7 +43,7 @@ public class PlayerLobby {
      * @param player1 the username of player1
      * @param player2 the username of player2
      */
-    public void startGame(String player1, String player2){
+    public void startGame(Player player1, Player player2){
         //TODO
     }
 
