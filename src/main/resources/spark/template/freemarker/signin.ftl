@@ -16,14 +16,14 @@
 
         <!-- Provide a message to the user, if supplied. -->
         <#include "message.ftl">
-    </div>
 
-    <form action="./signinattempt" method="POST">
-        <br/>
-        <input username="myUserName" />
-        <br/><br/>
-        <button type="submit">Ok</button>
-    </form>
+        <form action="./signinattempt" method="POST">
+            <br/>
+            <input username="myUserName" />
+            <br/><br/>
+            <button type="submit">Ok</button>
+        </form>
+    </div>
 
 </div>
 </body>

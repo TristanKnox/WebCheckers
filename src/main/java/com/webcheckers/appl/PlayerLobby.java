@@ -5,14 +5,14 @@ import java.util.*;
 /**
  * This Class holds all of the current userers loged into the WebCheckers App
  */
-public class PlayerLoby {
+public class PlayerLobby {
 
-    private Map<String, PlayerServices> curentUsers;
+    private Map<String, PlayerServices> currentUsers;
 
 
     //Constructor
-    public PlayerLoby(){
-        curentUsers = new HashMap<>();
+    public PlayerLobby(){
+        currentUsers = new HashMap<>();
     }
 
     /**
@@ -21,10 +21,10 @@ public class PlayerLoby {
      * @return true if user was successfully added
      * @return false if username was already in use and the user was not added
      */
-    public boolean addPlayer(String username){
-        if (curentUsers.containsKey(username))
+    public synchronized boolean addPlayer(String username){
+        if (currentUsers.containsKey(username))
             return false;   //User name already in use
-        curentUsers.put(username,new PlayerServices());     //username added as Key and a new PlayerService created as Value
+        currentUsers.put(username,new PlayerServices());     //username added as Key and a new PlayerService created as Value
         return true;
     }
 
@@ -33,7 +33,7 @@ public class PlayerLoby {
      * @return the list of usernames
      */
     public List<String> getAllUserNames(){
-        Set<String> userSet = curentUsers.keySet();
+        Set<String> userSet = currentUsers.keySet();
         List<String> users = new ArrayList<>(userSet);
         return users;
     }
@@ -53,9 +53,13 @@ public class PlayerLoby {
      * @return true if successful
      * @return false if unsuccessful
      */
-    public boolean logout(String username){
-        //TODO
-        return false;
+    public synchronized boolean logout(String username){
+        if(currentUsers.containsKey(username)){
+            currentUsers.remove(username);
+            return true;
+        }
+        else
+            return false;
     }
 
 
