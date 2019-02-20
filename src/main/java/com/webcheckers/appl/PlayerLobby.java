@@ -28,6 +28,11 @@ public class PlayerLobby {
         return true;
     }
 
+    public boolean isValidUsername(String username){
+        //TODO add Validation
+        return true;
+    }
+
     /**
      * Creates a list of usernames repersenting all curently loged in users
      * @return the list of usernames
