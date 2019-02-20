@@ -57,6 +57,8 @@ public class WebServer {
 
   public static final String SIGN_IN_URL = "/signin";
 
+  public static final String TRY_USERNAME_URL = "/signinattempt";
+
   //
   // Attributes
   //
@@ -145,6 +147,8 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(templateEngine));
 
     get(SIGN_IN_URL, new GetSigninRoute(templateEngine));
+
+    get(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
     //
     LOG.config("WebServer is initialized.");
