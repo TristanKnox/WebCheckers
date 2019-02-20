@@ -28,6 +28,12 @@ public class PlayerLobby {
         return true;
     }
 
+    /**
+     * Checks to see if a username is valid or not
+     * @param username in question
+     * @return true if username is valid
+     * @return false if username is invalid
+     */
     public boolean isValidUsername(String username){
         //TODO add Validation
         return true;
