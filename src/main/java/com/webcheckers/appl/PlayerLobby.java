@@ -3,16 +3,16 @@ package com.webcheckers.appl;
 import java.util.*;
 
 /**
- * This Class holds all of the current userers loged into the WebCheckers App
+ * This Class holds all of the current users logged into the WebCheckers App
  */
 public class PlayerLobby {
 
-    private Map<String, PlayerServices> curentUsers;
+    private Map<String, PlayerServices> currentUsers;
 
 
     //Constructor
     public PlayerLobby(){
-        curentUsers = new HashMap<>();
+        currentUsers = new HashMap<>();
     }
 
     /**
@@ -22,9 +22,9 @@ public class PlayerLobby {
      * @return false if username was already in use and the user was not added
      */
     public synchronized boolean addPlayer(String username){
-        if (curentUsers.containsKey(username))
+        if (currentUsers.containsKey(username))
             return false;   //User name already in use
-        curentUsers.put(username,new PlayerServices());     //username added as Key and a new PlayerService created as Value
+        currentUsers.put(username,new PlayerServices());     //username added as Key and a new PlayerService created as Value
         return true;
     }
 
@@ -33,7 +33,7 @@ public class PlayerLobby {
      * @return the list of usernames
      */
     public List<String> getAllUserNames(){
-        Set<String> userSet = curentUsers.keySet();
+        Set<String> userSet = currentUsers.keySet();
         List<String> users = new ArrayList<>(userSet);
         return users;
     }
