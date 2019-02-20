@@ -5,13 +5,13 @@ import java.util.*;
 /**
  * This Class holds all of the current userers loged into the WebCheckers App
  */
-public class PlayerLoby {
+public class PlayerLobby {
 
     private Map<String, PlayerServices> curentUsers;
 
 
     //Constructor
-    public PlayerLoby(){
+    public PlayerLobby(){
         curentUsers = new HashMap<>();
     }
 
@@ -21,7 +21,7 @@ public class PlayerLoby {
      * @return true if user was successfully added
      * @return false if username was already in use and the user was not added
      */
-    public boolean addPlayer(String username){
+    public synchronized boolean addPlayer(String username){
         if (curentUsers.containsKey(username))
             return false;   //User name already in use
         curentUsers.put(username,new PlayerServices());     //username added as Key and a new PlayerService created as Value
@@ -53,7 +53,7 @@ public class PlayerLoby {
      * @return true if successful
      * @return false if unsuccessful
      */
-    public boolean logout(String username){
+    public synchronized boolean logout(String username){
         //TODO
         return false;
     }
