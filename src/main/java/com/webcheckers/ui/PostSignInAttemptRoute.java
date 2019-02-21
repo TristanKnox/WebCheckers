@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public class PostSignInAttemptRoute implements Route {
     static final String MESSAGE_TYPE_ATTR = "message.type";
     static final String ERROR_TYPE = "ERROR";
     static final String USERNAME_PARAM = "myUserName";
-    static final String INVALID_USERNAME = "Username taken. Enter another to login.";
+    static final Message INVALID_USERNAME = Message.error("Username taken. Enter another to login.");
     static final String VIEW_NAME = "signin.ftl";
 
     //
@@ -72,22 +73,12 @@ public class PostSignInAttemptRoute implements Route {
         if(playerLobby.addPlayer(username)){
             vm.put("title", "Homepage");
             vm.put(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
+            System.out.println(username);
             return templateEngine.render(new ModelAndView(vm, "home.ftl"));
         }
         else{
-            vm.put(MESSAGE_ATTR, INVALID_USERNAME);
-            vm.put(MESSAGE_TYPE_ATTR, ERROR_TYPE);
+            vm.put("message", INVALID_USERNAME);
             return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
         }
-    }
-
-    //
-    // Private methods
-    //
-
-    private ModelAndView error(final Map<String, Object> vm, final String message) {
-        vm.put(MESSAGE_ATTR, message);
-        vm.put(MESSAGE_TYPE_ATTR, ERROR_TYPE);
-        return new ModelAndView(vm, VIEW_NAME);
     }
 }

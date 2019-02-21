@@ -65,7 +65,7 @@ public class WebServer {
 
   private final TemplateEngine templateEngine;
   private final Gson gson;
-  private final PlayerLobby playerLobby;
+  private final PlayerLobby playerLoby;
 
   //
   // Constructor
@@ -89,7 +89,7 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
-    this.playerLobby = new PlayerLobby();
+    this.playerLoby = new PlayerLobby();
   }
 
   //
