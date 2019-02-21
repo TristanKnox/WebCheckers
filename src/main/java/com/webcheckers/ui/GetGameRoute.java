@@ -34,10 +34,10 @@ public class GetGameRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", GAME_TITLE);
     // Fake user data
-    vm.put("currentUser", new Person("Bobbothy"));
-    vm.put("redPlayer", new Person("Samilly"));
-    vm.put("whitePlayer", new Person("Bobbothy"));
-    vm.put("activeColor", "white");
+    vm.put("currentUser", new Person("Sammily"));
+    vm.put("redPlayer", new Person("Sammily"));
+    vm.put("whitePlayer", new Person("Bobbathy"));
+    vm.put("activeColor", "red");
     // Fake view mode
     vm.put("viewMode", "PLAY");
     // Fake board
@@ -75,7 +75,7 @@ public class GetGameRoute implements Route {
    */
   public class BoardView implements Iterable<Row> {
     private List<Row> rows;
-    private final int MAX_SIZE = 7;
+    private final int MAX_SIZE = 8;
 
     public BoardView() {
       rows = new ArrayList<>();
@@ -109,7 +109,7 @@ public class GetGameRoute implements Route {
 
     private List<Space> spaces;
     private int index;
-    private final int MAX_SIZE = 7;
+    private final int MAX_SIZE = 8;
 
     public Row(int index) {
       this.index = index;
@@ -126,15 +126,15 @@ public class GetGameRoute implements Route {
       PieceColor color = null;
       if (index < 3)
         color = PieceColor.RED;
-      else if (index > 5)
+      else if (index > 4)
         color = PieceColor.WHITE;
       for (int col = 0; col < MAX_SIZE; col++) {
         Space space = null;
         if ((index == 0 || index == 2 || index == 6) && col % 2 != 0)
-          space = new Space(col, new Piece(PieceType.SINGLE, color), true);
+          space = new Space(col, new Piece(PieceType.SINGLE, color), false);
         else if ((index == 1 || index == 5 || index == 7) && col % 2 == 0)
-          space = new Space(col, new Piece(PieceType.SINGLE, color), true);
-        else if((index == 3 && col % 2 != 0) || (index == 4 && col % 2 == 0))
+          space = new Space(col, new Piece(PieceType.SINGLE, color), false);
+        else if((index == 3 && col % 2 == 0) || (index == 4 && col % 2 != 0))
           space = new Space(col, null, true);
         else
           space = new Space(col, null, false);
@@ -178,6 +178,10 @@ public class GetGameRoute implements Route {
     public boolean isValid() {
       return valid;
     }
+
+    public Piece getPiece() {
+      return piece;
+    }
   }
 
   public class Piece {
@@ -188,13 +192,11 @@ public class GetGameRoute implements Route {
       this.type = type;
       this.color = color;
     }
-
-    public PieceType getType() {
-      return type;
-    }
-
     public PieceColor getColor() {
       return color;
+    }
+    public PieceType getType() {
+      return type;
     }
   }
 
