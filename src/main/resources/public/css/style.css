@@ -25,6 +25,7 @@ input[type="text"],
 input[type="password"] {
   background: white;
   border: 1px solid #BFE6FF;
+  margin-left: 10px;
   padding: 2px;
   font-family: 'Trebuchet MS', sans-serif;
   font-size: 14px;
@@ -36,6 +37,7 @@ input[type="password"] {
 input[type="submit"] {
   background: #1057FF;
   border: 1px solid #073BFF;
+  margin-left: 10px;
   padding: 1px 3px;
   font-family: 'Trebuchet MS', sans-serif;
   font-size: 14px;
