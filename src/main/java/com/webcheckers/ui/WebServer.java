@@ -61,6 +61,8 @@ public class WebServer {
 
   public static final String REQUEST_GAME_URL = "/requestgame";
 
+  public static final String TRY_USERNAME_URL = "/signinattempt";
+
   //
   // Attributes
   //
