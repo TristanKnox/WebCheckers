@@ -1,7 +1,6 @@
 package com.webcheckers.model;
 
 import com.webcheckers.model.checkers.Piece.PieceColor;
-import com.webcheckers.model.checkers.Piece.PieceType;
 
 /**
  * Represents the player of the game. Each player is defined by a unique name

@@ -26,7 +26,6 @@ public class PlayerLobby {
     public synchronized Player addPlayer(String username){
         if (currentUsers.containsKey(username))
             return null;   //User name already in use
-
         currentUsers.put(username,new Player(username));     //username added as Key and a new PlayerService created as Value
         return currentUsers.get(username);
     }
