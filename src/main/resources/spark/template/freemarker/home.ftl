@@ -22,9 +22,16 @@
 
     <!-- Check if there is a player signed in. -->
     <#if currentUser??>
+      <br/>
+      <p id = "availableUsers">
+        Available Users
+      </p>
+
+
+      <!-- Add clickable buttons with available users. -->
       <form action="./requestgame" method="POST">
         <#list players as player>
-          <button username = "otherUser" type="submit">${player.getPlayer()}</button>
+          <button class = "player" username = "otherUser" type="submit" value = ${currentUser.getName()}>${currentUser.getName()}</button>
         </#list>
       </form>
     </#if>

@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import com.webcheckers.appl.Player;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import com.webcheckers.util.Message;
@@ -82,7 +81,7 @@ public class GetHomeRoute implements Route {
       vm.put(PLAYERS_LIST_ATTR, playerLobby.getAllUserNames());
 
       // give the home page a personalized welcome message
-      vm.put("message", Message.info(String.format(PERSONAL_WELCOME, p.getPlayer())));
+      vm.put("message", Message.info(String.format(PERSONAL_WELCOME, p.getName())));
     }
 
     // render the view
