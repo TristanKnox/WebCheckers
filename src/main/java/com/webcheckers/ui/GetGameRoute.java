@@ -17,7 +17,7 @@ public class GetGameRoute implements Route {
 
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
   private final TemplateEngine templateEngine;
-  private static final String GAME_TITLE = "Checkers";
+  public static final String GAME_TITLE = "Checkers";
 
   public GetGameRoute(final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
