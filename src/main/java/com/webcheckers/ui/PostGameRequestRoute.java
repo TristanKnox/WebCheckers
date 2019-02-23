@@ -32,9 +32,9 @@ public class PostGameRequestRoute implements Route {
         //Get players names
         final Session session = request.session();
         //TODO make sure that session was started in getHomeRoute and get access to PlayerServisKey
-        Player player1 = session.attribute("PlayerServecisKey");
+       // Player player1 = session.attribute("PlayerServecisKey");
         //TODO make sure that the opponet name was stored on post request and get key
-        String player2name = request.queryParams("oponentName");
+        String player2name = request.queryParams("otherUser");
 
 
         //Remove players from playerLobby
