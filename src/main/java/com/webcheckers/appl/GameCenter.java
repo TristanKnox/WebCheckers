@@ -1,33 +1,35 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Game;
 
 import java.util.HashMap;
 
 public class GameCenter {
 
-    //todo spawn game and what not.  Hold list of players like hashmap of <String, Games> and active games
-    //todo spawn a game based off of two player objs. Return Game.
-    private HashMap<String, Game> activeGames; //player name to Game obj
+    private HashMap<Player, Game> activeGames; //player name to Game obj
     private HashMap<Player, Player> playersInMatch; //player to player for matches
 
     /**
-     * creates the gamecenter object for the server application.
+     * creates the game-center object for the server application.
      */
     public GameCenter(){
-        activeGames= new HashMap<String, Game>();
+        activeGames= new HashMap<>();
         playersInMatch = new HashMap<>();
     }
 
     /**
      * creates the game that the players will play on.
-     * @param playerOne
-     * @param playerTwo
-     * @return
+     * @param playerOne the first player
+     * @param playerTwo the second player
+     * @return the game that is created
      */
     public Game spawnGame(Player playerOne, Player playerTwo){
-        //todo fill in with the game constructor. and return the following game
-        return null;
+        Game game = new Game(playerOne,playerTwo);
+        addPlayersToMatch(playerOne,playerTwo);
+        addPlayerToGame(playerOne,game);
+        addPlayerToGame(playerTwo,game);
+        return game;
     }
 
     /**
@@ -47,9 +49,8 @@ public class GameCenter {
      * @param game the game instance.
      */
     public void addPlayerToGame(Player player, Game game){
-        activeGames.put(player.getPlayer(), game);
+        activeGames.put(player, game);
     }
-
 
     /**
      * gets the other player of the game.
@@ -59,7 +60,14 @@ public class GameCenter {
     public Player getOtherPlayer(Player player) {
        return  playersInMatch.containsKey(player) ? playersInMatch.get(player) : null;
     }
-    public Game getGaame(String username){
-        return activeGames.get(username);
+
+    /**
+     * gets the game that a player is playing on currently.
+     * @param player the player
+     * @return the game
+     */
+    public Game getGame(Player player){
+        return activeGames.get(player);
     }
+
 }
