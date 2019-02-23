@@ -1,9 +1,9 @@
 package com.webcheckers.ui;
 
-import java.util.ArrayList;
+import com.webcheckers.model.checkers.Game;
+import com.webcheckers.model.Player;
+import com.webcheckers.model.checkers.Piece.PieceColor;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -34,181 +34,19 @@ public class GetGameRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", GAME_TITLE);
     // Fake user data
-    vm.put("currentUser", new Person("Sammily"));
-    vm.put("redPlayer", new Person("Sammily"));
-    vm.put("whitePlayer", new Person("Bobbathy"));
+    Player playerOne = new Player("Sammily", PieceColor.RED);
+    Player playerTwo = new Player("Bobbathy", PieceColor.WHITE);
+    vm.put("currentUser", playerOne);
+    vm.put("whitePlayer", playerOne);
+    vm.put("redPlayer", playerTwo);
     vm.put("activeColor", "red");
     // Fake view mode
     vm.put("viewMode", "PLAY");
     // Fake board
-    vm.put("board", new BoardView());
+    vm.put("board", new Game(playerOne, playerTwo));
 
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "game.ftl"));
   }
-
-  // Begin junk classes
-  /**
-   * TODO:
-   * Remove when Player object complete
-   */
-  public class Person {
-    private String name;
-
-     Person(String name) {
-      this.name = name;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public String toString() {
-      return "{Person " + " '" + name + "'}";
-    }
-  }
-
-  /**
-   * TODO:
-   * Remove when game board complete
-   */
-  public class BoardView implements Iterable<Row> {
-    private List<Row> rows;
-    private final int MAX_SIZE = 8;
-
-    public BoardView() {
-      rows = new ArrayList<>();
-      generateBoard();
-    }
-
-    private void generateBoard() {
-      for(int row = 0; row < MAX_SIZE; row++)
-        rows.add(new Row(row));
-    }
-
-
-    @Override
-    public Iterator<Row> iterator() {
-      return new Iterator<Row>() {
-        private int count = 0;
-        @Override
-        public boolean hasNext() {
-          return count < rows.size();
-        }
-
-        @Override
-        public Row next() {
-          return rows.get(count++);
-        }
-      };
-    }
-  }
-
-  public class Row implements Iterable<Space> {
-
-    private List<Space> spaces;
-    private int index;
-    private final int MAX_SIZE = 8;
-
-    public Row(int index) {
-      this.index = index;
-      spaces = new ArrayList<>();
-      generateSpaces();
-    }
-
-    public int getIndex() {
-      return index;
-    }
-
-    private void generateSpaces() {
-      // Check for spaces with pieces
-      PieceColor color = null;
-      if (index < 3)
-        color = PieceColor.RED;
-      else if (index > 4)
-        color = PieceColor.WHITE;
-      for (int col = 0; col < MAX_SIZE; col++) {
-        Space space = null;
-        if ((index == 0 || index == 2 || index == 6) && col % 2 != 0)
-          space = new Space(col, new Piece(PieceType.SINGLE, color), false);
-        else if ((index == 1 || index == 5 || index == 7) && col % 2 == 0)
-          space = new Space(col, new Piece(PieceType.SINGLE, color), false);
-        else if((index == 3 && col % 2 == 0) || (index == 4 && col % 2 != 0))
-          space = new Space(col, null, true);
-        else
-          space = new Space(col, null, false);
-        spaces.add(space);
-      }
-    }
-
-    @Override
-    public Iterator<Space> iterator() {
-      return new Iterator<Space>() {
-        private int count = 0;
-
-        @Override
-        public boolean hasNext() {
-          return count < spaces.size();
-        }
-
-        @Override
-        public Space next() {
-          return spaces.get(count++);
-        }
-      };
-    }
-  }
-
-  public class Space {
-    private int cellIdx;
-    private Piece piece;
-    private boolean valid;
-
-    public Space(int cellIdx, Piece piece, boolean valid) {
-      this.cellIdx = cellIdx;
-      this.piece = piece;
-      this.valid = valid;
-    }
-
-    public int getCellIdx() {
-      return cellIdx;
-    }
-
-    public boolean isValid() {
-      return valid;
-    }
-
-    public Piece getPiece() {
-      return piece;
-    }
-  }
-
-  public class Piece {
-    private PieceType type;
-    private PieceColor color;
-
-    public Piece(PieceType type, PieceColor color) {
-      this.type = type;
-      this.color = color;
-    }
-    public PieceColor getColor() {
-      return color;
-    }
-    public PieceType getType() {
-      return type;
-    }
-  }
-
-  public enum PieceType {
-    SINGLE,
-    KING
-  }
-
-  public enum PieceColor {
-    RED,
-    WHITE
-  }
-
-  // End junk classes
 }
