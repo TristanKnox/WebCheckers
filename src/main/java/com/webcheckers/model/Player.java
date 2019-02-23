@@ -17,10 +17,20 @@ public class Player {
   /**
    * Initialize a player with a unique name
    * @param name The name of the player
+   * @param color The color of the player
    */
   public Player(String name, PieceColor color) {
     this.name = name;
     this.color = color;
+  }
+
+  /**
+   * Initialize a player with a name and no color. Used before a player is
+   * put into a game
+   * @param name The name of the player
+   */
+  public Player(String name) {
+    this.name = name;
   }
 
   public String getName() {
@@ -29,6 +39,10 @@ public class Player {
 
   public PieceColor getColor() {
     return color;
+  }
+
+  public void setColor(PieceColor color) {
+    this.color = color;
   }
 
   @Override
