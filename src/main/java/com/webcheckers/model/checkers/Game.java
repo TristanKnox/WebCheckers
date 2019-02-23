@@ -44,8 +44,8 @@ public class Game implements Iterable<Row> {
     }
   }
 
-  public List<Row> getRows() {
-    return rows;
+  public List<Row> getCopyRows() {
+    return new ArrayList<>(rows);
   }
 
   /**
