@@ -1,6 +1,8 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Player;
 import java.util.*;
+
 
 /**
  * This Class holds all of the current users logged into the WebCheckers App
