@@ -5,7 +5,7 @@ import java.util.*;
 
 
 /**
- * This Class holds all of the current userers loged into the WebCheckers App
+ * This Class holds all of the current users logged into the WebCheckers App
  */
 public class PlayerLobby {
 
@@ -26,6 +26,7 @@ public class PlayerLobby {
     public synchronized boolean addPlayer(String username){
         if (currentUsers.containsKey(username))
             return false;   //User name already in use
+
         currentUsers.put(username,new Player(username));     //username added as Key and a new PlayerService created as Value
         return true;
     }
