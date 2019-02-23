@@ -20,6 +20,14 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl">
 
+    <!-- Check if there is a player signed in. -->
+    <#if currentUser??>
+      <form action="./requestgame" method="POST">
+        <#list players as player>
+          <button username = "otherUser" type="submit">${player.getPlayer()}</button>
+        </#list>
+      </form>
+    </#if>
     <!-- TODO: future content on the Home:
             to start games,
             spectating active games,

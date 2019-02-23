@@ -21,12 +21,12 @@ public class PlayerLobby {
      * @return true if user was successfully added
      * @return false if username was already in use and the user was not added
      */
-    public synchronized boolean addPlayer(String username){
+    public synchronized Player addPlayer(String username){
         if (currentUsers.containsKey(username))
-            return false;   //User name already in use
+            return null;   //User name already in use
 
         currentUsers.put(username,new Player(username));     //username added as Key and a new PlayerService created as Value
-        return true;
+        return currentUsers.get(username);
     }
 
     /**
@@ -41,7 +41,7 @@ public class PlayerLobby {
     }
 
     /**
-     * Creates a list of usernames repersenting all curently loged in users
+     * Creates a list of usernames repersenting all curently logged in users
      * @return the list of usernames
      */
     public List<String> getAllUserNames(){
@@ -73,6 +73,4 @@ public class PlayerLobby {
         else
             return false;
     }
-
-
 }
