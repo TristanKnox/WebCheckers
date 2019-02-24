@@ -4,6 +4,7 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -59,10 +60,15 @@ public class PostGameRequestRoute implements Route {
     //Adding data to vm
     vm.put("title", GetGameRoute.GAME_TITLE);
 
-    vm.put("currentUser", playerOne);
-    vm.put("whitePlayer", game.getWhitePlayer());
-    vm.put("redPlayer", game.getRedPlayer());
-    vm.put("activeColor", game.getActivateColor());
+    PieceColor currentColor = game.getActivateColor();
+    Player redPlayer = game.getRedPlayer();
+    Player whitePlayer = game.getWhitePlayer();
+    Player currentPlayer = currentColor == PieceColor.RED ? redPlayer : whitePlayer;
+    vm.put("currentUser", currentPlayer);
+    vm.put("redPlayer", redPlayer);
+    vm.put("whitePlayer", whitePlayer);
+    vm.put("activeColor", currentColor);
+    
     vm.put("viewMode", "PLAY");
     vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(playerOne)));
 

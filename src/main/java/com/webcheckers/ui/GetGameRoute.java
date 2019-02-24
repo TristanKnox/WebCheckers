@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,10 +43,14 @@ public class GetGameRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", GAME_TITLE);
 
-    vm.put("currentUser", player);
-    vm.put("redPlayer", game.getRedPlayer());
-    vm.put("whitePlayer", game.getWhitePlayer());
-    vm.put("activeColor", game.getActivateColor());
+    PieceColor currentColor = game.getActivateColor();
+    Player redPlayer = game.getRedPlayer();
+    Player whitePlayer = game.getWhitePlayer();
+    Player currentPlayer = currentColor == PieceColor.RED ? redPlayer : whitePlayer;
+    vm.put("currentUser", currentPlayer);
+    vm.put("redPlayer", redPlayer);
+    vm.put("whitePlayer", whitePlayer);
+    vm.put("activeColor", currentColor);
     /*
      * TODO
      * Add ability to select game view (will be an enhancement down the road)
