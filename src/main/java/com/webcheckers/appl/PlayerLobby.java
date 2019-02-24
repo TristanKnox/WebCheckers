@@ -125,6 +125,10 @@ public class PlayerLobby {
         return (avalUsers.containsValue(player));
     }
 
+    public int getNumberOfUsers(){
+        return currentUsers.size();
+    }
+
     public enum Outcome {
         SUCCESS, TAKEN, INVALID
     }
