@@ -31,12 +31,11 @@
       <!-- Add clickable buttons with available users. -->
       <form action="./requestgame" method="POST">
         <#list players as player>
-          <button class = "player" username = "otherUser" type="submit" value = ${currentUser.getName()}>${currentUser.getName()}</button>
+          <button class = "player" username = "otherUser" type="submit" value = ${player.getName()}>${player.getName()}</button>
         </#list>
       </form>
     </#if>
     <!-- TODO: future content on the Home:
-            to start games,
             spectating active games,
             or replay archived games
     -->

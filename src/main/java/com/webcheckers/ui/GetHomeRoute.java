@@ -11,25 +11,27 @@ import spark.*;
 import com.webcheckers.util.Message;
 
 /**
- * The UI Controller to GET the Home page.
+ * The Route which is responsible for rendering the home page.
+ * Capable of determining whether the player is signed in,
+ * and rendering the home page accordingly.
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * @author Andrew Bado
  */
 public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
   
   // values for use in the view-model map
   static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
-  static final String PLAYER_LOBBY_ATTR = "playerLobby";
   static final String TITLE_ATTR = "title";
   static final String VIEW_NAME = "home.ftl";
-  static final String PERSONAL_WELCOME = "Welcome to webcheckers, %s.";
+  static final String PERSONAL_WELCOME = "Welcome to Webcheckers, %s.";
   static final String CURRENT_USER_ATTR = "currentUser";
   static final String PLAYERS_LIST_ATTR = "players";
 
   // values for use in the session attribute map
   static final String PLAYER_KEY = "player";
 
+  // Attributes
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
 
@@ -38,8 +40,11 @@ public class GetHomeRoute implements Route {
    *
    * @param templateEngine
    *   the HTML template rendering engine
+   * @param playerLobby
+   *   responsible of keeping track of all active players
    */
   public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+    // neither parameter may be null
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
     LOG.config("GetHomeRoute is initialized.");
@@ -68,11 +73,14 @@ public class GetHomeRoute implements Route {
 
     // check if there is a player in the session map
     if(httpSession.attribute(PLAYER_KEY) == null){
+
+      // begin filling the view bucket case: player not yet signed in
       vm.put(TITLE_ATTR, "Welcome!");
-      // give the home page a welcome message
       vm.put("message", WELCOME_MSG);
     }
     else{
+
+      //begin filling the view bucket case: the player is signed in
       vm.put(TITLE_ATTR, "Homepage");
 
       // retrieve the player from the session
