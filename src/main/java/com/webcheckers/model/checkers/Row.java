@@ -33,6 +33,16 @@ public class Row implements Iterable<Space> {
   }
 
   /**
+   * Creates a row object with predefined order of spaces
+   * @param spaces list of spaces in the desired order
+   * @int rowIndex - index of row
+   */
+  public Row(List<Space> spaces, int rowIndex){
+    this.spaces = spaces;
+    this.index = rowIndex;
+  }
+
+  /**
    * Used to check if a given space should be initialized with a piece.
    * @param index The row number of the space to check
    * @param col The column number of the space to check

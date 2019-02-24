@@ -44,6 +44,10 @@ public class Game implements Iterable<Row> {
     }
   }
 
+  public List<Row> getCopyRows() {
+    return new ArrayList<>(rows);
+  }
+
   /**
    * The iterator method required for the client UI. The iterator returns the iterator
    * from the list of rows
