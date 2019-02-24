@@ -27,15 +27,14 @@ public class PlayerLobby {
      * @param username is the username that the user is attempting to login with
      * @return false if username was already in use and the user was not added
      */
-    public synchronized Player addPlayer(String username) {
-        if (isValidUsername(username)) {
+    public synchronized Outcome addPlayer(String username) {
+        Outcome outcome = isValidUsername(username);
+        if (outcome == Outcome.SUCCESS) {
             Player temp = new Player(username);
             currentUsers.put(username, temp);
             avalUsers.put(username, temp);
-            return temp;
         }
-        return null;
-
+        return outcome;
     }
 
     /**
@@ -44,12 +43,13 @@ public class PlayerLobby {
      * @param username in question
      * @return false if username is invalid
      */
-    public boolean isValidUsername(String username) {
+    public Outcome isValidUsername(String username) {
+        Outcome ret = Outcome.SUCCESS;
         if (!currentUsers.containsKey(username)) {
             if (username.length() == 0) {
-                return false;
+                ret = Outcome.TAKEN;
             } else if (!Character.isLetter(username.charAt(0))) {
-                return false;
+                ret = Outcome.INVALID;
             } else {
                 for (int i = 0; i < username.length(); i++) {
                     char c = username.charAt(i);
@@ -59,24 +59,26 @@ public class PlayerLobby {
                     } else if ((48 <= ascii && ascii <= 57) || (65 <= ascii && ascii <= 90) || (97 <= ascii && ascii <= 122)) {
                         continue;
                     } else {
-                        return false;
+                        ret = Outcome.INVALID;
                     }
                 }
             }
+            return ret;
         }
-        return false;
+        ret = Outcome.TAKEN;
+        return ret;
     }
 
 
     /**
      * Creates a list of usernames repersenting all curently logged in users
      * @return the list of usernames
-     *//*
+     */
     public List<String> getAllUserNames(){
         Set<String> userSet = currentUsers.keySet();
         List<String> users = new ArrayList<>(userSet);
         return users;
-    }*/
+    }
 
     /**
      * Creates a list of usernames repersenting all curently loged in users
@@ -116,6 +118,11 @@ public class PlayerLobby {
         Player ret = getPlayer(username);
         removePlayer(username);
         return ret;
+    }
+
+    public enum Outcome
+    {
+        SUCCESS, TAKEN, INVALID
     }
 }
 

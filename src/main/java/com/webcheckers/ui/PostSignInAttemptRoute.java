@@ -4,7 +4,6 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -16,10 +15,10 @@ public class PostSignInAttemptRoute implements Route {
 
     // Values used in the view-model map for rendering the game view after a guess.
     static final String MESSAGE_ATTR = "message";
-    static final String MESSAGE_TYPE_ATTR = "message.type";
-    static final String ERROR_TYPE = "ERROR";
     static final String USERNAME_PARAM = "myUserName";
-    static final Message INVALID_USERNAME = Message.error("Username taken. Enter another to login.");
+    static final Message TAKEN_USERNAME = Message.error("Username taken. Enter another to login.");
+    static final Message INVALID_USERNAME = Message.error("Invalid username. " +
+            "Username must start with a letter, and use only alphanumeric charachters");
     static final String VIEW_NAME = "signin.ftl";
 
     //
@@ -75,21 +74,20 @@ public class PostSignInAttemptRoute implements Route {
         // retrieve request parameter
         final String username = request.queryParams(USERNAME_PARAM);
 
-        Player p = playerLobby.addPlayer(username);
-        if(p != null){
-            /*
-            vm.put("title", "Homepage");
-            vm.put("currentUser", p);
-            vm.put(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
-            */
-            httpSession.attribute(GetHomeRoute.PLAYER_KEY, p);
+        PlayerLobby.Outcome outcome = playerLobby.addPlayer(username);
+        if(outcome == PlayerLobby.Outcome.SUCCESS){
+            httpSession.attribute(GetHomeRoute.PLAYER_KEY, playerLobby.getPlayer(username));
             System.out.println(username);
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         }
+        else if(outcome == PlayerLobby.Outcome.INVALID){
+            vm.put(MESSAGE_ATTR, INVALID_USERNAME);
+            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+        }
         else{
-            vm.put("message", INVALID_USERNAME);
+            vm.put(MESSAGE_ATTR, TAKEN_USERNAME);
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
     }
