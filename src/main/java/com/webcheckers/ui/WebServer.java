@@ -2,11 +2,13 @@ package com.webcheckers.ui;
 
 import static spark.Spark.*;
 
+import com.webcheckers.appl.GameCenter;
 import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -54,10 +56,14 @@ public class WebServer {
    * The URL pattern to request the Home page.
    */
   public static final String HOME_URL = "/";
+
   public static final String GAME_URL = "/game";
 
   public static final String SIGN_IN_URL = "/signin";
-  public static final String REQUEST_GAME = "/requestgame";
+
+  public static final String REQUEST_GAME_URL = "/requestgame";
+
+  public static final String TRY_USERNAME_URL = "/signinattempt";
 
   //
   // Attributes
@@ -65,7 +71,8 @@ public class WebServer {
 
   private final TemplateEngine templateEngine;
   private final Gson gson;
-  private final PlayerLobby playerLoby;
+  private final PlayerLobby playerLobby;
+  private GameCenter gameCenter;
 
   //
   // Constructor
@@ -89,7 +96,8 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
-    this.playerLoby = new PlayerLobby();
+    this.playerLobby = new PlayerLobby();
+    this.gameCenter = new GameCenter();
   }
 
   //
@@ -144,14 +152,19 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(templateEngine));
-    get(GAME_URL, new GetGameRoute(templateEngine));
+
+    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
 
     get(SIGN_IN_URL, new GetSigninRoute(templateEngine));
 
-    //post(REQUEST_GAME, new PostGameRequestRoute(templateEngine,playerLoby,gameCenter));
+    post(REQUEST_GAME_URL, new PostGameRequestRoute(templateEngine,playerLobby,gameCenter));
 
-    //
+    post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
+
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
+
+    //post(REQUEST_GAME_URL, new PostGameRequestRoute(templateEngine,playerLobby,gameCenter));
+
     LOG.config("WebServer is initialized.");
   }
 

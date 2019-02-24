@@ -130,9 +130,24 @@ button.player {
   background-color: #f1f1f1;
   width: 100px;
   margin: 10px;
+  background: #DEE9FF;
+  border: 1px solid #1057FF;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  padding: 4px;
+  font-size: 13px;
+  display: block;
 }
 button.game {
   background-color: #fff1f1;
   width: 100px;
   margin: 10px;
+}
+
+#availableUsers{
+  width: 100px;
+  margin: 10px;
+  border-bottom: 2px solid black;
+  text-align: center;
+  font-weight: bold;
 }
