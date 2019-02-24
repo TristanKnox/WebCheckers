@@ -122,7 +122,7 @@ public class PlayerLobby {
     }
 
     public boolean isInGame(Player player) {
-        return (avalUsers.containsValue(player));
+        return (!avalUsers.containsValue(player));
     }
 
     public int getNumberOfUsers(){
