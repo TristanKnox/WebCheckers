@@ -105,7 +105,7 @@ public class PlayerLobby {
     }
 
     public Player getPlayer(String username) {
-        return (avalUsers.get(username));
+        return (currentUsers.get(username));
     }
 
     public void removePlayer(String username) {
@@ -116,6 +116,10 @@ public class PlayerLobby {
         Player ret = getPlayer(username);
         removePlayer(username);
         return ret;
+    }
+    
+    public boolean isInGame(Player player){
+        return(avalUsers.containsValue(player));
     }
 }
 
