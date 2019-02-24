@@ -10,6 +10,8 @@ import spark.*;
 
 import com.webcheckers.util.Message;
 
+import static spark.Spark.halt;
+
 /**
  * The Route which is responsible for rendering the home page.
  * Capable of determining whether the player is signed in,
@@ -77,6 +79,11 @@ public class GetHomeRoute implements Route {
       // begin filling the view bucket case: player not yet signed in
       vm.put(TITLE_ATTR, "Welcome!");
       vm.put("message", WELCOME_MSG);
+    }
+    else if(playerLobby.isInGame(httpSession.attribute(PLAYER_KEY))){
+      response.redirect(WebServer.GAME_URL);
+      halt();
+      return null;
     }
     else{
 
