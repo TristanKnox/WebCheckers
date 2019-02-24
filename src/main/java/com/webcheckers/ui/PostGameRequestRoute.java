@@ -62,7 +62,7 @@ public class PostGameRequestRoute implements Route {
     // Fake view mode
     vm.put("viewMode", "PLAY");
     // Fake board
-    vm.put("board", ViewGenorator.getView(game, playerOne));
+    vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(playerOne)));
 
 
     // render the View
