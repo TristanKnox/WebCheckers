@@ -27,15 +27,14 @@ public class PlayerLobby {
      * @param username is the username that the user is attempting to login with
      * @return false if username was already in use and the user was not added
      */
-    public synchronized Player addPlayer(String username) {
-        if (isValidUsername(username) == Outcome.SUCCESS) {
+    public synchronized Outcome addPlayer(String username) {
+        Outcome outcome = isValidUsername(username);
+        if (outcome == Outcome.SUCCESS) {
             Player temp = new Player(username);
             currentUsers.put(username, temp);
             avalUsers.put(username, temp);
-            return temp;
         }
-        return null;
-
+        return outcome;
     }
 
     /**
@@ -48,7 +47,7 @@ public class PlayerLobby {
         Outcome ret = Outcome.SUCCESS;
         if (!currentUsers.containsKey(username)) {
             if (username.length() == 0) {
-                ret = Outcome.INVALID;
+                ret = Outcome.TAKEN;
             } else if (!Character.isLetter(username.charAt(0))) {
                 ret = Outcome.INVALID;
             } else {
@@ -121,7 +120,7 @@ public class PlayerLobby {
         return ret;
     }
 
-    enum Outcome
+    public enum Outcome
     {
         SUCCESS, TAKEN, INVALID;
     }

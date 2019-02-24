@@ -1,4 +1,3 @@
-/*
 package com.webcheckers.ui;
 
 import com.webcheckers.model.Player;
@@ -8,12 +7,10 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-*/
 
 /**
  *  The UI controller to Post requests for starting a new game
  */
-/*
 public class PostGameRequestRoute implements Route {
 
    // GameCenter gameCenter;TODO uncomment when GameCenter exists
@@ -73,4 +70,4 @@ public class PostGameRequestRoute implements Route {
         return null;
     }
 }
-*/
+
