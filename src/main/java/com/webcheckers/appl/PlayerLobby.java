@@ -27,14 +27,14 @@ public class PlayerLobby {
      * @param username is the username that the user is attempting to login with
      * @return false if username was already in use and the user was not added
      */
-    public synchronized boolean addPlayer(String username) {
+    public synchronized Player addPlayer(String username) {
         if (isValidUsername(username)) {
             Player temp = new Player(username);
             currentUsers.put(username, temp);
             avalUsers.put(username, temp);
-            return true;
+            return temp;
         }
-        return false;
+        return null;
 
     }
 
