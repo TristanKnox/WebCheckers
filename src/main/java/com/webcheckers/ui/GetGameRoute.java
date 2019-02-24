@@ -3,8 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.checkers.Piece.PieceColor;
-import com.webcheckers.ui.ViewObjects.ViewGenorator;
+import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -37,26 +36,22 @@ public class GetGameRoute implements Route {
      * TODO
      * Create permanent variable for player attribute key
      */
-    final Player player = session.attribute("player");
+    final Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Game game = gameCenter.getGame(player);
 
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", GAME_TITLE);
 
     vm.put("currentUser", player);
-    vm.put("redPlayer", game.getPlayerOne());
-    vm.put("whitePlayer", game.getPlayerTwo());
-    /*
-     * TODO
-     * Add ability to keep track of active color
-     */
-    vm.put("activeColor", "red");
+    vm.put("redPlayer", game.getRedPlayer());
+    vm.put("whitePlayer", game.getWhitePlayer());
+    vm.put("activeColor", game.getActivateColor());
     /*
      * TODO
      * Add ability to select game view (will be an enhancement down the road)
      */
     vm.put("viewMode", "PLAY");
-    vm.put("board", ViewGenorator.getView(game, player));
+    vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(player)));
     
     // render the View
     return templateEngine.render(new ModelAndView(vm , "game.ftl"));

@@ -4,7 +4,7 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.checkers.Game;
-import com.webcheckers.ui.ViewObjects.ViewGenorator;
+import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import spark.*;
 
 import java.util.HashMap;
