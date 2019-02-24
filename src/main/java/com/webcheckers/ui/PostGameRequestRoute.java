@@ -5,10 +5,13 @@ import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static spark.Spark.halt;
 
 /**
  *  The UI controller to Post requests for starting a new game
@@ -39,6 +42,12 @@ public class PostGameRequestRoute implements Route {
      //Get playerTwo username from posted data
     String playerTwoName = request.queryParams("otherUser");
 
+    if(playerLobby.isInGame(playerTwoName)){
+        session.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG, true);
+        response.redirect(WebServer.HOME_URL);
+        halt();
+        return null;
+    }
 
     //Remove players from playerLobby
     playerOne = playerLobby.getPlayerForGame(playerOne.getName());
