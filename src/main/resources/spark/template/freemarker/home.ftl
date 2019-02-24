@@ -31,7 +31,9 @@
       <!-- Add clickable buttons with available users. -->
       <form action="./requestgame" method="POST">
         <#list players as player>
-          <button class = "player" name = "otherUser" type="submit" value = ${player.getName()}>${player.getName()}</button>
+          <#if currentUser != player>
+            <button class = "player" name = "otherUser" type="submit" value = ${player.getName()}>${player.getName()}</button>
+          </#if>
         </#list>
       </form>
     </#if>
