@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -66,6 +67,7 @@ public class WebServer {
   private final TemplateEngine templateEngine;
   private final Gson gson;
   private final PlayerLobby playerLoby;
+  private final GameCenter gameCenter;
 
   //
   // Constructor
@@ -90,6 +92,7 @@ public class WebServer {
     this.templateEngine = templateEngine;
     this.gson = gson;
     this.playerLoby = new PlayerLobby();
+    this.gameCenter = new GameCenter();
   }
 
   //
@@ -149,7 +152,7 @@ public class WebServer {
 
     get(SIGN_IN_URL, new GetSigninRoute(templateEngine));
 
-    //post(REQUEST_GAME, new PostGameRequestRoute(templateEngine,playerLoby,gameCenter));
+    post(REQUEST_GAME, new PostGameRequestRoute(templateEngine,playerLoby,gameCenter));
 
     //
     LOG.config("WebServer is initialized.");

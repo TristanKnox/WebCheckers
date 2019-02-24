@@ -1,8 +1,10 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.ui.ViewObjects.ViewGenorator;
 import spark.*;
 
 import java.util.HashMap;
@@ -14,11 +16,13 @@ import java.util.Map;
  */
 public class PostGameRequestRoute implements Route {
 
-   // GameCenter gameCenter;TODO uncomment when GameCenter exists
+    GameCenter gameCenter;
     PlayerLobby playerLobby;
     TemplateEngine templateEngine;
-    public PostGameRequestRoute(TemplateEngine templateEngine, PlayerLobby playerLobby){//, GameCenter GameCenter){ TODO uncomment when GameCenter exists
-       // this.gameCenter = gameCenter;TODO uncomment when GameCenter exists
+
+
+    public PostGameRequestRoute(TemplateEngine templateEngine, PlayerLobby playerLobby, GameCenter gameCenter){
+        this.gameCenter = gameCenter;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
@@ -44,7 +48,7 @@ public class PostGameRequestRoute implements Route {
 
         //Inject players into game center to retrev game
         //TODO insure that GameCenter exissts and has a startGame method that takes 2 players and returns a game
-     //   Game game = gamecenter.startGame(player1,player2);
+        Game game = gameCenter.getGame(player1,player2);
 
 
         Map<String, Object> vm = new HashMap<>();
@@ -58,7 +62,7 @@ public class PostGameRequestRoute implements Route {
         // Fake view mode
         vm.put("viewMode", "PLAY");
         // Fake board
-        vm.put("board", game.getBoard(playerOne));
+        vm.put("board", ViewGenorator.getView(game,playerOne));
 
 
         // render the View
