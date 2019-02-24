@@ -120,10 +120,9 @@ public class PlayerLobby {
         removePlayer(username);
         return ret;
     }
-
     public enum Outcome
     {
-        SUCCESS, TAKEN, INVALID;
+        SUCCESS, TAKEN, INVALID
     }
 }
 
