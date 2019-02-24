@@ -63,6 +63,7 @@ public class PlayerLobby {
                     }
                 }
             }
+            return true;
         }
         return false;
     }
@@ -71,12 +72,12 @@ public class PlayerLobby {
     /**
      * Creates a list of usernames repersenting all curently logged in users
      * @return the list of usernames
-     *//*
+     */
     public List<String> getAllUserNames(){
         Set<String> userSet = currentUsers.keySet();
         List<String> users = new ArrayList<>(userSet);
         return users;
-    }*/
+    }
 
     /**
      * Creates a list of usernames repersenting all curently loged in users
