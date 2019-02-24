@@ -126,6 +126,10 @@ div.INFO {
   display: flex;
   flex-flow: row wrap;
 }
+
+/**
+ * styling of a button used to start a game with a player
+ */
 button.player {
   background-color: #f1f1f1;
   width: 100px;
@@ -138,12 +142,16 @@ button.player {
   font-size: 13px;
   display: block;
 }
+
 button.game {
   background-color: #fff1f1;
   width: 100px;
   margin: 10px;
 }
 
+/**
+ * style the title for the available users list
+ */
 #availableUsers{
   width: 100px;
   margin: 10px;
