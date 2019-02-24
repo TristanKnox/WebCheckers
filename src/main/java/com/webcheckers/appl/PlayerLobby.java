@@ -121,7 +121,7 @@ public class PlayerLobby {
         return ret;
     }
 
-    enum Outcome
+    public enum Outcome
     {
         SUCCESS, TAKEN, INVALID;
     }
