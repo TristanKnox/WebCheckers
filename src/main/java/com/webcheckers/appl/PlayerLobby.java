@@ -122,7 +122,7 @@ public class PlayerLobby {
 
     public enum Outcome
     {
-        SUCCESS, TAKEN, INVALID;
+        SUCCESS, TAKEN, INVALID
     }
 }
 
