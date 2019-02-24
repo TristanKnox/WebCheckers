@@ -16,6 +16,7 @@
         <!-- Provide a message to the user, if supplied. -->
         <#include "message.ftl">
 
+        <!-- provide a way for the user to enter and submit their name -->
         <form action="./signinattempt" method="POST">
             <br/>
             <input name="myUserName" />
