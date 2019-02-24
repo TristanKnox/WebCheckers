@@ -37,20 +37,16 @@ public class GetGameRoute implements Route {
      * TODO
      * Create permanent variable for player attribute key
      */
-    final Player player = session.attribute("player");
+    final Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Game game = gameCenter.getGame(player);
 
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", GAME_TITLE);
 
     vm.put("currentUser", player);
-    vm.put("redPlayer", game.getPlayerOne());
-    vm.put("whitePlayer", game.getPlayerTwo());
-    /*
-     * TODO
-     * Add ability to keep track of active color
-     */
-    vm.put("activeColor", "red");
+    vm.put("redPlayer", game.getRedPlayer());
+    vm.put("whitePlayer", game.getWhitePlayer());
+    vm.put("activeColor", game.getActivateColor());
     /*
      * TODO
      * Add ability to select game view (will be an enhancement down the road)
