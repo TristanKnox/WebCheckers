@@ -1,6 +1,8 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Player;
 import java.util.*;
+
 
 /**
  * This Class holds all of the current users logged into the WebCheckers App
@@ -33,6 +35,7 @@ public class PlayerLobby {
             return true;
         }
         return false;
+
     }
 
     /**
@@ -68,8 +71,9 @@ public class PlayerLobby {
         return false;
     }
 
-/*    *//**
-     * Creates a list of usernames repersenting all curently loged in users
+
+    /**
+     * Creates a list of usernames repersenting all curently logged in users
      * @return the list of usernames
      *//*
     public List<String> getAllUserNames(){
@@ -117,4 +121,4 @@ public class PlayerLobby {
         removePlayer(username);
         return ret;
     }
-}
+

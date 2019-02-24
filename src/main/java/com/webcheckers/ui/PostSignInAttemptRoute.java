@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -36,6 +37,7 @@ public class PostSignInAttemptRoute implements Route {
      * The constructor for the {@code POST /guess} route handler.
      *
      * @param playerLobby
+     *    {@Link PlayerLobby} that holds over statistics
      *    {@Link GameCenter} that holds over statistics
      * @param templateEngine
      *    template engine to use for rendering HTML page
@@ -64,21 +66,31 @@ public class PostSignInAttemptRoute implements Route {
      */
     @Override
     public String handle(Request request, Response response) {
+        // get the session
+        Session httpSession = request.session();
+
         // start building the View-Model
         final Map<String, Object> vm = new HashMap<>();
 
         // retrieve request parameter
         final String username = request.queryParams(USERNAME_PARAM);
 
-        if(playerLobby.addPlayer(username)){
+        Player p = playerLobby.addPlayer(username);
+        if(p != null){
+            /*
             vm.put("title", "Homepage");
+            vm.put("currentUser", p);
             vm.put(GetHomeRoute.PLAYER_LOBBY_ATTR, playerLobby);
+            */
+            httpSession.attribute(GetHomeRoute.PLAYER_KEY, p);
             System.out.println(username);
-            return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+            response.redirect(WebServer.HOME_URL);
+            halt();
+            return null;
         }
         else{
             vm.put("message", INVALID_USERNAME);
-            return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+            return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
     }
 }
