@@ -13,13 +13,12 @@ public class ViewGenerator {
     /**
      * Orients the view of the board for each player
      * @param game -  the game being played
-     * @param player - the player the vew is intended for
      * @return an list of rows in the order to be renderd made up of spaces in the order they should be renderd in
      */
     public static List<Row> getView(Game game, PieceColor color){
         List<Row> board = game.getCopyRows();
         // If player one return the board as is
-        if(color == Piece.PieceColor.RED){
+        if(color == Piece.PieceColor.WHITE){
             return board;
         }
         // Other wise revers rows and spaces
