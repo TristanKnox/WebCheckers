@@ -1,6 +1,7 @@
 package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.model.checkers.Piece.PieceColor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,11 +18,13 @@ public class Game implements Iterable<Row> {
   private static final int MAX_SIZE = 8;
 
   /** The player initiating the game **/
-  private Player playerOne;
+  private Player redPlayer;
   /** The player selected to play the game **/
-  private Player playerTwo;
+  private Player whitePlayer;
   /** Represents each row of the board **/
   private List<Row> rows;
+  /** The color of the player whose turn it is **/
+  private PieceColor activateColor;
 
   /**
    * Creates an initial game with the rows initialized each player kept track of
@@ -29,8 +32,9 @@ public class Game implements Iterable<Row> {
    * @param playerTwo The player invited to play the game
    */
   public Game(Player playerOne, Player playerTwo) {
-    this.playerOne = playerOne;
-    this.playerTwo = playerTwo;
+    this.redPlayer = playerOne;
+    this.whitePlayer = playerTwo;
+    this.activateColor = PieceColor.RED;
     rows = new ArrayList<>();
     initializeRows();
   }
@@ -58,11 +62,19 @@ public class Game implements Iterable<Row> {
     return rows.iterator();
   }
 
-  public Player getPlayerOne() {
-    return playerOne;
+  public Player getRedPlayer() {
+    return redPlayer;
   }
 
-  public Player getPlayerTwo() {
-    return playerTwo;
+  public Player getWhitePlayer() {
+    return whitePlayer;
+  }
+
+  public void setActivateColor(PieceColor color) {
+    this.activateColor = color;
+  }
+
+  public PieceColor getActivateColor() {
+    return activateColor;
   }
 }
