@@ -72,9 +72,10 @@ public class PlayerLobby {
 
     /**
      * Creates a list of usernames repersenting all curently logged in users
+     *
      * @return the list of usernames
      */
-    public List<String> getAllUserNames(){
+    public List<String> getAllUserNames() {
         Set<String> userSet = currentUsers.keySet();
         List<String> users = new ArrayList<>(userSet);
         return users;
@@ -107,7 +108,7 @@ public class PlayerLobby {
     }
 
     public Player getPlayer(String username) {
-        return (avalUsers.get(username));
+        return (currentUsers.get(username));
     }
 
     public void removePlayer(String username) {
@@ -120,8 +121,11 @@ public class PlayerLobby {
         return ret;
     }
 
-    public enum Outcome
-    {
+    public boolean isInGame(Player player) {
+        return (avalUsers.containsValue(player));
+    }
+
+    public enum Outcome {
         SUCCESS, TAKEN, INVALID
     }
 }
