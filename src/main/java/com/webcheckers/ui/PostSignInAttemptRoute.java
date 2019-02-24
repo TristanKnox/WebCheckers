@@ -16,6 +16,8 @@ public class PostSignInAttemptRoute implements Route {
 
     // Values used in the view-model map for rendering the game view after a guess.
     static final String MESSAGE_ATTR = "message";
+    static final String MESSAGE_TYPE_ATTR = "message.type";
+    static final String ERROR_TYPE = "ERROR";
     static final String USERNAME_PARAM = "myUserName";
     static final Message INVALID_USERNAME = Message.error("Username taken. Enter another to login.");
     static final String VIEW_NAME = "signin.ftl";
@@ -36,6 +38,7 @@ public class PostSignInAttemptRoute implements Route {
      *
      * @param playerLobby
      *    {@Link PlayerLobby} that holds over statistics
+     *    {@Link GameCenter} that holds over statistics
      * @param templateEngine
      *    template engine to use for rendering HTML page
      *
