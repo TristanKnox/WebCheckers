@@ -22,7 +22,6 @@ public class GetSigninRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSigninRoute.class.getName());
 
     private static final Message SIGN_IN = Message.info("Please enter a username to sign in.");
-    private static final Message SIGN_IN_ERROR = Message.info("Username taken. Enter another to sign in.");
 
     private final TemplateEngine templateEngine;
 

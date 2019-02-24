@@ -10,7 +10,6 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  *  The UI controller to Post requests for starting a new game
  */
@@ -61,6 +60,5 @@ public class PostGameRequestRoute implements Route {
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "game.ftl"));
-
   }
 }
