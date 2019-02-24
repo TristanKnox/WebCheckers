@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import static spark.Spark.*;
 
+import com.webcheckers.appl.GameCenter;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -70,6 +71,7 @@ public class WebServer {
   private final TemplateEngine templateEngine;
   private final Gson gson;
   private final PlayerLobby playerLobby;
+  private GameCenter gameCenter;
 
   //
   // Constructor
@@ -94,6 +96,7 @@ public class WebServer {
     this.templateEngine = templateEngine;
     this.gson = gson;
     this.playerLobby = new PlayerLobby();
+    this.gameCenter = new GameCenter();
   }
 
   //
@@ -157,7 +160,7 @@ public class WebServer {
 
     post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
 
     //post(REQUEST_GAME_URL, new PostGameRequestRoute(templateEngine,playerLobby,gameCenter));
 
