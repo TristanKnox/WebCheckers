@@ -3,8 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.checkers.Piece.PieceColor;
-import com.webcheckers.ui.ViewObjects.ViewGenorator;
+import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -52,7 +51,7 @@ public class GetGameRoute implements Route {
      * Add ability to select game view (will be an enhancement down the road)
      */
     vm.put("viewMode", "PLAY");
-    vm.put("board", ViewGenorator.getView(game, player));
+    vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(player)));
     
     // render the View
     return templateEngine.render(new ModelAndView(vm , "game.ftl"));

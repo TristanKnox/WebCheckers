@@ -77,4 +77,16 @@ public class Game implements Iterable<Row> {
   public PieceColor getActivateColor() {
     return activateColor;
   }
+
+  /**
+   * Get the color associated with the give player for this game.
+   * If the player is not in this game then null is returned
+   * @param player The player to check for in the game
+   * @return The color associated with the player in the game, null if not in game
+   */
+  public PieceColor getPlayerColor(Player player) {
+    if(player.equals(redPlayer))
+      return PieceColor.RED;
+    return player.equals(whitePlayer) ? PieceColor.WHITE : null;
+  }
 }
