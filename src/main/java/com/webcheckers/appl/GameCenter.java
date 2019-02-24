@@ -70,4 +70,17 @@ public class GameCenter {
         return activeGames.get(player);
     }
 
+    public void removePlayersFromMatch(Player playerOne, Player playerTwo){
+        playersInMatch.remove(playerOne);
+        playersInMatch.remove(playerTwo);
+    }
+
+    /**
+     * Removes player from an active game.
+     * @param player the player to be removed from the game
+     */
+    public void removePlayerFromGame(Player player){
+        activeGames.remove(player);
+    }
+
 }
