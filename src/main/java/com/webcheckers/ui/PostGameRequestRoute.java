@@ -42,7 +42,7 @@ public class PostGameRequestRoute implements Route {
      //Get playerTwo username from posted data
     String playerTwoName = request.queryParams("otherUser");
 
-    if(playerLobby.isInGame(playerTwoName)){
+    if(playerLobby.isInGame(playerLobby.getPlayer(playerTwoName))){
         session.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG, true);
         response.redirect(WebServer.HOME_URL);
         halt();
