@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -156,7 +157,7 @@ public class WebServer {
 
     get(SIGN_IN_URL, new GetSigninRoute(templateEngine));
 
-    //post(REQUEST_GAME, new PostGameRequestRoute(templateEngine,playerLoby,gameCenter));
+    post(REQUEST_GAME_URL, new PostGameRequestRoute(templateEngine,playerLobby,gameCenter));
 
     post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
