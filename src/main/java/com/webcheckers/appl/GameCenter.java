@@ -5,6 +5,10 @@ import com.webcheckers.model.checkers.Game;
 
 import java.util.HashMap;
 
+/**
+ * The game center manipulates the holding of the matches and games for the web server
+ * @Autor Evan Nolan
+ */
 public class GameCenter {
 
     private HashMap<Player, Game> activeGames; //player name to Game obj
