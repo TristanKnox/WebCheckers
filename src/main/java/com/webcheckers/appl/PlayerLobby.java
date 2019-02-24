@@ -28,7 +28,7 @@ public class PlayerLobby {
      * @return false if username was already in use and the user was not added
      */
     public synchronized Player addPlayer(String username) {
-        if (isValidUsername(username)) {
+        if (isValidUsername(username) == Outcome.SUCCESS) {
             Player temp = new Player(username);
             currentUsers.put(username, temp);
             avalUsers.put(username, temp);
@@ -44,12 +44,13 @@ public class PlayerLobby {
      * @param username in question
      * @return false if username is invalid
      */
-    public boolean isValidUsername(String username) {
+    public Outcome isValidUsername(String username) {
+        Outcome ret = Outcome.SUCCESS;
         if (!currentUsers.containsKey(username)) {
             if (username.length() == 0) {
-                return false;
+                ret = Outcome.TAKEN;
             } else if (!Character.isLetter(username.charAt(0))) {
-                return false;
+                ret = Outcome.INVALID;
             } else {
                 for (int i = 0; i < username.length(); i++) {
                     char c = username.charAt(i);
@@ -59,13 +60,14 @@ public class PlayerLobby {
                     } else if ((48 <= ascii && ascii <= 57) || (65 <= ascii && ascii <= 90) || (97 <= ascii && ascii <= 122)) {
                         continue;
                     } else {
-                        return false;
+                        ret = Outcome.INVALID;
                     }
                 }
             }
-            return true;
+            return ret;
         }
-        return false;
+        ret = Outcome.TAKEN;
+        return ret;
     }
 
 
@@ -117,6 +119,11 @@ public class PlayerLobby {
         Player ret = getPlayer(username);
         removePlayer(username);
         return ret;
+    }
+
+    enum Outcome
+    {
+        SUCCESS, TAKEN, INVALID;
     }
 }
 
