@@ -77,6 +77,7 @@ public class PostSignInAttemptRoute implements Route {
         PlayerLobby.Outcome outcome = playerLobby.addPlayer(username);
         if(outcome == PlayerLobby.Outcome.SUCCESS){
             httpSession.attribute(GetHomeRoute.PLAYER_KEY, playerLobby.getPlayer(username));
+            httpSession.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG, false);
             System.out.println(username);
             response.redirect(WebServer.HOME_URL);
             halt();

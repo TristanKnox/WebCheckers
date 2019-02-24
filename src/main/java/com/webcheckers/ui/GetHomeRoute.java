@@ -23,7 +23,8 @@ public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
   
   // values for use in the view-model map
-  static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  static final String WELCOME_MSG = "Welcome to the world of online Checkers.\n" +
+          "%d players are currently logged in.";
   static final String TITLE_ATTR = "title";
   static final String VIEW_NAME = "home.ftl";
   static final String PERSONAL_WELCOME = "Welcome to Webcheckers, %s.";
@@ -79,7 +80,7 @@ public class GetHomeRoute implements Route {
 
       // begin filling the view bucket case: player not yet signed in
       vm.put(TITLE_ATTR, "Welcome!");
-      vm.put("message", WELCOME_MSG);
+      vm.put("message", Message.info(String.format(WELCOME_MSG, playerLobby.getNumberOfUsers())));
     }
     // check that you have not been put in a game
     else if(playerLobby.isInGame(httpSession.attribute(PLAYER_KEY))){
