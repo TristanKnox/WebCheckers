@@ -86,7 +86,7 @@ public class GetHomeRoute implements Route {
       // retrieve the player from the session
       Player p = httpSession.attribute(PLAYER_KEY);
       vm.put(CURRENT_USER_ATTR, p);
-      vm.put(PLAYERS_LIST_ATTR, playerLobby.getAllUserNames());
+      vm.put(PLAYERS_LIST_ATTR, playerLobby.getAllAvalPlayers());
 
       // give the home page a personalized welcome message
       vm.put("message", Message.info(String.format(PERSONAL_WELCOME, p.getName())));

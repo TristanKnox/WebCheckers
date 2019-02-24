@@ -10,7 +10,6 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  *  The UI controller to Post requests for starting a new game
  */
@@ -52,15 +51,14 @@ public class PostGameRequestRoute implements Route {
     vm.put("title", GetGameRoute.GAME_TITLE);
 
     vm.put("currentUser", playerOne);
-    vm.put("whitePlayer", playerOne);
-    vm.put("redPlayer", playerTwo);
-    vm.put("activeColor", "red");
+    vm.put("whitePlayer", game.getWhitePlayer());
+    vm.put("redPlayer", game.getRedPlayer());
+    vm.put("activeColor", game.getRedPlayer());
     vm.put("viewMode", "PLAY");
     vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(playerOne)));
 
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "game.ftl"));
-
   }
 }
