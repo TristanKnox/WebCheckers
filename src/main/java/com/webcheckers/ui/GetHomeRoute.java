@@ -32,6 +32,7 @@ public class GetHomeRoute implements Route {
 
   // values for use in the session attribute map
   static final String PLAYER_KEY = "player";
+  static final String IN_GAME_ERROR_FLAG = "inGameError";
 
   // Attributes
   private final TemplateEngine templateEngine;
@@ -80,26 +81,42 @@ public class GetHomeRoute implements Route {
       vm.put(TITLE_ATTR, "Welcome!");
       vm.put("message", WELCOME_MSG);
     }
+    // check that you have not been put in a game
     else if(playerLobby.isInGame(httpSession.attribute(PLAYER_KEY))){
       response.redirect(WebServer.GAME_URL);
       halt();
       return null;
     }
+    // check that you have not selected a busy player
+    else if(httpSession.attribute(IN_GAME_ERROR_FLAG) == (Boolean)true){
+      // build the vm
+      vmBuilderHelper(vm, httpSession);
+
+      // give the home page a personalized welcome message
+      vm.put("message", Message.error("User has joined another game. Pick another user."));
+      httpSession.attribute(IN_GAME_ERROR_FLAG, false);
+    }
+    // default home view
     else{
+      // build the vm
+      vmBuilderHelper(vm, httpSession);
 
-      //begin filling the view bucket case: the player is signed in
-      vm.put(TITLE_ATTR, "Homepage");
-
-      // retrieve the player from the session
       Player p = httpSession.attribute(PLAYER_KEY);
-      vm.put(CURRENT_USER_ATTR, p);
-      vm.put(PLAYERS_LIST_ATTR, playerLobby.getAllAvalPlayers());
-
       // give the home page a personalized welcome message
       vm.put("message", Message.info(String.format(PERSONAL_WELCOME, p.getName())));
     }
 
     // render the view
     return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+  }
+
+  private void vmBuilderHelper(Map<String, Object> vm, Session httpSession){
+    //begin filling the view bucket case: the player is signed in
+    vm.put(TITLE_ATTR, "Homepage");
+
+    // retrieve the player from the session
+    Player p = httpSession.attribute(PLAYER_KEY);
+    vm.put(CURRENT_USER_ATTR, p);
+    vm.put(PLAYERS_LIST_ATTR, playerLobby.getAllAvalPlayers());
   }
 }
