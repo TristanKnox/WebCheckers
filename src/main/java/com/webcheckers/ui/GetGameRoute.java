@@ -51,7 +51,7 @@ public class GetGameRoute implements Route {
      * Add ability to select game view (will be an enhancement down the road)
      */
     vm.put("viewMode", "PLAY");
-    vm.put("board", game);
+    vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(player)));
     
     // render the View
     return templateEngine.render(new ModelAndView(vm , "game.ftl"));
