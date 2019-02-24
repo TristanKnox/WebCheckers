@@ -11,6 +11,7 @@ import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
 
+
 /**
  * The server that initializes the set of HTTP request handlers.
  * This defines the <em>web application interface</em> for this
@@ -65,7 +66,7 @@ public class WebServer {
 
   private final TemplateEngine templateEngine;
   private final Gson gson;
-  private final PlayerLobby playerLoby;
+  private final PlayerLobby playerLobby;
 
   //
   // Constructor
@@ -89,7 +90,7 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
-    this.playerLoby = new PlayerLobby();
+    this.playerLobby = new PlayerLobby();
   }
 
   //
