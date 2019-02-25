@@ -46,7 +46,7 @@ public class PlayerLobby {
     Outcome ret = Outcome.SUCCESS;
     if (!currentUsers.containsKey(username)) {
       if (username.length() == 0) {
-        ret = Outcome.TAKEN;
+        ret = Outcome.INVALID;
       }
       else if (!Character.isLetter(username.charAt(0))) {
         ret = Outcome.INVALID;
