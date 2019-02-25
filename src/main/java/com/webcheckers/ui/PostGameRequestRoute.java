@@ -23,7 +23,9 @@ public class PostGameRequestRoute implements Route {
   PlayerLobby playerLobby;
   TemplateEngine templateEngine;
 
-
+  /**
+   * Constructor - creates and instance of this class
+   */
   public PostGameRequestRoute(TemplateEngine templateEngine, PlayerLobby playerLobby, GameCenter gameCenter){
     this.gameCenter = gameCenter;
     this.playerLobby = playerLobby;
