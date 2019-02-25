@@ -35,7 +35,7 @@ public class Row implements Iterable<Space> {
   /**
    * Creates a row object with predefined order of spaces
    * @param spaces list of spaces in the desired order
-   * @int rowIndex - index of row
+   * @param rowIndex - index of row
    */
   public Row(List<Space> spaces, int rowIndex){
     this.spaces = spaces;
@@ -95,10 +95,18 @@ public class Row implements Iterable<Space> {
     return spaces.iterator();
   }
 
+  /**
+   * Get the list of spaces
+   * @return The list of spaces
+   */
   public List<Space> getSpaces() {
     return spaces;
   }
 
+  /**
+   * Get the index of the current row
+   * @return The index of the row
+   */
   public int getIndex() {
     return index;
   }

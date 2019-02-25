@@ -21,7 +21,7 @@
             <br/>
             <input name="myUserName" />
             <br/><br/>
-            <button type="submit">Ok</button>
+            <button type="submit">Log In</button>
         </form>
     </div>
 
