@@ -42,15 +42,15 @@ public class ViewGenerator {
   }
 
 
-    /**
-     * Reverses the order of spaces in a row
-     * @param row - the row of spaces to be reversed
-     * @return -  a new row representing the reversed spaces
-     */
-    private static Row reverseSpaces(Row row){
-        List<Space> spaces = new ArrayList<Space>(row.getSpaces());
-        Collections.reverse(spaces);
-        Row reversed = new Row(spaces, row.getIndex());
-        return reversed;
-    }
+  /**
+  * Reverses the order of spaces in a row
+  * @param row - the row of spaces to be reversed
+  * @return -  a new row representing the reversed spaces
+  */
+  private static Row reverseSpaces(Row row){
+    List<Space> spaces = new ArrayList<Space>(row.getSpaces());
+    Collections.reverse(spaces);
+    Row reversed = new Row(spaces, row.getIndex());
+    return reversed;
+  }
 }
