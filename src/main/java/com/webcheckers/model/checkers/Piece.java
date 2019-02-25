@@ -38,10 +38,18 @@ public class Piece {
     this.color = color;
   }
 
+  /**
+   * Get the type of the piece either king or single
+   * @return The type of the piece
+   */
   public PieceType getType() {
     return type;
   }
 
+  /**
+   * Get the color of the piece either red or white
+   * @return The color of the piece
+   */
   public PieceColor getColor() {
     return color;
   }

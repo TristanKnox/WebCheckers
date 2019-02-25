@@ -144,7 +144,7 @@ public class PlayerLobby {
     removePlayer(username);
     return ret;
   }
-
+  
 /**
  *
  * Checks to see if the given player is in game
@@ -154,6 +154,17 @@ public class PlayerLobby {
  */
   public boolean isInGame(Player player) {
     return (avalUsers.containsValue(player));
+  }
+
+
+/**
+ *
+ * Gets the total number of users currently signed in
+ *
+ * @return the number of users
+ */
+  public int getNumberOfUsers(){
+    return currentUsers.size();
   }
 
 /**

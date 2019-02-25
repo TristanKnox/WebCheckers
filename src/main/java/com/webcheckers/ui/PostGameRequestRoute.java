@@ -4,17 +4,20 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static spark.Spark.halt;
+
 /**
  *  The UI controller to Post requests for starting a new game
  */
 public class PostGameRequestRoute implements Route {
-
   GameCenter gameCenter;
   PlayerLobby playerLobby;
   TemplateEngine templateEngine;
@@ -39,6 +42,12 @@ public class PostGameRequestRoute implements Route {
      //Get playerTwo username from posted data
     String playerTwoName = request.queryParams("otherUser");
 
+    if(playerLobby.isInGame(playerLobby.getPlayer(playerTwoName))){
+      session.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG, true);
+      response.redirect(WebServer.HOME_URL);
+      halt();
+      return null;
+    }
 
     //Remove players from playerLobby
     playerOne = playerLobby.getPlayerForGame(playerOne.getName());
@@ -51,9 +60,9 @@ public class PostGameRequestRoute implements Route {
     vm.put("title", GetGameRoute.GAME_TITLE);
 
     vm.put("currentUser", playerOne);
-    vm.put("whitePlayer", game.getWhitePlayer());
     vm.put("redPlayer", game.getRedPlayer());
-    vm.put("activeColor", game.getRedPlayer());
+    vm.put("whitePlayer", game.getWhitePlayer());
+    vm.put("activeColor", game.getActivateColor());
     vm.put("viewMode", "PLAY");
     vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(playerOne)));
 

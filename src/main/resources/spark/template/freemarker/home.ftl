@@ -2,7 +2,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-  <meta http-equiv="refresh" content="10">
+  <meta http-equiv="refresh" content="5">
   <title>Web Checkers | ${title}</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -31,7 +31,9 @@
       <!-- Add clickable buttons with available users. -->
       <form action="./requestgame" method="POST">
         <#list players as player>
-          <button class = "player" name = "otherUser" type="submit" value = ${player.getName()}>${player.getName()}</button>
+          <#if currentUser != player>
+            <button class = "player" name = "otherUser" type="submit" value = ${player.getName()}>${player.getName()}</button>
+          </#if>
         </#list>
       </form>
     </#if>

@@ -48,6 +48,10 @@ public class Game implements Iterable<Row> {
     }
   }
 
+  /**
+   * Create a copied list of the rows used when developing the board view for each player
+   * @return Copied list of the rows
+   */
   public List<Row> getCopyRows() {
     return new ArrayList<>(rows);
   }
@@ -62,18 +66,34 @@ public class Game implements Iterable<Row> {
     return rows.iterator();
   }
 
+  /**
+   * Get the red player
+   * @return The red player (player 1)
+   */
   public Player getRedPlayer() {
     return redPlayer;
   }
 
+  /**
+   * Get the white player
+   * @return The white player (player 2)
+   */
   public Player getWhitePlayer() {
     return whitePlayer;
   }
 
+  /**
+   * Set the color of the player whose turn it is
+   * @param color The color whose turn it is
+   */
   public void setActivateColor(PieceColor color) {
     this.activateColor = color;
   }
 
+  /**
+   * Get the color of the player whose turn it is
+   * @return The color of the current players turn
+   */
   public PieceColor getActivateColor() {
     return activateColor;
   }
