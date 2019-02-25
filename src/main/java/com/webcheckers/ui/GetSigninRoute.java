@@ -14,44 +14,44 @@ import spark.TemplateEngine;
 import com.webcheckers.util.Message;
 
 /**
- * The UI Controller to GET the Signin page.
+ * The route which is responsible for rendering the sign in page
+ * when the link from the home page is clicked.
  *
  * @author Andrew Bado
  */
 public class GetSigninRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSigninRoute.class.getName());
 
-    private static final Message SIGN_IN = Message.info("Please enter a username to sign in.");
+    // Values used to build the view-model
+    static final Message SIGN_IN = Message.info("Please enter a username to sign in.");
 
+    // Attributes
     private final TemplateEngine templateEngine;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all @code GET /signin HTTP requests.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param templateEngine  HTML template rendering engine
      */
     public GetSigninRoute(final TemplateEngine templateEngine) {
+        // the template engine may not be null
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //
+
         LOG.config("GetSigninRoute is initialized.");
     }
 
     /**
      * Render the WebCheckers Signin page.
      *
-     * @param request
-     *   the HTTP request
-     * @param response
-     *   the HTTP response
+     * @param request the HTTP request
+     * @param response the HTTP response
      *
-     * @return
-     *   the rendered HTML for the Signin page
+     * @return the rendered HTML for the Signin page
      */
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetSigninRoute is invoked.");
-        //
+        // start the view model bucket
         Map<String, Object> vm = new HashMap<>();
 
         // display a user message in the Home page
