@@ -18,7 +18,6 @@ import static spark.Spark.halt;
  *  The UI controller to Post requests for starting a new game
  */
 public class PostGameRequestRoute implements Route {
-
   GameCenter gameCenter;
   PlayerLobby playerLobby;
   TemplateEngine templateEngine;
@@ -44,10 +43,10 @@ public class PostGameRequestRoute implements Route {
     String playerTwoName = request.queryParams("otherUser");
 
     if(playerLobby.isInGame(playerLobby.getPlayer(playerTwoName))){
-        session.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG, true);
-        response.redirect(WebServer.HOME_URL);
-        halt();
-        return null;
+      session.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG, true);
+      response.redirect(WebServer.HOME_URL);
+      halt();
+      return null;
     }
 
     //Remove players from playerLobby
