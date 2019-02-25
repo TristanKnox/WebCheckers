@@ -153,7 +153,7 @@ public class PlayerLobby {
  * @return Boolean of the player status
  */
   public boolean isInGame(Player player) {
-    return (avalUsers.containsValue(player));
+    return (!avalUsers.containsValue(player));
   }
 
 
