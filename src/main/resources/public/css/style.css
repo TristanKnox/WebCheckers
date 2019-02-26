@@ -25,6 +25,7 @@ input[type="text"],
 input[type="password"] {
   background: white;
   border: 1px solid #BFE6FF;
+  margin-left: 10px;
   padding: 2px;
   font-family: 'Trebuchet MS', sans-serif;
   font-size: 14px;
@@ -36,6 +37,7 @@ input[type="password"] {
 input[type="submit"] {
   background: #1057FF;
   border: 1px solid #073BFF;
+  margin-left: 10px;
   padding: 1px 3px;
   font-family: 'Trebuchet MS', sans-serif;
   font-size: 14px;
@@ -124,13 +126,36 @@ div.INFO {
   display: flex;
   flex-flow: row wrap;
 }
+
+/**
+ * styling of a button used to start a game with a player
+ */
 button.player {
   background-color: #f1f1f1;
   width: 100px;
   margin: 10px;
+  background: #DEE9FF;
+  border: 1px solid #1057FF;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  padding: 4px;
+  font-size: 13px;
+  display: block;
 }
+
 button.game {
   background-color: #fff1f1;
   width: 100px;
   margin: 10px;
+}
+
+/**
+ * style the title for the available users list
+ */
+#availableUsers{
+  width: 100px;
+  margin: 10px;
+  border-bottom: 2px solid black;
+  text-align: center;
+  font-weight: bold;
 }
