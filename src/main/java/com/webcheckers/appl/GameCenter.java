@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 /**
 * The game center manipulates the holding of the matches and games for the web server
-* @Autor Evan Nolan
+* @Autor Evan Nolan {@link https://github.com/emn3779}
 */
 public class GameCenter {
 
@@ -26,7 +26,7 @@ public class GameCenter {
   * creates the game that the players will play on.
   * @param playerOne the first player
   * @param playerTwo the second player
-  * @return the game that is created
+  * @return the {@link Game} that is created
   */
   public Game spawnGame(Player playerOne, Player playerTwo){
     Game game = new Game(playerOne,playerTwo);
@@ -39,8 +39,8 @@ public class GameCenter {
   /**
   * Adds players to game to keep track of them.
   * adds twice to find them quicker.
-  * @param p1 player one
-  * @param p2 player two
+  * @param p1 {@Link Player} one
+  * @param p2 {@link Player} two
   */
   public void addPlayersToMatch(Player p1, Player p2){
     playersInMatch.put(p1,p2);
@@ -49,8 +49,8 @@ public class GameCenter {
 
   /**
   * Adds a player to the game listing.
-  * @param player the player
-  * @param game the game instance.
+  * @param player the {@Link Player} object
+  * @param game the {@Link Game} instance.
   */
   public void addPlayerToGame(Player player, Game game){
     activeGames.put(player, game);
@@ -58,7 +58,7 @@ public class GameCenter {
 
   /**
   * gets the other player of the game.
-  * @param player player whose opponent wants to be found.
+  * @param player {@link Player}  whose opponent wants to be found.
   * @return the players opponent, if it exists.
   */
   public Player getOtherPlayer(Player player) {
@@ -68,7 +68,7 @@ public class GameCenter {
   /**
   * gets the game that a player is playing on currently.
   * @param player the player
-  * @return the game
+  * @return the {@link Game}
   */
   public Game getGame(Player player){
     return activeGames.get(player);
@@ -81,7 +81,7 @@ public class GameCenter {
 
   /**
   * Removes player from an active game.
-  * @param player the player to be removed from the game
+  * @param player the {@Link Player} to be removed from the game
   */
   public void removePlayerFromGame(Player player){
     activeGames.remove(player);
