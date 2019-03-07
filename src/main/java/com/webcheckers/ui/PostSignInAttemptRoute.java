@@ -58,6 +58,13 @@ public class PostSignInAttemptRoute implements Route {
     // get the session
     Session httpSession = request.session();
 
+    // if the player is already signed in, redirect them to the home page
+    if(httpSession.attribute(GetHomeRoute.PLAYER_KEY) != null){
+      response.redirect(WebServer.HOME_URL);
+      halt();
+      return null;
+    }
+
     // start the View-Model
     final Map<String, Object> vm = new HashMap<>();
 
