@@ -57,9 +57,15 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](Copy of TeamC_Avoiding_Zugzwang.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+The main entity in the Domain Model is the ‘Checkers Game’ entity. This entity at a high level 
+handles the interactions that exists with the other domain entities. The ‘Checkers Game’ is played
+on a ‘Board’ which is made up of ‘Tiles’ which are the individual spaces on the board. The
+relation between the ‘Board’ and ‘Tiles’ are important since the ‘Tiles’ represent different
+functionality on the ‘Board’. For example, the light vs. dark tiles impact if a ‘Piece’ can be
+placed in the given ‘Tile’. Another important entity is the ‘Player’ entity. The ‘Player’
+represents the two opposing sides in checkers. ‘Player’ interacts with the ‘Pieces’ and the
+color of each ‘Piece’ represents each of the ‘Players’. ‘Turns’ is another important domain
+entity as it handles interactions between the ‘Players’ and the ‘Tiles’ through the ‘Move Rules’. 
 
 
 ## Architecture and Design
