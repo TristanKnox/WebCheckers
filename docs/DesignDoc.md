@@ -27,8 +27,8 @@ And with the ability to practice against AI players and watch replays anyone wil
 So what are you waiting for, grab your mouse, your keyboard, and your fanciest checkers hat and **lets play WebCheckers!**
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+WebCheckers aims to provide users means to play games of checkers with others from around the world.
+Users should be able to view other users who are looking to play a game and allow them to request a game with anyone from that list.
 
 ### Glossary and Acronyms
 
