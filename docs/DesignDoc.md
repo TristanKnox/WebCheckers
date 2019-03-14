@@ -55,7 +55,7 @@ This section describes the features of the application.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](uml-diagram.png)
+![The WebCheckers Domain Model](Copy of TeamC_Avoiding_Zugzwang.png)
 
 > _Provide a high-level overview of the domain for this application. You
 > can discuss the more important domain entities and their relationship
