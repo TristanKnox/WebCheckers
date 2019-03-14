@@ -56,23 +56,7 @@ This section describes the features of the application.
 This section describes the application domain.
 
 ![The WebCheckers Domain Model](Copy of TeamC_Avoiding_Zugzwang.png)
-As soon as the user enters the page they will be greeted by a message that displays how many people
- are currently in the player lobby waiting for a game. If they are not signed in they will be asked 
- to sign in using a name of their choosing. Leading to the “waiting for username” and brought to a 
- sign in page. There they can put in a name, which is checked to be a good username. That username 
- is checked for clearance and if it is a good one they move on, else they will be asked to choose a 
- username and given the rules for which to do so. Once they move on they will be brought to the 
- player lobby. Where all the names of potential opponents await to merely be clicked on to be
-  brought a game! If such a challenge of clicking on the opponent is issued via a click
-  on their name, then they will be given the option to accept or decline the challenge. 
-  If it is accepted they will be brought to a new page that displays their board positions 
-  and be brought to the “In game” state. Where a plethora of options await the user. One such 
-  option is to resign where they will be taken back to the home page. Another is to play the game 
-  by making a move which is validated and then brought to the opponents turn once submit turn is
-  done. If such a move resulted in the ending of a game they are then brought to the “endgame” 
-  where the homepage of the player lobby will be the next sight for the user to see. And lastly
-  at any moment where they are in the home page and they wish to sign out they will be taken
-  back to the sign in page where they can exit or resign in. 
+
 
 The main entity in the Domain Model is the ‘Checkers Game’ entity. This entity at a high level 
 handles the interactions that exists with the other domain entities. The ‘Checkers Game’ is played
@@ -113,7 +97,23 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
 
-
+As soon as the user enters the page they will be greeted by a message that displays how many people
+ are currently in the player lobby waiting for a game. If they are not signed in they will be asked 
+ to sign in using a name of their choosing. Leading to the “waiting for username” and brought to a 
+ sign in page. There they can put in a name, which is checked to be a good username. That username 
+ is checked for clearance and if it is a good one they move on, else they will be asked to choose a 
+ username and given the rules for which to do so. Once they move on they will be brought to the 
+ player lobby. Where all the names of potential opponents await to merely be clicked on to be
+  brought a game! If such a challenge of clicking on the opponent is issued via a click
+  on their name, then they will be given the option to accept or decline the challenge. 
+  If it is accepted they will be brought to a new page that displays their board positions 
+  and be brought to the “In game” state. Where a plethora of options await the user. One such 
+  option is to resign where they will be taken back to the home page. Another is to play the game 
+  by making a move which is validated and then brought to the opponents turn once submit turn is
+  done. If such a move resulted in the ending of a game they are then brought to the “endgame” 
+  where the homepage of the player lobby will be the next sight for the user to see. And lastly
+  at any moment where they are in the home page and they wish to sign out they will be taken
+  back to the sign in page where they can exit or resign in. 
 > _Provide a summary of the application's user interface.  Describe, from
 > the user's perspective, the flow of the pages in the web application._
 
