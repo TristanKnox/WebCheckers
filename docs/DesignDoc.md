@@ -9,13 +9,13 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: Avoiding Zuggzwang
+* Team name: Avoiding Zugzwang
 * Team members
   * Andrew Bado
   * Collin Bolles
   * Tristan Knox
   * Jacob Jirinec
-  * Evan Nola
+  * Evan Nolan
 
 ## Executive Summary
 
