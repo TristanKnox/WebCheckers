@@ -59,6 +59,6 @@ public class Space {
    * @return if this move is valid
    */
   public boolean isValid() {
-    return type == SpaceType.BLACK && piece == null;
+    return true;//type == SpaceType.BLACK && piece == null;
   }
 }
