@@ -25,16 +25,22 @@ This new rendition of Checkers will leave players wanting more. B
 y connecting players worldwide WebCheckers brings endless opportunity to test your checker's prowess against any number of opponents. 
 And with the ability to practice against AI players and watch replays anyone will be able to take their game to the next level. 
 So what are you waiting for, grab your mouse, your keyboard, and your fanciest checkers hat and **lets play WebCheckers!**
+
 ### Purpose
 > _Provide a very brief statement about the project and the most
 > important user group and user goals._
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
 
 | Term | Definition |
 |------|------------|
-| VO | Value Object |
+| MVP  | Minimum Viable Product    |
+| OOP  | Object Oriented Programming|
+| POJOS| Plain Old Java Objects|
+| UI   | User Interface|
+| HTML | Hyper Text Markup Language|
+| CSS  | Cascading Style Sheets|
+| HTTP | Hyper Text Transfer Protocol|
 
 
 ## Requirements
