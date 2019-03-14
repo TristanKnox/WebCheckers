@@ -114,8 +114,7 @@ As soon as the user enters the page they will be greeted by a message that displ
   where the homepage of the player lobby will be the next sight for the user to see. And lastly
   at any moment where they are in the home page and they wish to sign out they will be taken
   back to the sign in page where they can exit or resign in. 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+
 
 
 ### UI Tier
