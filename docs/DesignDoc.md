@@ -13,8 +13,8 @@ geometry: margin=1in
 * Team members
   * Andrew Bado
   * Collin Bolles
-  * Tristan Knox
   * Jacob Jirinec
+  * Tristan Knox
   * Evan Nolan
 
 ## Executive Summary
