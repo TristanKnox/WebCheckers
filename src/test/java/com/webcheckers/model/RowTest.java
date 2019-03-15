@@ -1,4 +1,4 @@
-package com.webcheckers.ui.model;
+package com.webcheckers.model;
 
 import com.webcheckers.model.checkers.Row;
 import com.webcheckers.model.checkers.Space;
