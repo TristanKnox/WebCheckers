@@ -33,7 +33,9 @@ public class GetHomeRoute implements Route {
 
   // values for use in the session attribute map
   public static final String PLAYER_KEY = "player";
+
   public static final String IN_GAME_ERROR_FLAG = "inGameError";
+
 
   // Attributes
   private final TemplateEngine templateEngine;
