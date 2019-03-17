@@ -5,13 +5,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
 import com.webcheckers.util.Message;
+
+import static spark.Spark.halt;
 
 /**
 * The route which is responsible for rendering the sign in page
@@ -50,14 +48,14 @@ public class GetSigninRoute implements Route {
   */
   @Override
   public Object handle(Request request, Response response) {
-    LOG.finer("GetSigninRoute is invoked.");
-    // start the view model bucket
-    Map<String, Object> vm = new HashMap<>();
+      LOG.finer("GetSigninRoute is invoked.");
+      // start the view model bucket
+      Map<String, Object> vm = new HashMap<>();
 
-    // display a user message in the Home page
-    vm.put("message", SIGN_IN);
+      // display a user message in the Home page
+      vm.put("message", SIGN_IN);
 
-    // render the View
-    return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+      // render the View
+      return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
   }
 }
