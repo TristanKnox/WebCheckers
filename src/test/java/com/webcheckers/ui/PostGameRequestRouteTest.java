@@ -73,16 +73,25 @@ public class PostGameRequestRouteTest {
         when(playerLobby.getPlayer(POSTED_USER_NAME)).thenReturn(player2);
         when(playerLobby.isInGame(player2)).thenReturn(true);
 
-      //  final TemplateEngineTester testHelper = new TemplateEngineTester();
-       // when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        try {
+            CuT.handle(request, response);
+        }catch(Exception e){}
+        verify(response).redirect(WebServer.HOME_URL);
+        verify(session).attribute(eq(GetHomeRoute.IN_GAME_ERROR_FLAG),eq(true));
+    }
 
-        assertThrows(HaltException.class, () -> CuT.handle(request,response));
+    /**
+     * Tests PostRequestGameRout when current user is not available for a game
+     */
+    @Test
+    public void player1_not_available(){
+        when(playerLobby.isInGame(player1)).thenReturn(true);
 
-       // CuT.handle(request,response);
-       // assertTrue(session.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG));
-       // testHelper.assertViewModelExists();
-       // testHelper.assertViewModelIsaMap();
-        //testHelper.assertViewModelAttribute(GetHomeRoute.IN_GAME_ERROR_FLAG,true);//TODO figure out how to check for this after exception is thrown
+        try {
+            CuT.handle(request, response);
+        }catch(Exception e){}
+        verify(response).redirect(WebServer.HOME_URL);
+        verify(session).attribute(eq(GetHomeRoute.IN_GAME_ERROR_FLAG),eq(true));
     }
 
     /**

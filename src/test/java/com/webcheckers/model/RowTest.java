@@ -52,7 +52,7 @@ public class RowTest {
     @Test
     public void spaceInitilazation(){
         Row row;
-        for(int index = 1 ;  index < 8 ; index++){  //Iterate through the posible index's of each row
+        for(int index = 0 ;  index < 8 ; index++){  //Iterate through the posible index's of each row
             row = new Row(index);                   //Create a row for the given index
             checkRowSpaces(row);
         }
@@ -67,6 +67,7 @@ public class RowTest {
             }
             else {
                 Piece piece = space.getPiece();
+
                 if (rowIndex < 3) {       //Bottom 3 rows
                     assertNotNull(piece);
                     assertEquals(Piece.PieceColor.RED,piece.getColor());
