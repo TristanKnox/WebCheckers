@@ -61,4 +61,10 @@ public class Space {
   public boolean isValid() {
     return type == SpaceType.BLACK && piece == null;
   }
+
+  /**
+   * A getter method for the space type
+   * @return - type of this space
+   */
+  public SpaceType getType(){ return this.type; }
 }
