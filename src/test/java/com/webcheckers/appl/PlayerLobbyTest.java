@@ -1,8 +1,7 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.Application;
 import com.webcheckers.model.Player;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -24,12 +23,15 @@ public class PlayerLobbyTest {
   private static final String VALID_NAME2 = "Jacob999";
   private static final String VALID_NAME3 = "Jacob Jirinec";
 
-  @BeforeAll
+  @BeforeEach
   public void testNames(){
     CuT = new PlayerLobby();
     assertSame(PlayerLobby.Outcome.SUCCESS,CuT.addPlayer(VALID_NAME1));
+    CuT.addPlayer(VALID_NAME1);
     assertSame(PlayerLobby.Outcome.SUCCESS,CuT.addPlayer(VALID_NAME2));
+    CuT.addPlayer(VALID_NAME2);
     assertSame(PlayerLobby.Outcome.SUCCESS,CuT.addPlayer(VALID_NAME3));
+    CuT.addPlayer(VALID_NAME3);
     assertSame(PlayerLobby.Outcome.INVALID,CuT.addPlayer(INVALID_NAME1));
     assertSame(PlayerLobby.Outcome.INVALID,CuT.addPlayer(INVALID_NAME2));
     assertSame(PlayerLobby.Outcome.INVALID,CuT.addPlayer(INVALID_NAME3));
@@ -64,6 +66,6 @@ public class PlayerLobbyTest {
     playLobby.addPlayer(VALID_NAME1);
     assertNotNull(playLobby.getPlayer(VALID_NAME1));
     playLobby.removePlayer(VALID_NAME1);
-    assertSame(playLobby.getAllAvalPlayers().contains(playLobby.getPlayer(VALID_NAME1)),False);
+    assertSame(playLobby.getAllAvalPlayers().contains(playLobby.getPlayer(VALID_NAME1)),false);
 }
 }
