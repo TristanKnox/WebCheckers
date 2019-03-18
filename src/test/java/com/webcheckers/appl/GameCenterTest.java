@@ -3,6 +3,7 @@ package com.webcheckers.appl;
 import com.webcheckers.Application;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,7 @@ public class GameCenterTest {
   private static final String VALID_NAME = "Kristen";
   private static final String YONDER = "Yonder999";
 
-  @BeforeAll
+  @BeforeEach
   public void testSetups(){
     CuT = new GameCenter();
     playerName1 =  MY_FAVORITE_LOGIN;

@@ -1,11 +1,16 @@
 package com.webcheckers.ui;
 
+import static com.webcheckers.ui.PostSignInAttemptRoute.INVALID_USERNAME;
+import static com.webcheckers.ui.PostSignInAttemptRoute.MESSAGE_ATTR;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,17 +53,31 @@ public class PostSignInAttemptTest {
   }
 
   @Test
-  public void test_Login_Query(){
+  public void test_Valid_Login_Query(){
     when(request.queryParams(USERNAME)).thenReturn(TEST_NAME_VALID);
-    //thanks tristan!
-    final TemplateEngineTester testHelper = new TemplateEngineTester();
+    when(playerLobby.getPlayer(TEST_NAME_VALID)).thenReturn(new Player(TEST_NAME_VALID));
 
-    when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+    try {
+      CuT.handle(request, response);
+    }catch (Exception e){}
+    assertNotNull(session.attributes());
 
-    CuT.handle(request,response);
+    verify(session).attribute(eq(GetHomeRoute.PLAYER_KEY),any(Player.class));
+    verify(session).attribute(eq(GetHomeRoute.IN_GAME_ERROR_FLAG),eq(Boolean.FALSE));
+    verify(response).redirect(WebServer.HOME_URL);
 
-    testHelper.assertViewModelExists();
-    testHelper.assertViewModelIsaMap();
+  }
+  @Test
+  public void test_Invalid_Login_Query(){
+    when(request.queryParams(USERNAME)).thenReturn(TEST_NAME_INVALID);
+    TemplateEngineTester engineTester = new TemplateEngineTester();
+    try {
+      CuT.handle(request, response);
+    } catch (Exception e){ }
+    assertNotNull(session.attributes());
+    verify()
+
+
 
   }
 
