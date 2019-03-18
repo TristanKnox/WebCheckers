@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,7 +49,17 @@ public class PostSignInAttemptTest {
 
   @Test
   public void test_Login_Query(){
-    when(request.queryParams())
+    when(request.queryParams(USERNAME)).thenReturn(TEST_NAME_VALID);
+    //thanks tristan!
+    final TemplateEngineTester testHelper = new TemplateEngineTester();
+
+    when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+
+    CuT.handle(request,response);
+
+    testHelper.assertViewModelExists();
+    testHelper.assertViewModelIsaMap();
+
   }
 
 }
