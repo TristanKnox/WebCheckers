@@ -25,7 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The suite of tests for the webcheckers GetHomeRoute class
+ * The suite of tests for the webcheckers GetHomeRoute class.
+ * Tests each possible scenario of the home page.
+ *
+ * @author Andrew Bado
  */
 
 @Tag("UI-Tier")
@@ -87,6 +90,9 @@ public class GetHomeRouteTest {
     testHelper.assertViewName(GetHomeRoute.VIEW_NAME);
   }
 
+  /**
+   * Test the scenario where the home page is loaded, but the user is in a game
+   */
   @Test
   public void player_in_game(){
     // Arrange the test scenario: There is an existing session, and the player is in a game
@@ -106,6 +112,9 @@ public class GetHomeRouteTest {
     verify(response).redirect(WebServer.GAME_URL);
   }
 
+  /**
+   * Test the scenario where the user has selected a player who is already in a game
+   */
   @Test
   public void selected_player_unavailable(){
     // enables us to check for things in the vm bucket
@@ -143,14 +152,16 @@ public class GetHomeRouteTest {
     verify(session).attribute(eq(GetHomeRoute.IN_GAME_ERROR_FLAG), eq(false));
   }
 
+  /**
+   * Test the scenario where the user is signed in and idling on the homepage
+   */
   @Test
   public void default_home_state(){
       // enables us to check for things in the vm bucket
       final TemplateEngineTester testHelper = new TemplateEngineTester();
       when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
-      // Arrange the test Scenario: There is a player in the session, and they have selected an
-      // unavailable opponent.
+      // Arrange the test Scenario: There is a player in the session, and they are on the homepage
       when(session.attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player);
       when(playerLobby.isInGame(session.attribute(GetHomeRoute.PLAYER_KEY))).thenReturn(false);
       when(session.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG)).thenReturn(false);
