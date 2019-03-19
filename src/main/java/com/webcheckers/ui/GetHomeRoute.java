@@ -76,7 +76,6 @@ public class GetHomeRoute implements Route {
 
     // check if there is a player in the session map
     if(httpSession.attribute(PLAYER_KEY) == null){
-
       // begin filling the view bucket case: player not yet signed in
       vm.put(TITLE_ATTR, "Welcome!");
       vm.put("message", Message.info(String.format(WELCOME_MSG, playerLobby.getNumberOfUsers())));
