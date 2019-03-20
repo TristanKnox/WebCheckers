@@ -169,7 +169,7 @@ public class WebServer {
     //post(REQUEST_GAME_URL, new PostGameRequestRoute(templateEngine,playerLobby,gameCenter));
 
 
-    post(REQUEST_MOVE_URL, new PostMoveRequestRoute(templateEngine));
+    post(REQUEST_MOVE_URL, new PostMoveRequestRoute(templateEngine,gameCenter));
 
     LOG.config("WebServer is initialized.");
   }
