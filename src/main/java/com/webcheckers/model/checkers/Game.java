@@ -2,6 +2,7 @@ package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.model.checkers.Turn.TurnResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,9 @@ public class Game implements Iterable<Row> {
   private List<Row> rows;
   /** The color of the player whose turn it is **/
   private PieceColor activateColor;
+
+  /** Represents all of the turns made through out the duration of the game */
+  private List<Turn> turns;
 
   /**
    * Creates an initial game with the rows initialized each player kept track of
@@ -108,5 +112,26 @@ public class Game implements Iterable<Row> {
     if(player.equals(redPlayer))
       return PieceColor.RED;
     return player.equals(whitePlayer) ? PieceColor.WHITE : null;
+  }
+
+  /**
+   * Handles adding a move to the current active turn. The move is applied to the turn if the move
+   * is valid. The result of the validation is returned based on if any rule was violated
+   * @param move The move to be added to the current turn
+   * @return TurnResponse based on the validity/any broken rules
+   */
+  public TurnResponse addMove(Move move) {
+    return null;
+  }
+
+  /**
+   * Handles applying the current moves to the game sequentially updating the state of the game.
+   * This method also updates the active color of the game.
+   * @precondition There is a turn in the turn list
+   * @precondition The current turn is a valid turn with no errors
+   * @postcondition The next turn is created and the active color is changed to the next user
+   */
+  public void executeTurn() {
+
   }
 }
