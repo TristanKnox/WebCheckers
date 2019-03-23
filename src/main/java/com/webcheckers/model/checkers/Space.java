@@ -61,4 +61,12 @@ public class Space {
   public boolean isValid() {
     return true;//type == SpaceType.BLACK && piece == null;
   }
+
+  /**
+   * Get the type of space that this space is
+   * @return The type of space
+   */
+  public SpaceType getType() {
+    return type;
+  }
 }
