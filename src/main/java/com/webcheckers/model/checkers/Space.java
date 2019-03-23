@@ -69,4 +69,10 @@ public class Space {
   public SpaceType getType() {
     return type;
   }
+
+  /**
+   * A getter method for the space type
+   * @return - type of this space
+   */
+  public SpaceType getType(){ return this.type; }
 }
