@@ -44,8 +44,77 @@ public class Turn {
     this.moves = new ArrayList<>();
   }
 
-  private Piece getPiece(Game game, Position pos) {
+  public Piece getPiece(Game game, Position pos) {
     return game.getSpace(pos).getPiece();
+  }
+
+  /**
+   * Makes sure that the color used during a move and the color of the turn match
+   * @param usedColor The color of the piece used during the move
+   * @return True if the used and correct colors match
+   */
+  public boolean correctPieceUsed(PieceColor usedColor) {
+    return usedColor == turnColor;
+  }
+
+  /**
+   * Checks to make sure that the move is to a black tile
+   * @param game The game state
+   * @param move The move attempted to be made
+   * @return True if the end position is a black tile
+   */
+  public boolean moveToBlack(Game game, Move move) {
+    SpaceType targetSpaceType = game.getSpace(move.getEnd()).getType();
+    return targetSpaceType == SpaceType.BLACK;
+  }
+
+  /**
+   * Checks to make sure that the move path is possible. If multiple moves are made in a single turn
+   * the the end of the first move should be the start of the second move.
+   * @param move The move to check for the start position of
+   * @return True if this is the first move of the turn or if the end of the previous turn is
+   * the start of this new move
+   */
+  public boolean movePathPossible(Move move) {
+    if(moves.size() > 0) {
+      Move previousMove = moves.get(moves.size() - 1);
+      return previousMove.getEnd().equals(move.getStart());
+    }
+    return true;
+  }
+
+  /**
+   * Handles checking if a piece is moving in a valid direction based on its type and color.
+   * Kings are moving in the correct direction if they are moving diagonal in any direction. Red
+   * pieces are moving in the correct direction if they are moving diagonal in the positive
+   * direction. White pieces are moving in the correct direction if they are moving diagonal in
+   * the negative direction.
+   * @param piece The piece being moved
+   * @param move The move being attempted
+   * @return True if the piece is moving in a valid direction as specified above
+   */
+  public boolean moveDirectionValid(Piece piece, Move move) {
+    boolean validColumnMove = Math.abs(move.getStart().getCell() - move.getEnd().getCell()) == 1;
+    if(!validColumnMove)
+      return false;
+    boolean validRowMove = false;
+    if(piece.getType() == PieceType.KING)
+      validRowMove = Math.abs(move.getStart().getRow() - move.getEnd().getRow()) == 1;
+    else {
+      int validDirection = piece.getColor() == PieceColor.RED ? -1 : 1;
+      validRowMove = move.getStart().getRow() - move.getEnd().getRow() == validDirection;
+    }
+    return validRowMove;
+  }
+
+  /**
+   * Checks to make sure the end position of the move is empty ie piece is null in a space
+   * @param game The game state
+   * @param move The attempted move
+   * @return True if the space at the move's end is null
+   */
+  public boolean spaceIsEmpty(Game game, Move move) {
+    return game.getSpace(move.getEnd()).getPiece() == null;
   }
 
   /**
@@ -62,35 +131,22 @@ public class Turn {
     Piece piece = moves.size() == 0 ? getPiece(game, move.getStart())
         : getPiece(game, moves.get(0).getStart());
     // Check that the player is moving the correct color piece
-    if(piece.getColor() != turnColor)
-        return TurnResponse.INCORRECT_PIECE_USED;
+    if(!correctPieceUsed(piece.getColor()))
+      return TurnResponse.INCORRECT_PIECE_USED;
     // Check that the move is to a black tile
-    if(game.getSpace(move.getEnd()).getType() != SpaceType.BLACK)
-        return TurnResponse.MOVE_TO_WHITE_SPACE;
+    if(!moveToBlack(game, move))
+      return TurnResponse.MOVE_TO_WHITE_SPACE;
     // Check that the position from the last move is possible
-    if(moves.size() > 0) {
-      Move previousMove = moves.get(moves.size() - 1);
-      if(!previousMove.getEnd().equals(move.getStart()))
-        return TurnResponse.INVALID_MULTI_MOVE;
-    }
+    if(!movePathPossible(move))
+      return TurnResponse.INVALID_MULTI_MOVE;
     // Check direction of the move
-    if(piece.getType() == PieceType.KING) {
-      boolean xOffSetValid = Math.abs(move.getStart().getCell() - move.getEnd().getCell()) == 1;
-      boolean yOffSetValid = Math.abs(move.getStart().getRow() - move.getEnd().getRow()) == 1;
-      if(!xOffSetValid || !yOffSetValid)
-        return TurnResponse.INVALID_DIRECTION;
-    }
-    else {
-      boolean xOffSetValid = Math.abs(move.getStart().getCell() - move.getEnd().getCell()) == 1;
-      int validDirection = turnColor == PieceColor.RED ? 1 : -1;
-      boolean yOffSetValid = move.getStart().getRow() - move.getEnd().getRow() == validDirection;
-      if(!xOffSetValid || !yOffSetValid)
-        return TurnResponse.INVALID_DIRECTION;
-    }
+    if(!moveDirectionValid(piece, move))
+      return TurnResponse.INVALID_DIRECTION;
     // Check that a jump is not possible and the user is making a simple move
     // Check that the current space is not occupied
-    if(game.getSpace(move.getEnd()).getPiece() != null)
+    if(!spaceIsEmpty(game, move))
       return TurnResponse.SPACE_TAKEN;
+    moves.add(move);
     return TurnResponse.VALID_TURN;
   }
 

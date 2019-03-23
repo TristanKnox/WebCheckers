@@ -63,14 +63,6 @@ public class Space {
   }
 
   /**
-   * Get the type of space that this space is
-   * @return The type of space
-   */
-  public SpaceType getType() {
-    return type;
-  }
-
-  /**
    * A getter method for the space type
    * @return - type of this space
    */
