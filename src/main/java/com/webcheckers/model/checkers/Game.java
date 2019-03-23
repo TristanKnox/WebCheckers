@@ -115,6 +115,15 @@ public class Game implements Iterable<Row> {
   }
 
   /**
+   * Get the space at the given location
+   * @param pos The position to get the space from
+   * @return The space located at a given location
+   */
+  public Space getSpace(Position pos) {
+    return rows.get(pos.getRow()).getSpace(pos.getCell());
+  }
+
+  /**
    * Handles adding a move to the current active turn. The move is applied to the turn if the move
    * is valid. The result of the validation is returned based on if any rule was violated
    * @param move The move to be added to the current turn
