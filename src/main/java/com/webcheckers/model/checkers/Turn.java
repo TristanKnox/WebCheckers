@@ -1,6 +1,9 @@
 package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.model.checkers.Piece.PieceType;
+import com.webcheckers.model.checkers.Space.SpaceType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,14 +22,31 @@ public class Turn {
    */
   public enum TurnResponse {
     SPACE_TAKEN,
+    INCORRECT_PIECE_USED,
+    MOVE_TO_WHITE_SPACE,
+    INVALID_MULTI_MOVE,
+    INVALID_DIRECTION,
     MUST_JUMP,
     VALID_TURN
   }
 
   /** The color of that is currently making the turn */
   private PieceColor turnColor;
-  /** All moves made during theis specific turn */
+  /** All moves made during this specific turn */
   private List<Move> moves;
+
+  /**
+   * Create a new turn with a given color. Initialize moves to be an empty list
+   * @param turnColor The color of the active player
+   */
+  public Turn(PieceColor turnColor) {
+    this.turnColor = turnColor;
+    this.moves = new ArrayList<>();
+  }
+
+  private Piece getPiece(Game game, Position pos) {
+    return game.getSpace(pos).getPiece();
+  }
 
   /**
    * Handles adding the move to the list of moves if the move is valid. Validation occurs in here
@@ -39,7 +59,39 @@ public class Turn {
    * @return The broken rule if the move is invalid, valid turn response if the move is valid
    */
   public TurnResponse addMove(Game game, Move move) {
-    return null;
+    Piece piece = moves.size() == 0 ? getPiece(game, move.getStart())
+        : getPiece(game, moves.get(0).getStart());
+    // Check that the player is moving the correct color piece
+    if(piece.getColor() != turnColor)
+        return TurnResponse.INCORRECT_PIECE_USED;
+    // Check that the move is to a black tile
+    if(game.getSpace(move.getEnd()).getType() != SpaceType.BLACK)
+        return TurnResponse.MOVE_TO_WHITE_SPACE;
+    // Check that the position from the last move is possible
+    if(moves.size() > 0) {
+      Move previousMove = moves.get(moves.size() - 1);
+      if(!previousMove.getEnd().equals(move.getStart()))
+        return TurnResponse.INVALID_MULTI_MOVE;
+    }
+    // Check direction of the move
+    if(piece.getType() == PieceType.KING) {
+      boolean xOffSetValid = Math.abs(move.getStart().getCell() - move.getEnd().getCell()) == 1;
+      boolean yOffSetValid = Math.abs(move.getStart().getRow() - move.getEnd().getRow()) == 1;
+      if(!xOffSetValid || !yOffSetValid)
+        return TurnResponse.INVALID_DIRECTION;
+    }
+    else {
+      boolean xOffSetValid = Math.abs(move.getStart().getCell() - move.getEnd().getCell()) == 1;
+      int validDirection = turnColor == PieceColor.RED ? 1 : -1;
+      boolean yOffSetValid = move.getStart().getRow() - move.getEnd().getRow() == validDirection;
+      if(!xOffSetValid || !yOffSetValid)
+        return TurnResponse.INVALID_DIRECTION;
+    }
+    // Check that a jump is not possible and the user is making a simple move
+    // Check that the current space is not occupied
+    if(game.getSpace(move.getEnd()).getPiece() != null)
+      return TurnResponse.SPACE_TAKEN;
+    return TurnResponse.VALID_TURN;
   }
 
   /**
