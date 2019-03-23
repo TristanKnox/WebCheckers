@@ -41,6 +41,8 @@ public class Game implements Iterable<Row> {
     this.activateColor = PieceColor.RED;
     rows = new ArrayList<>();
     initializeRows();
+    this.turns = new ArrayList<>();
+    turns.add(new Turn(activateColor));
   }
 
   /**
@@ -130,7 +132,8 @@ public class Game implements Iterable<Row> {
    * @return TurnResponse based on the validity/any broken rules
    */
   public TurnResponse addMove(Move move) {
-    return null;
+    Turn currentTurn = turns.get(turns.size() - 1);
+    return currentTurn.addMove(this, move);
   }
 
   /**
@@ -141,6 +144,24 @@ public class Game implements Iterable<Row> {
    * @postcondition The next turn is created and the active color is changed to the next user
    */
   public void executeTurn() {
+    Turn currentTurn = turns.get(turns.size() - 1);
 
+    // Get the first and last moves made
+    List<Move> currentTurnMoves = currentTurn.getMoves();
+    Move firstMove = currentTurnMoves.get(0);
+    Move lastMove = currentTurn.get(currentTurnMoves.size() - 1);
+
+    // Get the spaces modified (first and last spaces)
+    Space firstSpace = getSpace(firstMove.getStart());
+    Space lastSpace = getSpace(lastMove.getEnd());
+
+    // Move the piece from the first to the last space
+    Piece movingPiece = firstSpace.getPiece();
+    firstSpace.setPiece(null);
+    lastSpace.setPiece(movingPiece);
+
+    // Flip active color
+    this.activateColor = this.activateColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    turns.add(new Turn(activateColor));
   }
 }
