@@ -63,17 +63,9 @@ public class PostSubmitTurnRouteTest {
   }
 
   /**
-   * Make sure that a correct player maki
+   * Check to make sure that an error message is returned when the player is attempting
+   * to execute a turn with not moves to be made
    */
-  @Test
-  public void correctPlayer() {
-    when(game.getActivateColor()).thenReturn(PieceColor.RED);
-    when(game.getPlayerColor(any())).thenReturn(PieceColor.RED);
-    String expectedValue = gson.toJson(PostSubmitTurnRoute.NO_MOVES_TO_EXECUTE);
-    String actualValue = (String) CuT.handle(request, null);
-    assertEquals(expectedValue, actualValue);
-  }
-
   @Test
   public void noMoveToExecute() {
     when(game.getActivateColor()).thenReturn(PieceColor.RED);
@@ -84,6 +76,9 @@ public class PostSubmitTurnRouteTest {
     assertEquals(expectedValue, actualValue);
   }
 
+  /**
+   * Make sure an info message is returned when a successful execution request is made
+   */
   @Test
   public void successfulMoveExecution() {
     when(game.getActivateColor()).thenReturn(PieceColor.RED);
