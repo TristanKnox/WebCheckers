@@ -9,14 +9,12 @@ import java.util.*;
  */
 public class PlayerLobby {
   private Map<String, Player> currentUsers;
-  private Map<String, Player> inGameUsers;
   private Map<String, Player> avalUsers;
 
 
     //Constructor
   public PlayerLobby() {
     currentUsers = new HashMap<>();
-    inGameUsers = new HashMap<>();
     avalUsers = new HashMap<>();
     }
 
