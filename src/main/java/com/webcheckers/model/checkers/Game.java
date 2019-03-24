@@ -26,7 +26,6 @@ public class Game implements Iterable<Row> {
   private List<Row> rows;
   /** The color of the player whose turn it is **/
   private PieceColor activateColor;
-
   /** Represents all of the turns made through out the duration of the game */
   private List<Turn> turns;
 
