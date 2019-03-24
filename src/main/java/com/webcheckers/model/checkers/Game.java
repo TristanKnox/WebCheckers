@@ -137,6 +137,16 @@ public class Game implements Iterable<Row> {
   }
 
   /**
+   * Handles checking to make sure that a turn has a valid move. Should be called before attempting
+   * to execute any turn
+   * @return True if there is at least one valid turn in the most recent turn
+   */
+  public boolean currentTurnHasMove() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    return currentTurn.getMoves().size() > 0;
+  }
+
+  /**
    * Handles applying the current moves to the game sequentially updating the state of the game.
    * This method also updates the active color of the game.
    * @precondition There is a turn in the turn list
