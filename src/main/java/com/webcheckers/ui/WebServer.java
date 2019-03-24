@@ -175,7 +175,7 @@ public class WebServer {
     //post(REQUEST_GAME_URL, new PostGameRequestRoute(templateEngine,playerLobby,gameCenter));
 
 
-    post(REQUEST_MOVE_URL, new PostMoveRequestRoute(templateEngine,gameCenter));
+    post(REQUEST_MOVE_URL, new PostMoveRequestRoute(gameCenter));
 
     post(REQUEST_TURN_SUBMISSION, new PostSubmitTurnRoute(gson, gameCenter));
 

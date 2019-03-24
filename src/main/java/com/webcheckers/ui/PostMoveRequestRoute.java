@@ -16,11 +16,13 @@ import java.net.URLDecoder;
  */
 public class PostMoveRequestRoute implements Route {
 
-  TemplateEngine templateEngine;
+  public static final String VALID_MOVE = "Move is valid";
+  public static final String INVALID_MOVE = "Invalid Move: ";
+
+
   GameCenter gameCenter;
 
-  public PostMoveRequestRoute(TemplateEngine templateEngine, GameCenter gameCenter){
-    this.templateEngine = templateEngine;
+  public PostMoveRequestRoute(GameCenter gameCenter){
     this.gameCenter = gameCenter;
   }
   @Override
@@ -33,6 +35,7 @@ public class PostMoveRequestRoute implements Route {
     Game game = gameCenter.getGame(player);
     //Get the posted move
     String moveJson = request.body();
+    System.out.println(moveJson);
     //Decode the moveJson to a usable formate
     moveJson = URLDecoder.decode(moveJson,"UTF-8");
 
@@ -43,9 +46,9 @@ public class PostMoveRequestRoute implements Route {
     //Sets up the mesage to be returnd
     Message msg;
     if(moveResponce == Turn.TurnResponse.VALID_TURN)
-      msg = Message.info("Move is good");
+      msg = Message.info(this.VALID_MOVE);
     else
-      msg = Message.error("Invalid move: " + moveResponce);
+      msg = Message.error(this.INVALID_MOVE + moveResponce);
     return gson.toJson(msg);
   }
 }
