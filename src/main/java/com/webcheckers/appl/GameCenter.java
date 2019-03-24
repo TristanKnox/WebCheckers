@@ -86,5 +86,4 @@ public class GameCenter {
   public void removePlayerFromGame(Player player){
     activeGames.remove(player);
   }
-
 }
