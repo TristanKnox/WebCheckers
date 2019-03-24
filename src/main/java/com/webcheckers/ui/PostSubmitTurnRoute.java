@@ -1,8 +1,13 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.util.Message;
+import java.util.HashMap;
+import java.util.Map;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -18,18 +23,23 @@ import spark.TemplateEngine;
  */
 public class PostSubmitTurnRoute implements Route {
 
+  private static final Message NO_MOVES_TO_EXECUTE = Message.error("No move to execute!");
+  private static final Message NOT_PLAYERS_TURN = Message.error("It is not your turn!");
+  private static final Message TURN_EXECUTED = Message.info("Turn Executed");
+
   /** Handles logic for rendering response to player */
-  private TemplateEngine templateEngine;
+  private Gson gson;
   /** Keeps track of the active games. Used for getting game to execute move on **/
   private GameCenter gameCenter;
 
+
   /**
    * Construct a route with a given template engine and game center
-   * @param templateEngine The template engine to use to render player views
+   * @param gson The gson object which handles converting messages to json
    * @param gameCenter The game center that keeps track of the active games
    */
-  public PostSubmitTurnRoute(TemplateEngine templateEngine, GameCenter gameCenter) {
-    this.templateEngine = templateEngine;
+  public PostSubmitTurnRoute(Gson gson, GameCenter gameCenter) {
+    this.gson = gson;
     this.gameCenter = gameCenter;
   }
 
@@ -47,11 +57,12 @@ public class PostSubmitTurnRoute implements Route {
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Game game = gameCenter.getGame(player);
     if(game.getActivateColor() != game.getPlayerColor(player)) {
-      // TODO: Handle sending an error, wrong player executing turn
+      return gson.toJson(NOT_PLAYERS_TURN);
     }
     if(!game.currentTurnHasMove()) {
-      // TODO: Handle sending an error, no turns to execute
+      return gson.toJson(NO_MOVES_TO_EXECUTE);
     }
     game.executeTurn();
+    return gson.toJson(TURN_EXECUTED);
   }
 }
