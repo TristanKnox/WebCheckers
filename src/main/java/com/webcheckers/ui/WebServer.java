@@ -70,6 +70,8 @@ public class WebServer {
 
   public static final String REQUEST_TURN_SUBMISSION = "/submitTurn";
 
+  public static final String CHECK_TURN_URL = "/checkTurn";
+
   //
   // Attributes
   //
@@ -174,6 +176,8 @@ public class WebServer {
     post(REQUEST_MOVE_URL, new PostMoveRequestRoute(templateEngine,gameCenter));
 
     post(REQUEST_TURN_SUBMISSION, new PostSubmitTurnRoute(gson, gameCenter));
+
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gson, gameCenter));
 
     LOG.config("WebServer is initialized.");
   }
