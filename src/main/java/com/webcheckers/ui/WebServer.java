@@ -66,6 +66,8 @@ public class WebServer {
 
   public static final String TRY_USERNAME_URL = "/signinattempt";
 
+  public static final String RESIGNATION_URL = "resignGame";
+
   //
   // Attributes
   //
@@ -164,7 +166,7 @@ public class WebServer {
 
     get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
 
-    //post(REQUEST_GAME_URL, new PostGameRequestRoute(templateEngine,playerLobby,gameCenter));
+    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, templateEngine, gameCenter));
 
     LOG.config("WebServer is initialized.");
   }
