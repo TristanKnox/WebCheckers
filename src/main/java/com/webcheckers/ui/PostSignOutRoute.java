@@ -1,10 +1,8 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
-import com.webcheckers.util.Message;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,34 +16,34 @@ import static spark.Spark.halt;
  *
  * @author Andrew Bado
  */
-public class PostResignationRoute implements Route {
+public class PostSignOutRoute implements Route {
   // Values used in the view-model map for rendering the game view after a sign in attempt
 
   // Attributes
   private final PlayerLobby playerLobby;
   private final GameCenter gameCenter;
-  private final TemplateEngine templateEngine;
+  // private final TemplateEngine templateEngine;
 
   /**
    * The constructor for the POST /signinattempt route handler.
    *
    * @param playerLobby playerLobby, which keeps track of all current players
-   * @param templateEngine template engine to use for rendering HTML page
+   * // @param templateEngine template engine to use for rendering HTML page
    */
-  PostResignationRoute(PlayerLobby playerLobby, TemplateEngine templateEngine, GameCenter gameCenter) {
+  PostSignOutRoute(PlayerLobby playerLobby, GameCenter gameCenter /*, TemplateEngine templateEngine*/) {
     // neither parameter may be null
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
-    Objects.requireNonNull(gameCenter, "gameCenter must not be null");
-    Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    Objects.requireNonNull(playerLobby, "gameCenter must not be null");
+    //Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
     this.playerLobby = playerLobby;
     this.gameCenter = gameCenter;
-    this.templateEngine = templateEngine;
+    // this.templateEngine = templateEngine;
   }
 
   /**
-   * Obtains the username, asks playerLobby if it is valid. Then re-renders
-   * the sign in page, or re-directs to home accordingly.
+   * Gets the username of the resigning player, ends their game,
+   * and returns them to the lobby and homepage
    *
    * @param request the HTTP request
    * @param response the HTTP response
@@ -57,14 +55,21 @@ public class PostResignationRoute implements Route {
     // get the session
     Session httpSession = request.session();
 
+    Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
+
+    if(playerLobby.isInGame(player)){
+      // TODO need a method that does this
+      // gameCenter.resign(player);
+    }
+
+    // TODO need a method that does this
+    // playerLobby.signOutPlayer(player);
+
     // start the View-Model
     // final Map<String, Object> vm = new HashMap<>();
 
-    Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
-
-    playerLobby.makeAvailable(player);
-
-    Gson gson = new Gson();
-    return gson.toJson(Message.info("someone resigned"));
+    response.redirect(WebServer.HOME_URL);
+    halt();
+    return null;
   }
 }
