@@ -17,7 +17,7 @@ public class PostBackupMoveRoute implements Route {
   /** Message returned when the wrong player attempts to backup a move */
   public static final Message WRONG_PLAYER = Message.error("It is not your turn!");
   /** Message returned when the backup is successful */
-  public static final Message BACKUP_SUCCESSUL = Message.info("Backup move");
+  public static final Message BACKUP_SUCCESSFUL = Message.info("Backup move");
 
   /** Handles the logic for converting messages to json */
   private Gson gson;
@@ -50,6 +50,6 @@ public class PostBackupMoveRoute implements Route {
     if(game.getActivateColor() != game.getPlayerColor(player))
       return gson.toJson(WRONG_PLAYER);
     game.backupTurn();
-    return gson.toJson(BACKUP_SUCCESSUL);
+    return gson.toJson(BACKUP_SUCCESSFUL);
   }
 }
