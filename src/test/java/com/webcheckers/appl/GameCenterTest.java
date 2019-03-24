@@ -75,4 +75,5 @@ public class GameCenterTest {
     CuT.removePlayerFromGame(player2);
     assertNull(CuT.getGame(player2));
   }
+
 }
