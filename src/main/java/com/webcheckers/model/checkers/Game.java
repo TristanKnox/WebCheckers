@@ -149,7 +149,7 @@ public class Game implements Iterable<Row> {
     // Get the first and last moves made
     List<Move> currentTurnMoves = currentTurn.getMoves();
     Move firstMove = currentTurnMoves.get(0);
-    Move lastMove = currentTurn.get(currentTurnMoves.size() - 1);
+    Move lastMove = currentTurnMoves.get(currentTurnMoves.size() - 1);
 
     // Get the spaces modified (first and last spaces)
     Space firstSpace = getSpace(firstMove.getStart());
