@@ -63,6 +63,8 @@ public class PostResignationRoute implements Route {
     Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
     playerLobby.makeAvailable(player);
+    gameCenter.getGame(player).endGame();
+    gameCenter.getGame(player).switchActivateColor();
 
     Gson gson = new Gson();
     return gson.toJson(Message.info("someone resigned"));

@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.Player;
@@ -9,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+
+import com.webcheckers.util.Message;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -66,6 +69,14 @@ public class GetGameRoute implements Route {
 
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", GAME_TITLE);
+
+    if(game.isGameOver()){
+      Gson gson = new Gson();
+      Map<String, Object> modeOptions = new HashMap<String, Object>();
+      modeOptions.put("isGameOver", true);
+      modeOptions.put("gameOverMessage", Message.info("Your opponent has resigned"));
+      vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+    }
 
     vm.put("currentUser", player);
     vm.put("redPlayer", game.getRedPlayer());

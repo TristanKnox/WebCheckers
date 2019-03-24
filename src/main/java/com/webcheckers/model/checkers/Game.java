@@ -25,6 +25,8 @@ public class Game implements Iterable<Row> {
   private List<Row> rows;
   /** The color of the player whose turn it is **/
   private PieceColor activateColor;
+  /** whether the game has ended **/
+  private Boolean gameOver;
 
   /**
    * Creates an initial game with the rows initialized each player kept track of
@@ -35,6 +37,7 @@ public class Game implements Iterable<Row> {
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
     this.activateColor = PieceColor.RED;
+    this.gameOver = false;
     rows = new ArrayList<>();
     initializeRows();
   }
@@ -108,5 +111,30 @@ public class Game implements Iterable<Row> {
     if(player.equals(redPlayer))
       return PieceColor.RED;
     return player.equals(whitePlayer) ? PieceColor.WHITE : null;
+  }
+
+  /**
+   * returns true if the game is over, false otehrwise
+   * @return the gameOver variable
+   */
+  public boolean isGameOver(){
+    return this.gameOver;
+  }
+
+  /**
+   * tells a game that it has ended
+   */
+  public void endGame(){
+    this.gameOver = true;
+  }
+
+  /**
+   * flips which player is active
+   */
+  public void switchActivateColor(){
+   if(this.activateColor == PieceColor.WHITE)
+     activateColor = PieceColor.RED;
+   else
+     activateColor = PieceColor.WHITE;
   }
 }
