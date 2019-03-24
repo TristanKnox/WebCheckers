@@ -74,6 +74,12 @@ public class GameCenter {
     return activeGames.get(player);
   }
 
+  /**
+   * @precondition: parameters are not null. and are in the mapping.
+   * Removes a the player from the player vs player mapping. removes both of them.
+   * @param playerOne the first player
+   * @param playerTwo the second player
+   */
   public void removePlayersFromMatch(Player playerOne, Player playerTwo){
     playersInMatch.remove(playerOne);
     playersInMatch.remove(playerTwo);
