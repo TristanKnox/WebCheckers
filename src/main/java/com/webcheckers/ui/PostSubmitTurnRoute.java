@@ -5,14 +5,11 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.util.Message;
-import java.util.HashMap;
-import java.util.Map;
-import spark.ModelAndView;
+
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Session;
-import spark.TemplateEngine;
 
 /**
  * Handles logic for submitting the current turn that being added to. Calling
@@ -23,9 +20,9 @@ import spark.TemplateEngine;
  */
 public class PostSubmitTurnRoute implements Route {
 
-  private static final Message NO_MOVES_TO_EXECUTE = Message.error("No move to execute!");
-  private static final Message NOT_PLAYERS_TURN = Message.error("It is not your turn!");
-  private static final Message TURN_EXECUTED = Message.info("Turn Executed");
+  public static final Message NO_MOVES_TO_EXECUTE = Message.error("No move to execute!");
+  public static final Message NOT_PLAYERS_TURN = Message.error("It is not your turn!");
+  public static final Message TURN_EXECUTED = Message.info("Turn Executed");
 
   /** Handles logic for rendering response to player */
   private Gson gson;
