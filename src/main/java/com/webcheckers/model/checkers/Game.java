@@ -129,11 +129,10 @@ public class Game implements Iterable<Row> {
   /**
    * flips which player is active
    */
-  public void switchActivateColor() {
-    if (this.activateColor == PieceColor.WHITE)
-      activateColor = PieceColor.RED;
-    else
-      activateColor = PieceColor.WHITE;
+  public void resignationEnabler(Player player) {
+    if (this.getPlayerColor(player) == activateColor){
+      activateColor = this.getPlayerColor(player) == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    }
   }
   /**
    * Get the space at the given location
