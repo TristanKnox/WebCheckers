@@ -34,15 +34,12 @@ public class PostMoveRequestRoute implements Route {
         Move move = gson.fromJson(moveJson.substring(11),Move.class);//TODO uncomment this once Move and Position has bee made
         System.out.println(move.toString());//TODO remvoe me
         Turn.TurnResponse moveResponce = game.addMove(move);
+        //Sets up the mesage to be returnd
         Message msg;
         if(moveResponce == Turn.TurnResponse.VALID_TURN)
             msg = Message.info("Move is good");
         else
             msg = Message.error("Invalid move: " + moveResponce);
-
-       // return gson.toJson(Message.info("Move Good"));
-        //return gson.toJson(Message.error("Bad Move sucker!!!!!!!!!!!!"));
-        System.out.println(msg.toString());
         return gson.toJson(msg);
     }
 }
