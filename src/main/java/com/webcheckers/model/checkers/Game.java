@@ -89,14 +89,6 @@ public class Game implements Iterable<Row> {
   }
 
   /**
-   * Set the color of the player whose turn it is
-   * @param color The color whose turn it is
-   */
-  public void setActivateColor(PieceColor color) {
-    this.activateColor = color;
-  }
-
-  /**
    * Get the color of the player whose turn it is
    * @return The color of the current players turn
    */
