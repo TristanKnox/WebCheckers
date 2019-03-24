@@ -1,0 +1,200 @@
+package com.webcheckers.model;
+
+import com.webcheckers.model.checkers.Game;
+import com.webcheckers.model.checkers.Move;
+import com.webcheckers.model.checkers.Piece;
+import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.model.checkers.Piece.PieceType;
+import com.webcheckers.model.checkers.Position;
+import com.webcheckers.model.checkers.Space;
+import com.webcheckers.model.checkers.Space.SpaceType;
+import com.webcheckers.model.checkers.Turn;
+
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+/**
+ * Handles testing the Turn class in the model tier. This includes testing all of the
+ * turn validation cases and making sure the correct rule broken is returned
+ */
+@Tag("Model-tier")
+public class TurnTest {
+  /**
+   * Handles testing the helper method that gets the piece at the given location
+   * in the game.
+   */
+  @Test
+  public void testGetPiece() {
+    Piece testPiece = new Piece(PieceType.SINGLE, PieceColor.WHITE);
+    Space testSpace = mock(Space.class);
+    when(testSpace.getPiece()).thenReturn(testPiece);
+    Game game = mock(Game.class);
+    when(game.getSpace(any())).thenReturn(testSpace);
+
+    Turn CuT = new Turn(PieceColor.RED);
+    Piece returnedPiece = CuT.getPiece(game, null);
+    assertNotNull(returnedPiece);
+    assertEquals(testPiece, returnedPiece);
+  }
+
+  /**
+   * Handles testing the method which checks to make sure that the color making the
+   * move is the same color as the piece being moves
+   */
+  @Test
+  public void testCorrectPieceUsed() {
+    // Check for red player attempting to move white piece
+    Turn CuT = new Turn(PieceColor.RED);
+    assertFalse(CuT.correctPieceUsed(PieceColor.WHITE));
+
+    // Check for white player attempting to move red piece
+    CuT = new Turn(PieceColor.WHITE);
+    assertFalse(CuT.correctPieceUsed(PieceColor.RED));
+
+    // Check for red player attempting to move red piece
+    CuT = new Turn(PieceColor.RED);
+    assertTrue(CuT.correctPieceUsed(PieceColor.RED));
+
+    // Check for white player attempting to move white piece
+    CuT = new Turn(PieceColor.WHITE);
+    assertTrue(CuT.correctPieceUsed(PieceColor.WHITE));
+  }
+
+  /**
+   * Checks to make sure that a move to a white space returns false
+   * and a move to a black space returns true
+   */
+  @Test
+  public void testMoveToBlack() {
+    Game game = mock(Game.class);
+    Move move = mock(Move.class);
+    when(move.getEnd()).thenReturn(null);
+    Space blackSpace = new Space(0, null, SpaceType.BLACK);
+    Space whiteSpace = new Space(0, null, SpaceType.WHITE);
+    Turn CuT = new Turn(PieceColor.RED);
+
+    // Test when space is black
+    when(game.getSpace(any())).thenReturn(blackSpace);
+    assertTrue(CuT.moveToBlack(game, move));
+
+    // Test when space is white
+    when(game.getSpace(any())).thenReturn(whiteSpace);
+    assertFalse(CuT.moveToBlack(game, move));
+  }
+
+  /**
+   * Makes sure that the new move is possible based on the previous move
+   */
+  @Test
+  public void testMovePathPossible() {
+    Turn CuT = new Turn(PieceColor.RED);
+    Game game = mock(Game.class);
+    Space space = mock(Space.class);
+    Piece piece = mock(Piece.class);
+    Move firstMove = mock(Move.class);
+    Position firstMoveEndPos = mock(Position.class);
+
+    when(firstMoveEndPos.getRow()).thenReturn(3);
+    when(firstMoveEndPos.getCell()).thenReturn(3);
+    when(firstMove.getEnd()).thenReturn(firstMoveEndPos);
+
+    // First move is always possible
+    assertTrue(CuT.movePathPossible(new Move(null, null)));
+
+    // Add a valid move to the list
+    CuT.getMoves().add(firstMove);
+
+    // Test adding an invalid move
+    Move secondMove = mock(Move.class);
+    when(secondMove.getStart()).thenReturn(null);
+    assertFalse(CuT.movePathPossible(secondMove));
+
+    // Test adding a valid move
+    when(secondMove.getStart()).thenReturn(firstMoveEndPos);
+    assertTrue(CuT.movePathPossible(secondMove));
+  }
+
+  /**
+   * Test validation for pieces moving. This tests a king piece, white piece, and red piece
+   * in a number of different directions to make sure each is valid at the correct time
+   */
+  @Test
+  public void testMoveDirectionValid() {
+    Position startPos = mock(Position.class);
+    when(startPos.getRow()).thenReturn(3);
+    when(startPos.getCell()).thenReturn(3);
+    Position endPos = mock(Position.class);
+    Move move = mock(Move.class);
+    when(move.getStart()).thenReturn(startPos);
+    when(move.getEnd()).thenReturn(endPos);
+
+    Turn CuT = new Turn(null);
+    Piece kingPiece = new Piece(PieceType.KING, PieceColor.WHITE);
+    Piece whitePiece = new Piece(PieceType.SINGLE, PieceColor.WHITE);
+    Piece redPiece = new Piece(PieceType.SINGLE, PieceColor.RED);
+
+    // Moving down and to the left (king and white piece only)
+    when(endPos.getRow()).thenReturn(2);
+    when(endPos.getCell()).thenReturn(2);
+    assertTrue(CuT.moveDirectionValid(kingPiece, move));
+    assertTrue(CuT.moveDirectionValid(whitePiece, move));
+    assertFalse(CuT.moveDirectionValid(redPiece, move));
+
+    // Move down and to the right (king and white piece only)
+    when(endPos.getCell()).thenReturn(4);
+    assertTrue(CuT.moveDirectionValid(kingPiece, move));
+    assertTrue(CuT.moveDirectionValid(whitePiece, move));
+    assertFalse(CuT.moveDirectionValid(redPiece, move));
+
+    // Move up and to the right (king and red piece only)
+    when(endPos.getRow()).thenReturn(4);
+    assertTrue(CuT.moveDirectionValid(kingPiece, move));
+    assertFalse(CuT.moveDirectionValid(whitePiece, move));
+    assertTrue(CuT.moveDirectionValid(redPiece, move));
+
+    // Move up and to the left (king and red piece only)
+    when(endPos.getCell()).thenReturn(2);
+    assertTrue(CuT.moveDirectionValid(kingPiece, move));
+    assertFalse(CuT.moveDirectionValid(whitePiece, move));
+    assertTrue(CuT.moveDirectionValid(redPiece, move));
+
+    // Moving to random row (no pieces)
+    when(endPos.getRow()).thenReturn(8);
+    assertFalse(CuT.moveDirectionValid(kingPiece, move));
+    assertFalse(CuT.moveDirectionValid(whitePiece, move));
+    assertFalse(CuT.moveDirectionValid(redPiece, move));
+
+    // Move to random cell (no pieces)
+    when(endPos.getRow()).thenReturn(4);
+    when(endPos.getCell()).thenReturn(8);
+    assertFalse(CuT.moveDirectionValid(kingPiece, move));
+    assertFalse(CuT.moveDirectionValid(whitePiece, move));
+    assertFalse(CuT.moveDirectionValid(redPiece, move));
+  }
+
+  /**
+   * Test to make sure that a space can correctly be identified as empty or not
+   */
+  @Test
+  public void testSpaceIsEmpty() {
+    Turn CuT = new Turn(null);
+    Game game = mock(Game.class);
+    Space space = mock(Space.class);
+    Move move = mock(Move.class);
+    when(game.getSpace(any())).thenReturn(space);
+    when(move.getEnd()).thenReturn(null);
+
+    // Space is full
+    when(space.getPiece()).thenReturn(new Piece(PieceType.SINGLE, PieceColor.RED));
+    assertFalse(CuT.spaceIsEmpty(game, move));
+
+    // Space is empty
+    when(space.getPiece()).thenReturn(null);
+    assertTrue(CuT.spaceIsEmpty(game, move));
+  }
+}

@@ -7,12 +7,28 @@ import java.util.HashMap;
 
 /**
 * The game center manipulates the holding of the matches and games for the web server
-* @Autor Evan Nolan {@link https://github.com/emn3779}
+* @Author Evan Nolan
 */
 public class GameCenter {
 
   private HashMap<Player, Game> activeGames; //player name to Game obj
   private HashMap<Player, Player> playersInMatch; //player to player for matches
+
+  /**
+   * getter for the active games listing
+   * @return the active games
+   */
+  public HashMap<Player, Game> getActiveGames() {
+    return activeGames;
+  }
+
+  /**
+   * getter for the match list
+   * @return the player list of those who are in a match.
+   */
+  public HashMap<Player, Player> getPlayersInMatch() {
+    return playersInMatch;
+  }
 
   /**
   * creates the game-center object for the server application.
@@ -75,10 +91,9 @@ public class GameCenter {
   }
 
   /**
-   * @precondition: parameters are not null. and are in the mapping.
-   * Removes a the player from the player vs player mapping. removes both of them.
-   * @param playerOne the first player
-   * @param playerTwo the second player
+   * removes the players from the match list
+   * @param playerOne first player
+   * @param playerTwo second player
    */
   public void removePlayersFromMatch(Player playerOne, Player playerTwo){
     playersInMatch.remove(playerOne);

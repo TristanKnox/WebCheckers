@@ -36,6 +36,8 @@ public class GetGameRoute implements Route {
   /** The title of the game screen on the UI **/
   public static final String GAME_TITLE = "Checkers";
 
+  public static final String GAME_TITLE_ATTR = "title";
+
   /**
    * Construct the game route with a template engine and game center
    * @param templateEngine The template engine to render the client UI
@@ -68,7 +70,7 @@ public class GetGameRoute implements Route {
     Game game = gameCenter.getGame(player);
 
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", GAME_TITLE);
+    vm.put(GAME_TITLE_ATTR, GAME_TITLE);
 
     if(game.isGameOver()){
       Gson gson = new Gson();

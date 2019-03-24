@@ -22,7 +22,7 @@ public class PostSignInAttemptRoute implements Route {
   static final String USERNAME_PARAM = "myUserName";
   static final Message TAKEN_USERNAME = Message.error("Username taken. Enter another to login.");
   static final Message INVALID_USERNAME = Message.error("Invalid username. " +
-    "Username must start with a letter, and use only alphanumeric charachters");
+    "Username must start with a letter, and use only alphanumeric characters");
   static final String VIEW_NAME = "signin.ftl";
 
   // Attributes
