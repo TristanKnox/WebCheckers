@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
 
@@ -53,7 +54,11 @@ public class PostResignationRoute implements Route {
 
     // start the View-Model
     // final Map<String, Object> vm = new HashMap<>();
-    
+
+    Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
+
+    playerLobby.makeAvailable(player);
+
     Gson gson = new Gson();
     return gson.toJson(Message.info("someone resigned"));
   }
