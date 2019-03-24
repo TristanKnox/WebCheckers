@@ -21,6 +21,7 @@ public class PostSignOutRoute implements Route {
 
   // Attributes
   private final PlayerLobby playerLobby;
+  private final GameCenter gameCenter;
   // private final TemplateEngine templateEngine;
 
   /**
@@ -32,9 +33,11 @@ public class PostSignOutRoute implements Route {
   PostSignOutRoute(PlayerLobby playerLobby, GameCenter gameCenter /*, TemplateEngine templateEngine*/) {
     // neither parameter may be null
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
+    Objects.requireNonNull(playerLobby, "gameCenter must not be null");
     //Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
     this.playerLobby = playerLobby;
+    this.gameCenter = gameCenter;
     // this.templateEngine = templateEngine;
   }
 
@@ -53,6 +56,11 @@ public class PostSignOutRoute implements Route {
     Session httpSession = request.session();
 
     Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
+
+    if(playerLobby.isInGame(player)){
+      // TODO need a method that does this
+      // gameCenter.resign(player);
+    }
 
     // TODO need a method that does this
     // playerLobby.signOutPlayer(player);

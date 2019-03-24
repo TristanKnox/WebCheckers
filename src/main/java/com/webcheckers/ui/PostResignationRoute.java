@@ -1,8 +1,10 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,15 +58,16 @@ public class PostResignationRoute implements Route {
     Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
     // TODO need a method that does this
-    //gameCenter.makeAvailable(player);
+    //playerLobby.makeAvailable(player);
 
-    // TODO Need to make the message here, and do Gson/Json stuffs
+
 
     // start the View-Model
     // final Map<String, Object> vm = new HashMap<>();
 
     response.redirect(WebServer.HOME_URL);
     halt();
-    return null;
+    Gson gson = new Gson();
+    return gson.toJson(Message.info("Your opponent has resigned."));
   }
 }
