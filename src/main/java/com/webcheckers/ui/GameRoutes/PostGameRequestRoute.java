@@ -34,7 +34,7 @@ public class PostGameRequestRoute implements Route {
 
 
   @Override
-  public Object handle(Request request, Response response) throws Exception {
+  public Object handle(Request request, Response response){
     //Create the View Model to store need data
     Map<String, Object> vm  = new HashMap<>();
 

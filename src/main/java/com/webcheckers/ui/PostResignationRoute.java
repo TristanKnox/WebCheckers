@@ -56,14 +56,14 @@ public class PostResignationRoute implements Route {
     // get the session
     Session httpSession = request.session();
 
-    // start the View-Model
-    // final Map<String, Object> vm = new HashMap<>();
-
+    //retrieve the current player object
     Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
+    // list the player as available, and end their game.
+    // then switch whose turn it is
     playerLobby.makeAvailable(player);
     gameCenter.getGame(player).endGame();
-    gameCenter.getGame(player).switchActivateColor();
+    gameCenter.getGame(player).resignationEnabler(player);
 
     Gson gson = new Gson();
     return gson.toJson(Message.info("someone resigned"));

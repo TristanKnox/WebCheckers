@@ -91,6 +91,15 @@ public class Row implements Iterable<Space> {
   }
 
   /**
+   * Get a space located at a given col 0 to MAX_SIZE - 1 inclusive
+   * @param col The column to get the space from
+   * @return Space at a given location
+   */
+  public Space getSpace(int col) {
+    return spaces.get(col);
+  }
+
+  /**
    * The iterator needed for the client UI, the iterator returns the iterator of spaces
    * @return The iterator from the spaces list
    */

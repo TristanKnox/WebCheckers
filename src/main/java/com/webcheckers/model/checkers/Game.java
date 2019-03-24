@@ -2,6 +2,7 @@ package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.model.checkers.Turn.TurnResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +29,9 @@ public class Game implements Iterable<Row> {
   /** whether the game has ended **/
   private Boolean gameOver;
 
+  /** Represents all of the turns made through out the duration of the game */
+  private List<Turn> turns;
+
   /**
    * Creates an initial game with the rows initialized each player kept track of
    * @param playerOne The player to start the game
@@ -40,6 +44,8 @@ public class Game implements Iterable<Row> {
     this.gameOver = false;
     rows = new ArrayList<>();
     initializeRows();
+    this.turns = new ArrayList<>();
+    turns.add(new Turn(activateColor));
   }
 
   /**
@@ -86,14 +92,6 @@ public class Game implements Iterable<Row> {
   }
 
   /**
-   * Set the color of the player whose turn it is
-   * @param color The color whose turn it is
-   */
-  public void setActivateColor(PieceColor color) {
-    this.activateColor = color;
-  }
-
-  /**
    * Get the color of the player whose turn it is
    * @return The color of the current players turn
    */
@@ -114,7 +112,7 @@ public class Game implements Iterable<Row> {
   }
 
   /**
-   * returns true if the game is over, false otehrwise
+   * returns true if the game is over, false otherwise
    * @return the gameOver variable
    */
   public boolean isGameOver(){
@@ -131,10 +129,76 @@ public class Game implements Iterable<Row> {
   /**
    * flips which player is active
    */
-  public void switchActivateColor(){
-   if(this.activateColor == PieceColor.WHITE)
-     activateColor = PieceColor.RED;
-   else
-     activateColor = PieceColor.WHITE;
+  public void resignationEnabler(Player player) {
+    if (this.getPlayerColor(player) == activateColor){
+      activateColor = this.getPlayerColor(player) == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    }
+  }
+  /**
+   * Get the space at the given location
+   * @param pos The position to get the space from
+   * @return The space located at a given location
+   */
+  public Space getSpace(Position pos) {
+    return rows.get(pos.getRow()).getSpace(pos.getCell());
+  }
+
+  /**
+   * Handles adding a move to the current active turn. The move is applied to the turn if the move
+   * is valid. The result of the validation is returned based on if any rule was violated
+   * @param move The move to be added to the current turn
+   * @return TurnResponse based on the validity/any broken rules
+   */
+  public TurnResponse addMove(Move move) {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    return currentTurn.addMove(this, move);
+  }
+
+  /**
+   * Handles the logic of backing up a move. Calls backup on the most recent turn.
+   * @precondition most recent turn has at least a single move
+   */
+  public void backupTurn() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    currentTurn.backupMove();
+  }
+
+  /**
+   * Handles checking to make sure that a turn has a valid move. Should be called before attempting
+   * to execute any turn
+   * @return True if there is at least one valid turn in the most recent turn
+   */
+  public boolean currentTurnHasMove() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    return currentTurn.getMoves().size() > 0;
+  }
+
+  /**
+   * Handles applying the current moves to the game sequentially updating the state of the game.
+   * This method also updates the active color of the game.
+   * @precondition There is a turn in the turn list
+   * @precondition The current turn is a valid turn with no errors
+   * @postcondition The next turn is created and the active color is changed to the next user
+   */
+  public void executeTurn() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+
+    // Get the first and last moves made
+    List<Move> currentTurnMoves = currentTurn.getMoves();
+    Move firstMove = currentTurnMoves.get(0);
+    Move lastMove = currentTurnMoves.get(currentTurnMoves.size() - 1);
+
+    // Get the spaces modified (first and last spaces)
+    Space firstSpace = getSpace(firstMove.getStart());
+    Space lastSpace = getSpace(lastMove.getEnd());
+
+    // Move the piece from the first to the last space
+    Piece movingPiece = firstSpace.getPiece();
+    firstSpace.setPiece(null);
+    lastSpace.setPiece(movingPiece);
+
+    // Flip active color
+    this.activateColor = this.activateColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    turns.add(new Turn(activateColor));
   }
 }
