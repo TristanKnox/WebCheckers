@@ -32,8 +32,8 @@ public class GetHomeRoute implements Route {
   static final String PLAYERS_LIST_ATTR = "players";
 
   // values for use in the session attribute map
-  static final String PLAYER_KEY = "player";
-  static final String IN_GAME_ERROR_FLAG = "inGameError";
+   public static final String PLAYER_KEY = "player";
+  public static final String IN_GAME_ERROR_FLAG = "inGameError";
 
   // Attributes
   private final TemplateEngine templateEngine;

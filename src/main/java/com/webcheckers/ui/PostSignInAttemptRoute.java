@@ -5,7 +5,6 @@ import com.webcheckers.util.Message;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import static spark.Spark.halt;
 

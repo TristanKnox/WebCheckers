@@ -1,12 +1,13 @@
-package com.webcheckers.ui;
+package com.webcheckers.ui.GameRoutes;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.checkers.Game;
-import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.ui.GameRoutes.GetGameRoute;
+import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
-import com.webcheckers.util.Message;
+import com.webcheckers.ui.WebServer;
 import spark.*;
 
 import java.util.HashMap;
