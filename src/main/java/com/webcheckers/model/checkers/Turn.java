@@ -89,6 +89,7 @@ public class Turn {
    * pieces are moving in the correct direction if they are moving diagonal in the positive
    * direction. White pieces are moving in the correct direction if they are moving diagonal in
    * the negative direction.
+   * TODO: ADD LOGIC FOR HANDLING WHEN A MOVE IS A JUMP/MULTI-JUMP
    * @param piece The piece being moved
    * @param move The move being attempted
    * @return True if the piece is moving in a valid direction as specified above

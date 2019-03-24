@@ -68,6 +68,8 @@ public class WebServer {
 
   public static final String REQUEST_MOVE_URL = "/validateMove";
 
+  public static final String REQUEST_TURN_SUBMISSION = "/submitTurn";
+
   //
   // Attributes
   //
@@ -170,6 +172,8 @@ public class WebServer {
 
 
     post(REQUEST_MOVE_URL, new PostMoveRequestRoute(templateEngine,gameCenter));
+
+    post(REQUEST_TURN_SUBMISSION, new PostSubmitTurnRoute(gson, gameCenter));
 
     LOG.config("WebServer is initialized.");
   }
