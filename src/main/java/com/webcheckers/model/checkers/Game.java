@@ -129,6 +129,15 @@ public class Game implements Iterable<Row> {
   }
 
   /**
+   * Handles the logic of backing up a move. Calls backup on the most recent turn.
+   * @precondition most recent turn has at least a single move
+   */
+  public void backupTurn() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    currentTurn.backupMove();
+  }
+
+  /**
    * Handles checking to make sure that a turn has a valid move. Should be called before attempting
    * to execute any turn
    * @return True if there is at least one valid turn in the most recent turn

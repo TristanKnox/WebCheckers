@@ -152,6 +152,15 @@ public class Turn {
   }
 
   /**
+   * Handles the logic of backing up a single move. The backup removes
+   * the last move added to the list of moves
+   * @precondition Moves has at least a single move
+   */
+  public void backupMove() {
+    moves.remove(moves.size() - 1);
+  }
+
+  /**
    * Get the color that is making this turn
    * @return The color of this turn
    */

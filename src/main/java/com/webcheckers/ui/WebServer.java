@@ -72,6 +72,8 @@ public class WebServer {
 
   public static final String CHECK_TURN_URL = "/checkTurn";
 
+  public static final String BACKUP_URL = "/backupMove";
+
   //
   // Attributes
   //
@@ -178,6 +180,8 @@ public class WebServer {
     post(REQUEST_TURN_SUBMISSION, new PostSubmitTurnRoute(gson, gameCenter));
 
     post(CHECK_TURN_URL, new PostCheckTurnRoute(gson, gameCenter));
+
+    post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
     LOG.config("WebServer is initialized.");
   }
