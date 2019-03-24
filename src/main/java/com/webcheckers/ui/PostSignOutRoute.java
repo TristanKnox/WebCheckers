@@ -16,11 +16,11 @@ import static spark.Spark.halt;
  *
  * @author Andrew Bado
  */
-public class PostResignationRoute implements Route {
+public class PostSignOutRoute implements Route {
   // Values used in the view-model map for rendering the game view after a sign in attempt
 
   // Attributes
-  private final GameCenter gameCenter;
+  private final PlayerLobby playerLobby;
   // private final TemplateEngine templateEngine;
 
   /**
@@ -29,13 +29,12 @@ public class PostResignationRoute implements Route {
    * @param playerLobby playerLobby, which keeps track of all current players
    * // @param templateEngine template engine to use for rendering HTML page
    */
-  PostResignationRoute(PlayerLobby playerLobby, GameCenter gameCenter /*, TemplateEngine templateEngine*/) {
+  PostSignOutRoute(PlayerLobby playerLobby, GameCenter gameCenter /*, TemplateEngine templateEngine*/) {
     // neither parameter may be null
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
-    Objects.requireNonNull(gameCenter, "gameCenter must not be null");
     //Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
-    this.gameCenter = gameCenter;
+    this.playerLobby = playerLobby;
     // this.templateEngine = templateEngine;
   }
 
@@ -56,9 +55,7 @@ public class PostResignationRoute implements Route {
     Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
     // TODO need a method that does this
-    //gameCenter.makeAvailable(player);
-
-    // TODO Need to make the message here, and do Gson/Json stuffs
+    // playerLobby.signOutPlayer(player);
 
     // start the View-Model
     // final Map<String, Object> vm = new HashMap<>();
