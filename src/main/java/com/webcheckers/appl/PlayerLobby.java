@@ -158,6 +158,9 @@ public class PlayerLobby {
   }
 
 
+  public void makeAvailable(Player player){
+      avalUsers.put(player.getName(),player);
+  }
 /**
  *
  * Gets the total number of users currently signed in
