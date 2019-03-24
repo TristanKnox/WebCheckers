@@ -10,12 +10,18 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
+/**
+ * Handles routing player's request to check for if it is their move. The route returns the result
+ * of if the player's color matches the active color of the game.
+ *
+ * @author Collin Bolles
+ */
 public class PostCheckTurnRoute implements Route {
 
   /** Message for when it is the player's turn */
-  private static final Message IS_PLAYER_TURN = Message.info("true");
+  public static final Message IS_PLAYER_TURN = Message.info("true");
   /** Message for when is it the opponents turn */
-  private static final Message IS_OPPONENT_TURN = Message.info("false");
+  public static final Message IS_OPPONENT_TURN = Message.info("false");
 
   /** Handles converting messages to json */
   private Gson gson;
