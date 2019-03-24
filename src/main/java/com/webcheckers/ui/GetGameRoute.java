@@ -76,7 +76,7 @@ public class GetGameRoute implements Route {
       Gson gson = new Gson();
       Map<String, Object> modeOptions = new HashMap<String, Object>();
       modeOptions.put("isGameOver", true);
-      modeOptions.put("gameOverMessage", Message.info("Your opponent has resigned"));
+      modeOptions.put("gameOverMessage", "Your opponent has resigned");
       vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
     }
 
