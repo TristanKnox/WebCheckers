@@ -34,37 +34,49 @@ public class GameTest {
     assertNotNull(game);
   }
 
+  /**
+   * Tests the starting game conditons
+   *
+   */
   @Test
   public void testStartingTurn(){
     assertEquals(game.getActivateColor(), PieceColor.RED);
+    assertEquals(game.getRedPlayer(), p1);
     assertEquals(game.getWhitePlayer(), p2);
     assertFalse(game.isGameOver());
   }
   @Test
+  /**
+   * Tests the switching of turns.
+   */
   public void testTurnSwitch(){
-
-
+    testStartingTurn();
+    game.executeTurn();
+    assertEquals(game.getActivateColor(), PieceColor.WHITE);
+    assertNotEquals(game.getActivateColor(), (PieceColor.RED));
   }
-  @Test
-  public void testResign(){
 
-  }
-  @Test
-  public void testValidMove(){
-
-  }
-  @Test
-  public void testBackUpMove(){
-
-  }
-  @Test
-  public void testResignationEnabler(){
-
-  }
-  @Test
-  public void testEndGame(){
-
-  }
+//  @Test todo
+//  public void testResign(){
+//
+//
+//  }
+//  @Test
+//  public void testValidMove(){
+//
+//  }
+//  @Test
+//  public void testBackUpMove(){
+//
+//  }
+//  @Test
+//  public void testResignationEnabler(){
+//
+//  }
+//  @Test
+//  public void testEndGame(){
+//
+//  }
 
 
 
