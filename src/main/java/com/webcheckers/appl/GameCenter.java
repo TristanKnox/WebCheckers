@@ -116,13 +116,18 @@ public class GameCenter {
    * @param player the player who has resigned.
    */
   public void resignation(Player player){
-    Player player2 = getOtherPlayer(player);
     Game game = getGame(player);
     game.endGame();
     game.resignationEnabler(player);
-
     removePlayerFromGame(player);
-    removePlayersFromMatch(player,player2);
-    removePlayerFromGame(player2);
+  }
+
+  /**
+   * exit the player
+   * @param player the player who exits the game.
+   */
+  public void exitGame(Player player){
+    removePlayerFromGame(player);
+    removePlayersFromMatch(getOtherPlayer(player),player);
   }
 }
