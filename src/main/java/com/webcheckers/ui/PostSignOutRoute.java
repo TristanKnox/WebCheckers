@@ -5,6 +5,8 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
 import java.util.Objects;
+
+import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
 import static spark.Spark.halt;
 
 /**
@@ -53,7 +55,7 @@ public class PostSignOutRoute implements Route {
     // get the session
     Session httpSession = request.session();
 
-    Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
+    Player player = httpSession.attribute(PLAYER_KEY);
 
     if(playerLobby.isInGame(player)){
       // TODO need a method that does this
@@ -66,6 +68,7 @@ public class PostSignOutRoute implements Route {
 
     // start the View-Model
     // final Map<String, Object> vm = new HashMap<>();
+    request.session().removeAttribute(PLAYER_KEY);
 
     response.redirect(WebServer.HOME_URL);
     halt();
