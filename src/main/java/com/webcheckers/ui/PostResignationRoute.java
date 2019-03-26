@@ -61,7 +61,7 @@ public class PostResignationRoute implements Route {
     Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
     // list the player as available, and end their game.
-    // then switch whose turn it is
+    // then switch whose turn it is if need be
     playerLobby.makeAvailable(player);
     //resign them from the game center.
     gameCenter.resignation(player);
