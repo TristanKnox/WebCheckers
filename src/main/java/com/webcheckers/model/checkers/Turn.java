@@ -200,9 +200,12 @@ public class Turn {
       return TurnResponse.SPACE_TAKEN;
     // Check for type of move and validate accordingly
     if(!isValidSimpleMove(move)) {
-      if (!isValidJumpMove(move, game))
-        return TurnResponse.INVALID_JUMP;
-      return TurnResponse.INVALID_SIMPLE_MOVE;
+      if (isValidJumpMove(move, game)) {
+        moves.add(move);
+        return TurnResponse.VALID_TURN;
+      }
+      else
+        return TurnResponse.INVALID_SIMPLE_MOVE;
     }
     moves.add(move);
     return TurnResponse.VALID_TURN;
