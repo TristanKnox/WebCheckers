@@ -144,6 +144,17 @@ As soon as the user enters the page they will be greeted by a message that displ
 > consider placing the narrative description of that feature in a
 > separate section for describing significant features. Place this after
 > you describe the design of the three tiers._
+The UI tier is responsible for all of the communications between the user and the server. Any time the user is submitting information a post route is used to send data to the server. Any time the user’s view needs to be updated a get route is used to render the new view. The classes in the UI tier are responsible for user stories such as signing in, starting a game, resigning a game and more.
+
+User Story Starting a Game
+Once a user has signed in the GetHomeRoute is responsible for providing a list of all players that are available for a game. The user then has the ability to select another player from that list. When an opponent is selected the PostRequestGameRoute is activated and the name of the opponent is posted to the server.
+
+![PostGameRequestRout_SequenceDiogram](PostRequestGameRoute_SequenceDiogram.png)
+
+First, the Player that made the request is accessed from the session. Next, the posted username of the opponent is accessed via the request. The Opponents name is used to get the Player object associated with that name from the player lobby. The availability of both players is then checked. If either of the players is found to be unavailable the player who initiated the request is redirected back to the home page where a message informs them that the other player had already joined a game. Otherwise, if both the players are available the players are passed to the game center to spawn a new game. The game center injects both of the players that it received into the new game that it created and stores that game in a list of games being played. The game is then returned back to the PostGameRequestRout where it is then passed into the ViewGenerator along with the current player, which arranges the board into the correct orientation for the given player. Finally, the game view is rendered for the player.
+
+Meanwhile, the other player is sent to the GetGameRoute. Inside the GetGameRout the current player is accessed from the session and all of the relevant information needed for the game view is put into the viewModel map. The info included in this is the current player, the red player, the white player, and the active color. Finally, the game associated with the player is accessed through the game center and passed into the ViewGenerator to arrange the board for the given player. The game board is then also added to the viewModel before rendering the game view for the player.
+
 
 
 ### Application Tier
