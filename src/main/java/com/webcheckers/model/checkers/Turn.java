@@ -136,18 +136,12 @@ public class Turn {
   }
 
   /**
-   * Handles checking if the move is a valid jump move. A valid jump move is
-   * a move that moves two cells away from the start position and goes over a piece
-   * of the opposite color of the person making the move.
-   * @param move The move to check to see if it is a valid jump
-   * @param game The game to check the move against
-   * @return true if the jump is a valid jump attempt
+   * Get the space where an attempted capture is being made
+   * @param move The move making the capture attempt
+   * @param game The game to get the space from
+   * @return The space that is being captured
    */
-  public boolean isValidJumpMove(Move move, Game game) {
-    // A jump move needs to move greater then one cell away
-    if(Math.abs(move.getStart().getRow() - move.getEnd().getRow()) == 1)
-      return false;
-    // Get the row to check for space being jumped
+  private Space getCaptureSpace(Move move, Game game) {
     int checkRow;
     if(move.getStart().getRow() > move.getEnd().getRow())
       checkRow = move.getStart().getRow() - 1;
@@ -161,7 +155,23 @@ public class Turn {
       checkCell = move.getStart().getCell() + 1;
 
     Position checkPos = new Position(checkRow, checkCell);
-    Space checkSpace = game.getSpace(checkPos);
+    return game.getSpace(checkPos);
+  }
+
+  /**
+   * Handles checking if the move is a valid jump move. A valid jump move is
+   * a move that moves two cells away from the start position and goes over a piece
+   * of the opposite color of the person making the move.
+   * @param move The move to check to see if it is a valid jump
+   * @param game The game to check the move against
+   * @return true if the jump is a valid jump attempt
+   */
+  public boolean isValidJumpMove(Move move, Game game) {
+    // A jump move needs to move greater then one cell away
+    if(Math.abs(move.getStart().getRow() - move.getEnd().getRow()) == 1)
+      return false;
+
+    Space checkSpace = getCaptureSpace(move, game);
     Piece jumpedPiece = checkSpace.getPiece();
 
     if(checkSpace.getPiece() == null)
@@ -218,6 +228,30 @@ public class Turn {
    */
   public void backupMove() {
     moves.remove(moves.size() - 1);
+  }
+
+  /**
+   * Handles the logic for executing a series of moves on a game. This does not handle any
+   * validation, just executes each moves. Handles removing captured pieces from the board
+   * @param game The game to execute on
+   */
+  public void execute(Game game) {
+    // Move piece from start to end location
+    Move firstMove = moves.get(0);
+    Move lastMove = moves.get(moves.size() - 1);
+
+    Space firstSpace = game.getSpace(firstMove.getStart());
+    Space endSpace = game.getSpace(lastMove.getEnd());
+    endSpace.setPiece(firstSpace.getPiece());
+    firstSpace.setPiece(null);
+
+    // Check if any piece captured
+    for(Move move: moves) {
+      if(isValidJumpMove(move, game)) {
+        Space capturedSpace = getCaptureSpace(move, game);
+        capturedSpace.setPiece(null);
+      }
+    }
   }
 
   /**
