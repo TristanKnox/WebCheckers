@@ -57,11 +57,12 @@ public class PostSignOutRoute implements Route {
 
     if(playerLobby.isInGame(player)){
       // TODO need a method that does this
+      response.redirect(WebServer.RESIGNATION_URL);
       // gameCenter.resign(player);
     }
 
     // TODO need a method that does this
-    // playerLobby.signOutPlayer(player);
+     playerLobby.signOutPlayer(player);
 
     // start the View-Model
     // final Map<String, Object> vm = new HashMap<>();
