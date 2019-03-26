@@ -54,6 +54,7 @@ public class PostResignationRoute implements Route {
   @Override
   public String handle(Request request, Response response) {
     // get the session
+    System.out.println("que tal todos");
     Session httpSession = request.session();
 
     //retrieve the current player object

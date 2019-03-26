@@ -22,7 +22,7 @@ public class PostSignOutRoute implements Route {
   // Attributes
   private final PlayerLobby playerLobby;
   private final GameCenter gameCenter;
-  // private final TemplateEngine templateEngine;
+   private final TemplateEngine templateEngine;
 
   /**
    * The constructor for the POST /signinattempt route handler.
@@ -30,7 +30,7 @@ public class PostSignOutRoute implements Route {
    * @param playerLobby playerLobby, which keeps track of all current players
    * // @param templateEngine template engine to use for rendering HTML page
    */
-  PostSignOutRoute(PlayerLobby playerLobby, GameCenter gameCenter /*, TemplateEngine templateEngine*/) {
+  PostSignOutRoute(PlayerLobby playerLobby, GameCenter gameCenter , TemplateEngine templateEngine) {
     // neither parameter may be null
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(playerLobby, "gameCenter must not be null");
@@ -38,7 +38,7 @@ public class PostSignOutRoute implements Route {
 
     this.playerLobby = playerLobby;
     this.gameCenter = gameCenter;
-    // this.templateEngine = templateEngine;
+    this.templateEngine = templateEngine;
   }
 
   /**
@@ -59,7 +59,9 @@ public class PostSignOutRoute implements Route {
 
     if(playerLobby.isInGame(player)){
       // TODO need a method that does this
-      response.redirect(WebServer.RESIGNATION_URL);
+      PostResignationRoute route = new PostResignationRoute(playerLobby,templateEngine,gameCenter);
+      route.handle(request,response);
+      System.out.println("HERE");
       // gameCenter.resign(player);
     }
 
