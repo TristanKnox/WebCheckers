@@ -1,10 +1,10 @@
-package com.webcheckers.ui.GameRoutes;
+package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.checkers.Game;
-import com.webcheckers.ui.GameRoutes.GetGameRoute;
+import com.webcheckers.ui.GetGameRoute;
 import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import com.webcheckers.ui.WebServer;

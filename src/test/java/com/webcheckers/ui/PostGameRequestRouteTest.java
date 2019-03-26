@@ -6,15 +6,11 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Piece;
-import com.webcheckers.ui.GameRoutes.GetGameRoute;
-import com.webcheckers.ui.GameRoutes.PostGameRequestRoute;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import spark.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
