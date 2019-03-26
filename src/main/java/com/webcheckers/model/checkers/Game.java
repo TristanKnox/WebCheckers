@@ -127,7 +127,7 @@ public class Game implements Iterable<Row> {
   }
 
   /**
-   * flips which player is active
+   * flips which player is active so that resignation worls properly
    */
   public void resignationEnabler(Player player) {
     if (this.getPlayerColor(player) == activateColor){
