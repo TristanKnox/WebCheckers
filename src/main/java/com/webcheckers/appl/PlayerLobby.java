@@ -175,7 +175,7 @@ public class PlayerLobby {
    * This method is used to sign out the player. For the sign out protocol.
    * @param player the player to be signed out
    */
-  public void signOut(Player player){
+  public void signOutPlayer(Player player){
       logout(player.getName());
   }
 /**

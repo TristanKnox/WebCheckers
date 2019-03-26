@@ -3,8 +3,6 @@ package com.webcheckers.ui;
 import static spark.Spark.*;
 
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.ui.GameRoutes.GetGameRoute;
-import com.webcheckers.ui.GameRoutes.PostGameRequestRoute;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -76,6 +74,8 @@ public class WebServer {
   public static final String CHECK_TURN_URL = "/checkTurn";
 
   public static final String BACKUP_URL = "/backupMove";
+
+  public static final String SIGN_OUT_URL = "/signOut";
 
   //
   // Attributes
@@ -186,6 +186,7 @@ public class WebServer {
 
     post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
+    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby,gameCenter));
     LOG.config("WebServer is initialized.");
   }
 

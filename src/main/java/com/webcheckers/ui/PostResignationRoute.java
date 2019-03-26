@@ -62,8 +62,8 @@ public class PostResignationRoute implements Route {
     // list the player as available, and end their game.
     // then switch whose turn it is if need be
     playerLobby.makeAvailable(player);
-    gameCenter.getGame(player).endGame();
-    gameCenter.getGame(player).resignationEnabler(player);
+    //resign them from the game center.
+    gameCenter.resignation(player);
 
     Gson gson = new Gson();
     return gson.toJson(Message.info("someone resigned"));

@@ -9,10 +9,8 @@ import com.webcheckers.model.checkers.Piece;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import spark.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -31,7 +29,7 @@ public class PostGameRequestRouteTest {
     private Session session;
     private Response response;
     private TemplateEngine engine;
-    //player1 reperesents the user generating this responce
+    //player1 represents the user generating this responce
     private Player player1;
     //player2 represents the user that player1 is requesting a game with
     private Player player2;
