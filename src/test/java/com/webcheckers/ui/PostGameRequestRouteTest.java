@@ -111,7 +111,7 @@ public class PostGameRequestRouteTest {
         //setting up mock game data
         when(game.getRedPlayer()).thenReturn(player1);
         when(game.getWhitePlayer()).thenReturn(player2);
-        when(game.getActivateColor()).thenReturn(Piece.PieceColor.RED);
+        when(game.getActiveColor()).thenReturn(Piece.PieceColor.RED);
 
         when(gameCenter.spawnGame(player1,player2)).thenReturn(game);
 

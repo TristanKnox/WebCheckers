@@ -47,7 +47,7 @@ public class PostBackupMoveRoute implements Route {
     Game game = gameCenter.getGame(player);
     if(!game.currentTurnHasMove())
       return gson.toJson(NO_MOVE_TO_BACKUP);
-    if(game.getActivateColor() != game.getPlayerColor(player))
+    if(game.getActiveColor() != game.getPlayerColor(player))
       return gson.toJson(WRONG_PLAYER);
     game.backupTurn();
     return gson.toJson(BACKUP_SUCCESSFUL);
