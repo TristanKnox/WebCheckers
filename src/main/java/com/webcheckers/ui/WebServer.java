@@ -75,6 +75,8 @@ public class WebServer {
 
   public static final String BACKUP_URL = "/backupMove";
 
+  public static final String SIGN_OUT_URL = "/signOut";
+
   //
   // Attributes
   //
@@ -184,6 +186,7 @@ public class WebServer {
 
     post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
+    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby,gameCenter));
     LOG.config("WebServer is initialized.");
   }
 
