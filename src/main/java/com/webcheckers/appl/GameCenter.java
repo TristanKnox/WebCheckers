@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 /**
 * The game center manipulates the holding of the matches and games for the web server
-* @Autor Evan Nolan {@link https://github.com/emn3779}
+* @Author Evan Nolan
 */
 public class GameCenter {
 
@@ -107,5 +107,27 @@ public class GameCenter {
   public void removePlayerFromGame(Player player){
     activeGames.remove(player);
   }
+  public boolean playerInGame(Player player){
+    return activeGames.containsKey(player);
+  }
 
+  /**
+   * resigns a player and no longer keeps track of their game.
+   * @param player the player who has resigned.
+   */
+  public void resignation(Player player){
+    Game game = getGame(player);
+    game.endGame();
+    game.resignationEnabler(player);
+    removePlayerFromGame(player);
+  }
+
+  /**
+   * exit the player
+   * @param player the player who exits the game.
+   */
+  public void exitGame(Player player){
+    removePlayerFromGame(player);
+    removePlayersFromMatch(getOtherPlayer(player),player);
+  }
 }

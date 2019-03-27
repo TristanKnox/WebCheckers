@@ -6,6 +6,8 @@ import java.util.*;
 
 /**
  * This Class holds all of the current users logged into the WebCheckers App
+ * @Authors Jacob Jirinec
+ *
  */
 public class PlayerLobby {
   private Map<String, Player> currentUsers;
@@ -16,6 +18,7 @@ public class PlayerLobby {
   public PlayerLobby() {
     currentUsers = new HashMap<>();
     avalUsers = new HashMap<>();
+
     }
 
     /**
@@ -83,7 +86,7 @@ public class PlayerLobby {
   }
 
  /**
- * Creates a list of usernames repersenting all curently loged in users
+ * Creates a list of usernames representing all currently logged in users
  *
  * @return the list of usernames
  */
@@ -155,6 +158,9 @@ public class PlayerLobby {
   }
 
 
+  public void makeAvailable(Player player){
+    avalUsers.put(player.getName(),player);
+  }
 /**
  *
  * Gets the total number of users currently signed in
@@ -165,6 +171,13 @@ public class PlayerLobby {
     return currentUsers.size();
   }
 
+  /**
+   * This method is used to sign out the player. For the sign out protocol.
+   * @param player the player to be signed out
+   */
+  public void signOutPlayer(Player player){
+    logout(player.getName());
+  }
 /**
  *
  * enum for Outcomes of Player sign in

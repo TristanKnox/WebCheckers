@@ -26,6 +26,8 @@ public class Game implements Iterable<Row> {
   private List<Row> rows;
   /** The color of the player whose turn it is **/
   private PieceColor activeColor;
+  /** whether the game has ended **/
+  private Boolean gameOver;
   /** Represents all of the turns made through out the duration of the game */
   private List<Turn> turns;
 
@@ -38,6 +40,8 @@ public class Game implements Iterable<Row> {
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
     this.activeColor = PieceColor.RED;
+    this.gameOver = false;
+
     rows = new ArrayList<>();
     initializeRows();
     this.turns = new ArrayList<>();
@@ -107,6 +111,29 @@ public class Game implements Iterable<Row> {
     return player.equals(whitePlayer) ? PieceColor.WHITE : null;
   }
 
+  /**
+   * returns true if the game is over, false otherwise
+   * @return the gameOver variable
+   */
+  public boolean isGameOver(){
+    return this.gameOver;
+  }
+
+  /**
+   * tells a game that it has ended
+   */
+  public void endGame(){
+    this.gameOver = true;
+  }
+
+  /**
+   * flips which player is active so that resignation worls properly
+   */
+  public void resignationEnabler(Player player) {
+    if (this.getPlayerColor(player) == activateColor){
+      activateColor = this.getPlayerColor(player) == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    }
+  }
   /**
    * Get the space at the given location
    * @param pos The position to get the space from
