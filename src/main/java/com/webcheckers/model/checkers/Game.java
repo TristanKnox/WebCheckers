@@ -188,6 +188,8 @@ public class Game implements Iterable<Row> {
     // Flip active color
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
     turns.add(new Turn(activeColor));
+    if(outOfPieces())
+      this.endGame();
   }
 
   public boolean outOfPieces(){
