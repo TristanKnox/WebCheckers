@@ -52,14 +52,17 @@ public class Game implements Iterable<Row> {
    * @param boardType - The board set up
    */
   public Game(Player playerOne, Player playerTwo, TestBoardBuilder.BoardType boardType){
+    //Start game as normal
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
     this.activateColor = PieceColor.RED;
     rows = new ArrayList<>();
     initializeRows();
-    rows = TestBoardBuilder.getTestBoard(rows,boardType);
     this.turns = new ArrayList<>();
     turns.add(new Turn(activateColor));
+    //Take initialized board and refactor it based on board type given
+    rows = TestBoardBuilder.getTestBoard(rows,boardType);
+
   }
 
   /**

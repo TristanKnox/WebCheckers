@@ -15,7 +15,8 @@ public class TestBoardBuilder {
 
   public enum BoardType{
     KING_PIECE,
-    MULTY_JUMP
+    MULTY_JUMP,
+    KING_MULTY_JUMP
   }
 
 
@@ -32,6 +33,9 @@ public class TestBoardBuilder {
         break;
       case MULTY_JUMP:
         rows = multyJumpSetUp(rows);
+        break;
+      case KING_MULTY_JUMP:
+        rows = kingJumpSetUp(rows);
         break;
     }
     return rows;
@@ -62,6 +66,18 @@ public class TestBoardBuilder {
         rows.get(row).getSpace(col).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));
         col +=2;
     }
+    return rows;
+  }
+
+  /**
+   * Sets up the board with a red king and some white pies to jump in both directions
+   * @param rows - the rows that should be updated to represent the new board state
+   * @return - the updated rows
+   */
+  private static List<Row> kingJumpSetUp(List<Row> rows){
+    rows = multyJumpSetUp(rows);
+    rows.get(1).getSpace(2).setPiece(new Piece(Piece.PieceType.KING, Piece.PieceColor.RED));
+    rows.get(2).getSpace(5).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));
     return rows;
   }
 
