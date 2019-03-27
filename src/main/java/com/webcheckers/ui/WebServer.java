@@ -165,7 +165,7 @@ public class WebServer {
 
     // Shows the Checkers game Home page.
 
-    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby, gameCenter));
+    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
 
     get(SIGN_IN_URL, new GetSigninRoute(templateEngine));
 
@@ -173,7 +173,7 @@ public class WebServer {
 
     post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
 
     post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter));
 
