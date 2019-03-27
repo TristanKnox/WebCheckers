@@ -32,16 +32,16 @@ public class PostResignationRouteTest {
 
     @BeforeEach
     public void setup() {
-        request = mock(Request.class);
-        session = mock(Session.class);
-        when(request.session()).thenReturn(session);
-        response = mock(Response.class);
-        gameCenter = mock(GameCenter.class);
-        playerLobby = mock(PlayerLobby.class);
-        gson = new Gson();
+      request = mock(Request.class);
+      session = mock(Session.class);
+      when(request.session()).thenReturn(session);
+      response = mock(Response.class);
+      gameCenter = mock(GameCenter.class);
+      playerLobby = mock(PlayerLobby.class);
+      gson = new Gson();
 
-        // create a unique CuT for each test
-        CuT = new PostResignationRoute(playerLobby, gameCenter);
+      // create a unique CuT for each test
+      CuT = new PostResignationRoute(playerLobby, gameCenter);
     }
 
     /**
@@ -50,7 +50,7 @@ public class PostResignationRouteTest {
      */
     @Test
     public void resign() {
-        assertNotNull(CuT);
-        assertNotNull(CuT.handle(request, response));
+      assertNotNull(CuT);
+      assertNotNull(CuT.handle(request, response));
     }
 }
