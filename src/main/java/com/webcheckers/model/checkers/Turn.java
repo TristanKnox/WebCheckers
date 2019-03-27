@@ -167,7 +167,7 @@ public class Turn {
    */
   public boolean isValidJumpMove(Move move, Game game) {
     // A jump move needs to move greater then one cell away
-    if(Math.abs(move.getStart().getRow() - move.getEnd().getRow()) == 1)
+    if(Math.abs(move.getStart().getRow() - move.getEnd().getRow()) != 2)
       return false;
 
     Space checkSpace = getCaptureSpace(move, game);
@@ -176,6 +176,22 @@ public class Turn {
     if(checkSpace.getPiece() == null)
       return false;
     return turnColor != jumpedPiece.getColor();
+  }
+
+  /**
+   * Checks the validity of the multi move. If there are no moves in the move list then by
+   * default it is valid. It then checks to make sure the move path is possible and that the
+   * current move and last moves are both valid jump moves
+   * @param move The move to validate
+   * @param game The game to validate against
+   * @return True if the move passes the criteria as described above
+   */
+  public boolean isValidMultiMove(Move move, Game game) {
+    if(moves.size() == 0)
+      return true;
+    if(!movePathPossible(move))
+      return false;
+    return isValidJumpMove(moves.get(moves.size() - 1), game) && isValidJumpMove(move, game);
   }
 
   /**
@@ -198,7 +214,7 @@ public class Turn {
     if(!moveToBlack(game, move))
       return TurnResponse.MOVE_TO_WHITE_SPACE;
     // Check that the position from the last move is possible
-    if(!movePathPossible(move))
+    if(!isValidMultiMove(move, game))
       return TurnResponse.INVALID_MULTI_MOVE;
     // Check direction of the move
     if(!moveDirectionValid(piece, move))

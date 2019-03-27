@@ -10,6 +10,7 @@ import com.webcheckers.model.checkers.Space;
 import com.webcheckers.model.checkers.Space.SpaceType;
 import com.webcheckers.model.checkers.Turn;
 
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -263,5 +264,41 @@ public class TurnTest {
     // Test valid jump
     when(piece.getColor()).thenReturn(PieceColor.WHITE);
     assertTrue(CuT.isValidJumpMove(move, game));
+  }
+
+  /**
+   * Handles testing of a mulit-jump. Checks to make sure the move path
+   * follows the rules of checkers
+   */
+  @Test
+  public void testValidMultiJump() {
+    Turn CuT = new Turn(PieceColor.RED);
+    Game game = mock(Game.class);
+    Move move = mock(Move.class);
+    Position startPosFirst = mock(Position.class);
+    Position endPosFirst = mock(Position.class);
+    Position startPosSecond = mock(Position.class);
+    Position endPosSecond = mock(Position.class);
+
+    when(startPosFirst.getRow()).thenReturn(0);
+    when(startPosFirst.getCell()).thenReturn(0);
+    when(endPosFirst.getCell()).thenReturn(1);
+    when(endPosFirst.getCell()).thenReturn(1);
+    when(move.getStart()).thenReturn(startPosFirst);
+    when(move.getEnd()).thenReturn(endPosFirst);
+
+
+    // No previous moves
+    assertTrue(CuT.isValidMultiMove(move, game));
+
+    // Path not possible
+    CuT.getMoves().add(new Move(startPosFirst, endPosFirst));
+
+    when(startPosSecond.getRow()).thenReturn(2);
+    when(startPosFirst.getCell()).thenReturn(2);
+    assertFalse(CuT.isValidMultiMove(new Move(startPosSecond, endPosSecond), game));
+
+    // Past move was not a jump
+    assertFalse(CuT.isValidMultiMove(new Move(endPosFirst, endPosSecond), game));
   }
 }
