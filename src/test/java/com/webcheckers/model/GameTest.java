@@ -40,7 +40,7 @@ public class GameTest {
    */
   @Test
   public void testStartingTurn(){
-    assertEquals(game.getActivateColor(), PieceColor.RED);
+    assertEquals(game.getActiveColor(), PieceColor.RED);
     assertEquals(game.getRedPlayer(), p1);
     assertEquals(game.getWhitePlayer(), p2);
     assertFalse(game.isGameOver());
@@ -52,8 +52,8 @@ public class GameTest {
   public void testTurnSwitch(){
     testStartingTurn();
     game.executeTurn();
-    assertEquals(game.getActivateColor(), PieceColor.WHITE);
-    assertNotEquals(game.getActivateColor(), (PieceColor.RED));
+    assertEquals(game.getActiveColor(), PieceColor.WHITE);
+    assertNotEquals(game.getActiveColor(), (PieceColor.RED));
   }
 
 //  @Test todo
