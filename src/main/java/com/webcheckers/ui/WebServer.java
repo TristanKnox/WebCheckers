@@ -173,7 +173,7 @@ public class WebServer {
 
     post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
 
     post(RESIGNATION_URL, new PostResignationRoute(playerLobby, templateEngine, gameCenter));
 
