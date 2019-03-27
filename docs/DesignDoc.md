@@ -245,12 +245,17 @@ The Turn represents the series of moves that are made during a Player’s
 turn in the game of checkers. The Turn therefore keeps track of the various 
 positions that pieces are being moved to. 
 ![Move Validation Sequence Diagram](validate_move_sequence.png)
-In addition, the Turn has the
-logic for validating the Moves that are being added to it. The Turn validated 
-the move based on the rules of checkers and returns a response based on rules 
-that are potentially broken. Later the Turn will be used in the replay enhancement.
+In addition to the Turn keeping track of the moves made using the turn,
+the Turn class also validates each move being added. Each move is validated
+against the rules of checkers by executing the series of methods shows in
+the UML diagram. If any of the method calls fail, the corresponding
+TurnResponse is returned and the move is not added to the list of moves.
 
-The turn also handles the execution of a move in which the piece is moved on the board and and peices are captured
+After the moves have been added, Turn handles the execution of the move.
+This involves taking in a game on which each move is executed onto. Note
+no validation takes place here. Pieces are captured and others flipped to
+king pieces as needed.
+
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct

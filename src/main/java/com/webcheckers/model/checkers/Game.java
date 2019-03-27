@@ -16,7 +16,7 @@ import java.util.List;
 public class Game implements Iterable<Row> {
 
   /** Max 8 rows per board **/
-  private static final int MAX_SIZE = 8;
+  public static final int MAX_SIZE = 8;
 
   /** The player initiating the game **/
   private Player redPlayer;

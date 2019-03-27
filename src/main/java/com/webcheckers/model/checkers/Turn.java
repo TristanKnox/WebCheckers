@@ -246,6 +246,20 @@ public class Turn {
   }
 
   /**
+   * Check if the given row index is the king row for the given color. Red pieces have their
+   * king row at the end of the board (largest row index) white white pieces have their king
+   * row at the bottom of the board (smallest row index)
+   * @param color The color of the piece being moved
+   * @param rowIndex The index of the row that the piece has landed on
+   * @return True if the color and row index match to be a king row
+   */
+  public boolean isKingRow(PieceColor color, int rowIndex) {
+    if(color == PieceColor.RED && rowIndex == Game.MAX_SIZE - 1)
+      return true;
+    return color == PieceColor.WHITE && rowIndex == 0;
+  }
+
+  /**
    * Handles the logic for executing a series of moves on a game. This does not handle any
    * validation, just executes each moves. Handles removing captured pieces from the board
    * @param game The game to execute on
@@ -255,9 +269,17 @@ public class Turn {
     Move firstMove = moves.get(0);
     Move lastMove = moves.get(moves.size() - 1);
 
+    // Get the space and pieces to swap
     Space firstSpace = game.getSpace(firstMove.getStart());
     Space endSpace = game.getSpace(lastMove.getEnd());
-    endSpace.setPiece(firstSpace.getPiece());
+    Piece swapPiece = firstSpace.getPiece();
+
+    // Check if the piece needs to be a king
+    if(isKingRow(turnColor, lastMove.getEnd().getRow()))
+      swapPiece.setType(PieceType.KING);
+
+    // Swap the piece location
+    endSpace.setPiece(swapPiece);
     firstSpace.setPiece(null);
 
     // Check if any piece captured
