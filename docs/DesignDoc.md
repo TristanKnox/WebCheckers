@@ -64,7 +64,8 @@ King Piece <br />
 
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+Watch Replay<br />
+AI Player
 
 
 ## Application Domain
