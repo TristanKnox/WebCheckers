@@ -156,19 +156,7 @@ public class Game implements Iterable<Row> {
   public void executeTurn() {
     Turn currentTurn = turns.get(turns.size() - 1);
 
-    // Get the first and last moves made
-    List<Move> currentTurnMoves = currentTurn.getMoves();
-    Move firstMove = currentTurnMoves.get(0);
-    Move lastMove = currentTurnMoves.get(currentTurnMoves.size() - 1);
-
-    // Get the spaces modified (first and last spaces)
-    Space firstSpace = getSpace(firstMove.getStart());
-    Space lastSpace = getSpace(lastMove.getEnd());
-
-    // Move the piece from the first to the last space
-    Piece movingPiece = firstSpace.getPiece();
-    firstSpace.setPiece(null);
-    lastSpace.setPiece(movingPiece);
+    currentTurn.execute(this);
 
     // Flip active color
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;

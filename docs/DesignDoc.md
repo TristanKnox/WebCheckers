@@ -250,6 +250,7 @@ logic for validating the Moves that are being added to it. The Turn validated
 the move based on the rules of checkers and returns a response based on rules 
 that are potentially broken. Later the Turn will be used in the replay enhancement.
 
+The turn also handles the execution of a move in which the piece is moved on the board and and peices are captured
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
