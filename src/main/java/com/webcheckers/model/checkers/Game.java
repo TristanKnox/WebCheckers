@@ -59,11 +59,12 @@ public class Game implements Iterable<Row> {
     //Start game as normal
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
-    this.activateColor = PieceColor.RED;
+    this.activeColor = PieceColor.RED;
     rows = new ArrayList<>();
     initializeRows();
     this.turns = new ArrayList<>();
-    turns.add(new Turn(activateColor));
+    turns.add(new Turn(activeColor));
+    gameOver = false;
     //Take initialized board and refactor it based on board type given
     rows = TestBoardBuilder.getTestBoard(rows,boardType);
 

@@ -10,7 +10,6 @@ import com.webcheckers.model.checkers.Space;
 import com.webcheckers.model.checkers.Space.SpaceType;
 import com.webcheckers.model.checkers.Turn;
 
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
