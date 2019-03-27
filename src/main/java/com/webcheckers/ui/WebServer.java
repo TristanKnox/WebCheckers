@@ -66,6 +66,7 @@ public class WebServer {
 
   public static final String TRY_USERNAME_URL = "/signinattempt";
 
+
   public static final String REQUEST_MOVE_URL = "/validateMove";
 
   public static final String REQUEST_TURN_SUBMISSION = "/submitTurn";
@@ -73,6 +74,9 @@ public class WebServer {
   public static final String CHECK_TURN_URL = "/checkTurn";
 
   public static final String BACKUP_URL = "/backupMove";
+
+  public static final String RESIGNATION_URL = "resignGame";
+
 
   //
   // Attributes
@@ -172,7 +176,7 @@ public class WebServer {
 
     get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
 
-    //post(REQUEST_GAME_URL, new PostGameRequestRoute(templateEngine,playerLobby,gameCenter));
+    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, templateEngine, gameCenter));
 
 
     post(REQUEST_MOVE_URL, new PostMoveRequestRoute(gameCenter));
