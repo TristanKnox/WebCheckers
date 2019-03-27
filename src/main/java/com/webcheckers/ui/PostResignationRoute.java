@@ -4,11 +4,9 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
-import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.util.Message;
 import spark.*;
 import java.util.Objects;
-import static spark.Spark.halt;
 
 /**
  * This Route is responsible for resigning a player from a game.
@@ -23,23 +21,20 @@ public class PostResignationRoute implements Route {
   // Attributes
   private final PlayerLobby playerLobby;
   private final GameCenter gameCenter;
-  private final TemplateEngine templateEngine;
 
   /**
-   * The constructor for the POST /signinattempt route handler.
+   * The constructor for the POST /resignGame route handler.
    *
    * @param playerLobby playerLobby, which keeps track of all current players
-   * @param templateEngine template engine to use for rendering HTML page
+   * @param gameCenter gameCenter keeps track of all games going on
    */
-  PostResignationRoute(PlayerLobby playerLobby, TemplateEngine templateEngine, GameCenter gameCenter) {
+  PostResignationRoute(PlayerLobby playerLobby, GameCenter gameCenter) {
     // neither parameter may be null
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(gameCenter, "gameCenter must not be null");
-    Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
     this.playerLobby = playerLobby;
     this.gameCenter = gameCenter;
-    this.templateEngine = templateEngine;
   }
 
   /**
@@ -54,7 +49,6 @@ public class PostResignationRoute implements Route {
   @Override
   public String handle(Request request, Response response) {
     // get the session
-    System.out.println("que tal todos");
     Session httpSession = request.session();
 
     //retrieve the current player object

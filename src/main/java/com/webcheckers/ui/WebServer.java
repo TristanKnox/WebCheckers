@@ -175,7 +175,7 @@ public class WebServer {
 
     get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
 
-    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, templateEngine, gameCenter));
+    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter));
 
 
     post(REQUEST_MOVE_URL, new PostMoveRequestRoute(templateEngine,gameCenter));
