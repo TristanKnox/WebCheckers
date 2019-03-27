@@ -54,6 +54,14 @@ public class Space {
   }
 
   /**
+   * Used to set the piece of this space.
+   * @param piece The new piece for this space, null if no piece in this space
+   */
+  public void setPiece(Piece piece) {
+    this.piece = piece;
+  }
+
+  /**
    * Return the validity of the space
    * Needs to be a black space and not already have a piece on it
    * @return if this move is valid
@@ -61,4 +69,10 @@ public class Space {
   public boolean isValid() {
     return type == SpaceType.BLACK && piece == null;
   }
+
+  /**
+   * A getter method for the space type
+   * @return - type of this space
+   */
+  public SpaceType getType(){ return this.type; }
 }

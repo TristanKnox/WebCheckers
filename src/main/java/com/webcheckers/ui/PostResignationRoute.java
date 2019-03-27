@@ -3,14 +3,18 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
-import static spark.Spark.halt;
+/**
+ * This Route is responsible for resigning a player from a game.
+ * It will have them removed from the game, and returned to the
+ * home screen when they press the resign button from the game view.
+ *
+ * @author Andrew Bado
+ */
 
 public class PostResignationRoute implements Route {
   // Values used in the view-model map for rendering the game view after a sign in attempt
@@ -18,23 +22,22 @@ public class PostResignationRoute implements Route {
   // Attributes
   private final PlayerLobby playerLobby;
   private final GameCenter gameCenter;
-  private final TemplateEngine templateEngine;
+
 
   /**
-   * The constructor for the POST /signinattempt route handler.
+   * The constructor for the POST /resignGame route handler.
    *
    * @param playerLobby playerLobby, which keeps track of all current players
-   * @param templateEngine template engine to use for rendering HTML page
+   * @param gameCenter gameCenter keeps track of all games going on
    */
-  PostResignationRoute(PlayerLobby playerLobby, TemplateEngine templateEngine, GameCenter gameCenter) {
+  PostResignationRoute(PlayerLobby playerLobby, GameCenter gameCenter) {
     // neither parameter may be null
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(gameCenter, "gameCenter must not be null");
-    Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
     this.playerLobby = playerLobby;
     this.gameCenter = gameCenter;
-    this.templateEngine = templateEngine;
+
   }
 
   /**
@@ -51,9 +54,17 @@ public class PostResignationRoute implements Route {
     // get the session
     Session httpSession = request.session();
 
-    // start the View-Model
-    // final Map<String, Object> vm = new HashMap<>();
-    
+
+    //retrieve the current player object
+    Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
+
+    // list the player as available, and end their game.
+    // then switch whose turn it is if need be
+    playerLobby.makeAvailable(player);
+    //resign them from the game center.
+    gameCenter.resignation(player);
+
+
     Gson gson = new Gson();
     return gson.toJson(Message.info("someone resigned"));
   }

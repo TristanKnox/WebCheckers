@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
-import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -65,8 +64,22 @@ public class WebServer {
   public static final String REQUEST_GAME_URL = "/requestgame";
 
   public static final String TRY_USERNAME_URL = "/signinattempt";
+  
+  public static final String RESIGNATION_URL = "/resignGame";
+
+
+  public static final String REQUEST_MOVE_URL = "/validateMove";
+
+  public static final String REQUEST_TURN_SUBMISSION = "/submitTurn";
+
+  public static final String CHECK_TURN_URL = "/checkTurn";
+
+  public static final String BACKUP_URL = "/backupMove";
+
+  public static final String SIGN_OUT_URL = "/signout";
 
   public static final String RESIGNATION_URL = "resignGame";
+
 
   //
   // Attributes
@@ -164,10 +177,19 @@ public class WebServer {
 
     post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
 
-    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, templateEngine, gameCenter));
+    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter));
 
+    post(REQUEST_MOVE_URL, new PostMoveRequestRoute(gameCenter));
+
+    post(REQUEST_TURN_SUBMISSION, new PostSubmitTurnRoute(gson, gameCenter));
+
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gson, gameCenter));
+
+    post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
+
+    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby,gameCenter,templateEngine));
     LOG.config("WebServer is initialized.");
   }
 

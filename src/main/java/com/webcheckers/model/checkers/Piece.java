@@ -47,6 +47,15 @@ public class Piece {
   }
 
   /**
+   * Set the type of the piece to either king or single. Used we a piece has reached
+   * either of the king rows
+   * @param type The piece type to set this piece to
+   */
+  public void setType(PieceType type) {
+    this.type = type;
+  }
+
+  /**
    * Get the color of the piece either red or white
    * @return The color of the piece
    */
