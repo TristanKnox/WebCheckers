@@ -15,6 +15,22 @@ public class GameCenter {
   private HashMap<Player, Player> playersInMatch; //player to player for matches
 
   /**
+   * getter for the active games listing
+   * @return the active games
+   */
+  public HashMap<Player, Game> getActiveGames() {
+    return activeGames;
+  }
+
+  /**
+   * getter for the match list
+   * @return the player list of those who are in a match.
+   */
+  public HashMap<Player, Player> getPlayersInMatch() {
+    return playersInMatch;
+  }
+
+  /**
   * creates the game-center object for the server application.
   */
   public GameCenter(){
@@ -74,6 +90,11 @@ public class GameCenter {
     return activeGames.get(player);
   }
 
+  /**
+   * removes the players from the match list
+   * @param playerOne first player
+   * @param playerTwo second player
+   */
   public void removePlayersFromMatch(Player playerOne, Player playerTwo){
     playersInMatch.remove(playerOne);
     playersInMatch.remove(playerTwo);

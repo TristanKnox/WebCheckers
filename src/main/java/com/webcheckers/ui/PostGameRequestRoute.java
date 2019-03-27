@@ -33,7 +33,7 @@ public class PostGameRequestRoute implements Route {
 
 
   @Override
-  public Object handle(Request request, Response response) throws Exception {
+  public Object handle(Request request, Response response){
     //Create the View Model to store need data
     Map<String, Object> vm  = new HashMap<>();
 
@@ -64,7 +64,7 @@ public class PostGameRequestRoute implements Route {
     vm.put("currentUser", playerOne);
     vm.put("redPlayer", game.getRedPlayer());
     vm.put("whitePlayer", game.getWhitePlayer());
-    vm.put("activeColor", game.getActivateColor());
+    vm.put("activeColor", game.getActiveColor());
     vm.put("viewMode", "PLAY");
     vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(playerOne)));
 

@@ -66,7 +66,17 @@ public class WebServer {
 
   public static final String TRY_USERNAME_URL = "/signinattempt";
 
+
+  public static final String REQUEST_MOVE_URL = "/validateMove";
+
+  public static final String REQUEST_TURN_SUBMISSION = "/submitTurn";
+
+  public static final String CHECK_TURN_URL = "/checkTurn";
+
+  public static final String BACKUP_URL = "/backupMove";
+
   public static final String RESIGNATION_URL = "resignGame";
+
 
   //
   // Attributes
@@ -167,6 +177,15 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
 
     post(RESIGNATION_URL, new PostResignationRoute(playerLobby, templateEngine, gameCenter));
+
+
+    post(REQUEST_MOVE_URL, new PostMoveRequestRoute(gameCenter));
+
+    post(REQUEST_TURN_SUBMISSION, new PostSubmitTurnRoute(gson, gameCenter));
+
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gson, gameCenter));
+
+    post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
     LOG.config("WebServer is initialized.");
   }
