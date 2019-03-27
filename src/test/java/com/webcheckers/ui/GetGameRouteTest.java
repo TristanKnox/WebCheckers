@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Piece.PieceColor;
@@ -41,6 +42,7 @@ public class GetGameRouteTest {
   private Response response;
   private TemplateEngine engine;
   private GameCenter gameCenter;
+  private PlayerLobby playerLobby;
   private Game game;
   private Player playerOne;
   private Player playerTwo;
@@ -53,12 +55,13 @@ public class GetGameRouteTest {
     response = mock(Response.class);
     engine = mock(TemplateEngine.class);
     gameCenter = mock(GameCenter.class);
+    playerLobby = mock(PlayerLobby.class);
     game = mock(Game.class);
     playerOne = new Player("sam");
     playerTwo = new Player("bob");
 
     // create a unique CuT for each test
-    CuT = new GetGameRoute(engine, gameCenter);
+    CuT = new GetGameRoute(engine, gameCenter,playerLobby);
   }
 
   /**

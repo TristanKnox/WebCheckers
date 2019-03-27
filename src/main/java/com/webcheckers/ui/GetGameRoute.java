@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.GetHomeRoute;
@@ -33,6 +34,8 @@ public class GetGameRoute implements Route {
   private final TemplateEngine templateEngine;
   /** Keeps track of the current games and the players in them **/
   private GameCenter gameCenter;
+  /** Keeps track of the players logged into webcheckers **/
+  private PlayerLobby playerLobby;
   /** The title of the game screen on the UI **/
   public static final String GAME_TITLE = "Checkers";
 
@@ -43,9 +46,10 @@ public class GetGameRoute implements Route {
    * @param templateEngine The template engine to render the client UI
    * @param gameCenter The object that keeps track of all games and the users in the game
    */
-  public GetGameRoute(final TemplateEngine templateEngine, GameCenter gameCenter) {
+  public GetGameRoute(final TemplateEngine templateEngine, GameCenter gameCenter, PlayerLobby playerLobby) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     this.gameCenter = gameCenter;
+    this.playerLobby = playerLobby;
     LOG.config("GetGameRoute is initialized.");
   }
 
@@ -73,6 +77,9 @@ public class GetGameRoute implements Route {
     vm.put(GAME_TITLE_ATTR, GAME_TITLE);
 
     if(game.isGameOver()){
+      gameCenter.exitGame(player);
+      playerLobby.makeAvailable(player);
+
       Gson gson = new Gson();
       Map<String, Object> modeOptions = new HashMap<String, Object>();
       modeOptions.put("isGameOver", true);
