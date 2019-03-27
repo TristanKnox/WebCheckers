@@ -26,6 +26,7 @@ public class Turn {
     MOVE_TO_WHITE_SPACE,
     INVALID_MULTI_MOVE,
     INVALID_DIRECTION,
+    INVALID_SIMPLE_MOVE,
     MUST_JUMP,
     VALID_TURN
   }
@@ -89,23 +90,24 @@ public class Turn {
    * pieces are moving in the correct direction if they are moving diagonal in the positive
    * direction. White pieces are moving in the correct direction if they are moving diagonal in
    * the negative direction.
-   * TODO: ADD LOGIC FOR HANDLING WHEN A MOVE IS A JUMP/MULTI-JUMP
    * @param piece The piece being moved
    * @param move The move being attempted
    * @return True if the piece is moving in a valid direction as specified above
    */
   public boolean moveDirectionValid(Piece piece, Move move) {
-    boolean validColumnMove = Math.abs(move.getStart().getCell() - move.getEnd().getCell()) == 1;
-    if(!validColumnMove)
+    int moveRowOffset = move.getStart().getRow() - move.getEnd().getRow();
+    int moveCellOffset = move.getStart().getCell() - move.getEnd().getCell();
+    boolean moveIsDiagonal = Math.abs(moveRowOffset) == Math.abs(moveCellOffset);
+    if(!moveIsDiagonal)
       return false;
-    boolean validRowMove = false;
+    // King can move in any direction
     if(piece.getType() == PieceType.KING)
-      validRowMove = Math.abs(move.getStart().getRow() - move.getEnd().getRow()) == 1;
-    else {
-      int validDirection = piece.getColor() == PieceColor.RED ? -1 : 1;
-      validRowMove = move.getStart().getRow() - move.getEnd().getRow() == validDirection;
-    }
-    return validRowMove;
+      return true;
+    // Red single pieces should move in "positive" direction
+    if(piece.getColor() == PieceColor.RED)
+      return moveRowOffset < 0;
+    // White single pieces should move in "negative" direction
+    return moveRowOffset > 0;
   }
 
   /**
@@ -116,6 +118,80 @@ public class Turn {
    */
   public boolean spaceIsEmpty(Game game, Move move) {
     return game.getSpace(move.getEnd()).getPiece() == null;
+  }
+
+  /**
+   * Check to make sure that a move is a valid simple move. A valid simple
+   * move only checks to make sure the move is only one cell away in any given
+   * direction. Does not validate the direction of the move, only the number
+   * of cells away the move is
+   * @param move The move to check
+   * @return True if the move's end is one cell away from the start position
+   */
+  public boolean isValidSimpleMove(Move move) {
+    int moveRowOffset = Math.abs(move.getStart().getRow() - move.getEnd().getRow());
+    int moveCellOffset = Math.abs(move.getStart().getCell() - move.getEnd().getCell());
+    return moveRowOffset == 1 && moveCellOffset == 1;
+  }
+
+  /**
+   * Get the space where an attempted capture is being made
+   * @param move The move making the capture attempt
+   * @param game The game to get the space from
+   * @return The space that is being captured
+   */
+  private Space getCaptureSpace(Move move, Game game) {
+    int checkRow;
+    if(move.getStart().getRow() > move.getEnd().getRow())
+      checkRow = move.getStart().getRow() - 1;
+    else
+      checkRow = move.getStart().getRow() + 1;
+    // Get the cell to check for space being jumped
+    int checkCell;
+    if(move.getStart().getCell() > move.getEnd().getCell())
+      checkCell = move.getStart().getCell() - 1;
+    else
+      checkCell = move.getStart().getCell() + 1;
+
+    Position checkPos = new Position(checkRow, checkCell);
+    return game.getSpace(checkPos);
+  }
+
+  /**
+   * Handles checking if the move is a valid jump move. A valid jump move is
+   * a move that moves two cells away from the start position and goes over a piece
+   * of the opposite color of the person making the move.
+   * @param move The move to check to see if it is a valid jump
+   * @param game The game to check the move against
+   * @return true if the jump is a valid jump attempt
+   */
+  public boolean isValidJumpMove(Move move, Game game) {
+    // A jump move needs to move greater then one cell away
+    if(Math.abs(move.getStart().getRow() - move.getEnd().getRow()) != 2)
+      return false;
+
+    Space checkSpace = getCaptureSpace(move, game);
+    Piece jumpedPiece = checkSpace.getPiece();
+
+    if(checkSpace.getPiece() == null)
+      return false;
+    return turnColor != jumpedPiece.getColor();
+  }
+
+  /**
+   * Checks the validity of the multi move. If there are no moves in the move list then by
+   * default it is valid. It then checks to make sure the move path is possible and that the
+   * current move and last moves are both valid jump moves
+   * @param move The move to validate
+   * @param game The game to validate against
+   * @return True if the move passes the criteria as described above
+   */
+  public boolean isValidMultiMove(Move move, Game game) {
+    if(moves.size() == 0)
+      return true;
+    if(!movePathPossible(move))
+      return false;
+    return isValidJumpMove(moves.get(moves.size() - 1), game) && isValidJumpMove(move, game);
   }
 
   /**
@@ -138,7 +214,7 @@ public class Turn {
     if(!moveToBlack(game, move))
       return TurnResponse.MOVE_TO_WHITE_SPACE;
     // Check that the position from the last move is possible
-    if(!movePathPossible(move))
+    if(!isValidMultiMove(move, game))
       return TurnResponse.INVALID_MULTI_MOVE;
     // Check direction of the move
     if(!moveDirectionValid(piece, move))
@@ -147,6 +223,15 @@ public class Turn {
     // Check that the current space is not occupied
     if(!spaceIsEmpty(game, move))
       return TurnResponse.SPACE_TAKEN;
+    // Check for type of move and validate accordingly
+    if(!isValidSimpleMove(move)) {
+      if (isValidJumpMove(move, game)) {
+        moves.add(move);
+        return TurnResponse.VALID_TURN;
+      }
+      else
+        return TurnResponse.INVALID_SIMPLE_MOVE;
+    }
     moves.add(move);
     return TurnResponse.VALID_TURN;
   }
@@ -158,6 +243,52 @@ public class Turn {
    */
   public void backupMove() {
     moves.remove(moves.size() - 1);
+  }
+
+  /**
+   * Check if the given row index is the king row for the given color. Red pieces have their
+   * king row at the end of the board (largest row index) white white pieces have their king
+   * row at the bottom of the board (smallest row index)
+   * @param color The color of the piece being moved
+   * @param rowIndex The index of the row that the piece has landed on
+   * @return True if the color and row index match to be a king row
+   */
+  public boolean isKingRow(PieceColor color, int rowIndex) {
+    if(color == PieceColor.RED && rowIndex == Game.MAX_SIZE - 1)
+      return true;
+    return color == PieceColor.WHITE && rowIndex == 0;
+  }
+
+  /**
+   * Handles the logic for executing a series of moves on a game. This does not handle any
+   * validation, just executes each moves. Handles removing captured pieces from the board
+   * @param game The game to execute on
+   */
+  public void execute(Game game) {
+    // Move piece from start to end location
+    Move firstMove = moves.get(0);
+    Move lastMove = moves.get(moves.size() - 1);
+
+    // Get the space and pieces to swap
+    Space firstSpace = game.getSpace(firstMove.getStart());
+    Space endSpace = game.getSpace(lastMove.getEnd());
+    Piece swapPiece = firstSpace.getPiece();
+
+    // Check if the piece needs to be a king
+    if(isKingRow(turnColor, lastMove.getEnd().getRow()))
+      swapPiece.setType(PieceType.KING);
+
+    // Swap the piece location
+    endSpace.setPiece(swapPiece);
+    firstSpace.setPiece(null);
+
+    // Check if any piece captured
+    for(Move move: moves) {
+      if(isValidJumpMove(move, game)) {
+        Space capturedSpace = getCaptureSpace(move, game);
+        capturedSpace.setPiece(null);
+      }
+    }
   }
 
   /**

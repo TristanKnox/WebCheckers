@@ -16,7 +16,7 @@ import java.util.List;
 public class Game implements Iterable<Row> {
 
   /** Max 8 rows per board **/
-  private static final int MAX_SIZE = 8;
+  public static final int MAX_SIZE = 8;
 
   /** The player initiating the game **/
   private Player redPlayer;
@@ -25,10 +25,9 @@ public class Game implements Iterable<Row> {
   /** Represents each row of the board **/
   private List<Row> rows;
   /** The color of the player whose turn it is **/
-  private PieceColor activateColor;
+  private PieceColor activeColor;
   /** whether the game has ended **/
   private Boolean gameOver;
-
   /** Represents all of the turns made through out the duration of the game */
   private List<Turn> turns;
 
@@ -40,12 +39,13 @@ public class Game implements Iterable<Row> {
   public Game(Player playerOne, Player playerTwo) {
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
-    this.activateColor = PieceColor.RED;
+    this.activeColor = PieceColor.RED;
     this.gameOver = false;
+
     rows = new ArrayList<>();
     initializeRows();
     this.turns = new ArrayList<>();
-    turns.add(new Turn(activateColor));
+    turns.add(new Turn(activeColor));
   }
 
   /**
@@ -95,8 +95,8 @@ public class Game implements Iterable<Row> {
    * Get the color of the player whose turn it is
    * @return The color of the current players turn
    */
-  public PieceColor getActivateColor() {
-    return activateColor;
+  public PieceColor getActiveColor() {
+    return activeColor;
   }
 
   /**
@@ -183,22 +183,10 @@ public class Game implements Iterable<Row> {
   public void executeTurn() {
     Turn currentTurn = turns.get(turns.size() - 1);
 
-    // Get the first and last moves made
-    List<Move> currentTurnMoves = currentTurn.getMoves();
-    Move firstMove = currentTurnMoves.get(0);
-    Move lastMove = currentTurnMoves.get(currentTurnMoves.size() - 1);
-
-    // Get the spaces modified (first and last spaces)
-    Space firstSpace = getSpace(firstMove.getStart());
-    Space lastSpace = getSpace(lastMove.getEnd());
-
-    // Move the piece from the first to the last space
-    Piece movingPiece = firstSpace.getPiece();
-    firstSpace.setPiece(null);
-    lastSpace.setPiece(movingPiece);
+    currentTurn.execute(this);
 
     // Flip active color
-    this.activateColor = this.activateColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
-    turns.add(new Turn(activateColor));
+    this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    turns.add(new Turn(activeColor));
   }
 }

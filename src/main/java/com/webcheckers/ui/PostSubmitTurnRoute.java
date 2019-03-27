@@ -53,7 +53,7 @@ public class PostSubmitTurnRoute implements Route {
     Session session = request.session();
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Game game = gameCenter.getGame(player);
-    if(game.getActivateColor() != game.getPlayerColor(player)) {
+    if(game.getActiveColor() != game.getPlayerColor(player)) {
       return gson.toJson(NOT_PLAYERS_TURN);
     }
     if(!game.currentTurnHasMove()) {

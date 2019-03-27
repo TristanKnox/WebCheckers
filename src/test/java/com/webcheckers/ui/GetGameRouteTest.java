@@ -79,7 +79,7 @@ public class GetGameRouteTest {
     // Return player two as the white player
     when(game.getWhitePlayer()).thenReturn(playerTwo);
     // Return red as the active color
-    when(game.getActivateColor()).thenReturn(PieceColor.RED);
+    when(game.getActiveColor()).thenReturn(PieceColor.RED);
     // Any game request will be the mocked game
     when(gameCenter.getGame(any(Player.class))).thenReturn(game);
 

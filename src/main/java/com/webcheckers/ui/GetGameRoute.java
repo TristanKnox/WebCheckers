@@ -90,7 +90,7 @@ public class GetGameRoute implements Route {
     vm.put("currentUser", player);
     vm.put("redPlayer", game.getRedPlayer());
     vm.put("whitePlayer", game.getWhitePlayer());
-    vm.put("activeColor", game.getActivateColor());
+    vm.put("activeColor", game.getActiveColor());
     /*
      * TODO
      * Add ability to select game view (will be an enhancement down the road)

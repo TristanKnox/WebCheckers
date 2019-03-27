@@ -15,12 +15,14 @@ import java.util.Objects;
  *
  * @author Andrew Bado
  */
+
 public class PostResignationRoute implements Route {
   // Values used in the view-model map for rendering the game view after a sign in attempt
 
   // Attributes
   private final PlayerLobby playerLobby;
   private final GameCenter gameCenter;
+
 
   /**
    * The constructor for the POST /resignGame route handler.
@@ -35,6 +37,7 @@ public class PostResignationRoute implements Route {
 
     this.playerLobby = playerLobby;
     this.gameCenter = gameCenter;
+
   }
 
   /**
@@ -51,6 +54,7 @@ public class PostResignationRoute implements Route {
     // get the session
     Session httpSession = request.session();
 
+
     //retrieve the current player object
     Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
@@ -59,6 +63,7 @@ public class PostResignationRoute implements Route {
     playerLobby.makeAvailable(player);
     //resign them from the game center.
     gameCenter.resignation(player);
+
 
     Gson gson = new Gson();
     return gson.toJson(Message.info("someone resigned"));

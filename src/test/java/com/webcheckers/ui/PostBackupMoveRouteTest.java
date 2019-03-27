@@ -45,7 +45,7 @@ public class PostBackupMoveRouteTest {
     when(request.session()).thenReturn(session);
     when(session.attribute(any())).thenReturn(null);
     when(gameCenter.getGame(any())).thenReturn(game);
-    when(game.getActivateColor()).thenReturn(PieceColor.RED);
+    when(game.getActiveColor()).thenReturn(PieceColor.RED);
 
     gson = new Gson();
     CuT = new PostBackupMoveRoute(gson, gameCenter);
@@ -81,7 +81,7 @@ public class PostBackupMoveRouteTest {
   public void testValidBackup() {
     when(game.currentTurnHasMove()).thenReturn(true);
     when(game.getPlayerColor(any())).thenReturn(PieceColor.RED);
-    String expectedValue = gson.toJson(PostBackupMoveRoute.BACKUP_SUCCESSUL);
+    String expectedValue = gson.toJson(PostBackupMoveRoute.BACKUP_SUCCESSFUL);
     String actualValue = (String) CuT.handle(request, null);
     assertEquals(expectedValue, actualValue);
   }

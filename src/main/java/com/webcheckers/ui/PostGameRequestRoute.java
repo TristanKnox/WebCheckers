@@ -65,7 +65,7 @@ public class PostGameRequestRoute implements Route {
     vm.put("currentUser", playerOne);
     vm.put("redPlayer", game.getRedPlayer());
     vm.put("whitePlayer", game.getWhitePlayer());
-    vm.put("activeColor", game.getActivateColor());
+    vm.put("activeColor", game.getActiveColor());
     vm.put("viewMode", "PLAY");
     vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(playerOne)));
 

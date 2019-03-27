@@ -54,7 +54,7 @@ public class PostCheckTurnRouteTest {
   @Test
   public void testIsPlayersTurn() {
     when(game.getPlayerColor(any())).thenReturn(PieceColor.RED);
-    when(game.getActivateColor()).thenReturn(PieceColor.RED);
+    when(game.getActiveColor()).thenReturn(PieceColor.RED);
     String expectedValue = gson.toJson(PostCheckTurnRoute.IS_PLAYER_TURN);
     String actualValue = (String) CuT.handle(request, null);
     assertEquals(expectedValue, actualValue);
@@ -67,7 +67,7 @@ public class PostCheckTurnRouteTest {
   @Test
   public void testIsOpponentTurn() {
     when(game.getPlayerColor(any())).thenReturn(PieceColor.RED);
-    when(game.getActivateColor()).thenReturn(PieceColor.WHITE);
+    when(game.getActiveColor()).thenReturn(PieceColor.WHITE);
     String expectedValue = gson.toJson(PostCheckTurnRoute.IS_OPPONENT_TURN);
     String actualValue = (String) CuT.handle(request, null);
     assertEquals(expectedValue, actualValue);
