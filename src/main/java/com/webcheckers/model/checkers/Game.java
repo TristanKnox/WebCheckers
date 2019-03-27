@@ -175,7 +175,7 @@ public class Game implements Iterable<Row> {
     turns.add(new Turn(activateColor));
   }
 
-  public boolean outOfPieces(Player p){
+  public boolean outOfPieces(){
     int blackPieces = 0;
     int redPieces = 0;
     for(Row r : rows){
