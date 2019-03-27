@@ -174,4 +174,24 @@ public class Game implements Iterable<Row> {
     this.activateColor = this.activateColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
     turns.add(new Turn(activateColor));
   }
+
+  public boolean outOfPieces(Player p){
+    int blackPieces = 0;
+    int redPieces = 0;
+    for(Row r : rows){
+      List<Space> spaces = r.getSpaces();
+      for(Space s : spaces){
+        if(s.getPiece() == null){
+          continue;
+        }
+        else if( s.getPiece().getColor() == PieceColor.RED){
+          redPieces++;
+        }
+        else{
+          blackPieces++;
+        }
+      }
+    }
+    return(blackPieces == 0 || redPieces == 0);
+  }
 }
