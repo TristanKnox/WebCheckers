@@ -10,7 +10,6 @@ import com.webcheckers.model.checkers.Space;
 import com.webcheckers.model.checkers.Space.SpaceType;
 import com.webcheckers.model.checkers.Turn;
 
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -300,5 +299,26 @@ public class TurnTest {
 
     // Past move was not a jump
     assertFalse(CuT.isValidMultiMove(new Move(endPosFirst, endPosSecond), game));
+  }
+
+  /**
+   * Tests to make sure the check for turning a piece into a king is working
+   */
+  @Test
+  public void testMakeKing() {
+    Turn CuT = new Turn(null);
+    // Invalid positions for a red piece
+    assertFalse(CuT.isKingRow(PieceColor.RED, 0));
+    assertFalse(CuT.isKingRow(PieceColor.RED, 5));
+
+    // Valid position for red piece
+    assertTrue(CuT.isKingRow(PieceColor.RED, 7));
+
+    // Invalid positions for a white piece
+    assertFalse(CuT.isKingRow(PieceColor.WHITE, 7));
+    assertFalse(CuT.isKingRow(PieceColor.WHITE, 3));
+
+    // Valid position for white piece
+    assertTrue(CuT.isKingRow(PieceColor.WHITE, 0));
   }
 }
