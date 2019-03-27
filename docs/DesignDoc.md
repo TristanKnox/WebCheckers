@@ -47,7 +47,8 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
-The minimum viable porduct allows user to log in to the web app and play games of checkers with other users
+The minimum viable product allows user to log into the web app and play games of checkers with other users. 
+This web app enforces standard checkers rules. Users are able to resign from games if they do not wish to finish a game. 
 ### MVP Features
 SignIn <br />
 SignOut <br />
