@@ -55,7 +55,7 @@ public class PostSubmitTurnRouteTest {
    */
   @Test
   public void notPlayersTurn() {
-    when(game.getActivateColor()).thenReturn(PieceColor.RED);
+    when(game.getActiveColor()).thenReturn(PieceColor.RED);
     when(game.getPlayerColor(any())).thenReturn(PieceColor.WHITE);
     String expectedValue = gson.toJson(PostSubmitTurnRoute.NOT_PLAYERS_TURN);
     String actualValue = (String) CuT.handle(request, null);
@@ -68,7 +68,7 @@ public class PostSubmitTurnRouteTest {
    */
   @Test
   public void noMoveToExecute() {
-    when(game.getActivateColor()).thenReturn(PieceColor.RED);
+    when(game.getActiveColor()).thenReturn(PieceColor.RED);
     when(game.getPlayerColor(any())).thenReturn(PieceColor.RED);
     when(game.currentTurnHasMove()).thenReturn(false);
     String expectedValue = gson.toJson(PostSubmitTurnRoute.NO_MOVES_TO_EXECUTE);
@@ -81,7 +81,7 @@ public class PostSubmitTurnRouteTest {
    */
   @Test
   public void successfulMoveExecution() {
-    when(game.getActivateColor()).thenReturn(PieceColor.RED);
+    when(game.getActiveColor()).thenReturn(PieceColor.RED);
     when(game.getPlayerColor(any())).thenReturn(PieceColor.RED);
     when(game.currentTurnHasMove()).thenReturn(true);
     String expectedValue = gson.toJson(PostSubmitTurnRoute.TURN_EXECUTED);

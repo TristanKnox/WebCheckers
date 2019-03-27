@@ -10,6 +10,7 @@ import com.webcheckers.model.checkers.Space;
 import com.webcheckers.model.checkers.Space.SpaceType;
 import com.webcheckers.model.checkers.Turn;
 
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -196,5 +197,108 @@ public class TurnTest {
     // Space is empty
     when(space.getPiece()).thenReturn(null);
     assertTrue(CuT.spaceIsEmpty(game, move));
+  }
+
+  /**
+   * Test to make sure a move is valid only if the move is a move to a single
+   * cell away
+   */
+  @Test
+  public void testSimpleMove() {
+    Turn CuT = new Turn(null);
+    Move move = mock(Move.class);
+    Position startPos = mock(Position.class);
+    Position endPos = mock(Position.class);
+
+    when(startPos.getRow()).thenReturn(0);
+    when(startPos.getCell()).thenReturn(0);
+    when(move.getStart()).thenReturn(startPos);
+    when(move.getEnd()).thenReturn(endPos);
+
+    // Invalid simple move
+    when(endPos.getRow()).thenReturn(0);
+    when(endPos.getCell()).thenReturn(10);
+    assertFalse(CuT.isValidSimpleMove(move));
+
+    // Valid simple move
+    when(endPos.getRow()).thenReturn(1);
+    when(endPos.getCell()).thenReturn(1);
+    assertTrue(CuT.isValidSimpleMove(move));
+  }
+
+  /**
+   * Test for valid jumps. Check to make sure the jump is a valid num
+   * spaces away, is jumping over a piece, and is jumping over the correct
+   * color piece
+   */
+  @Test
+  public void testValidJump() {
+    Turn CuT = new Turn(PieceColor.RED);
+    Game game = mock(Game.class);
+    Space space = mock(Space.class);
+    Piece piece = mock(Piece.class);
+    Move move = mock(Move.class);
+    Position startPos = mock(Position.class);
+    Position endPos = mock(Position.class);
+    when(move.getStart()).thenReturn(startPos);
+    when(move.getEnd()).thenReturn(endPos);
+    when(game.getSpace(any())).thenReturn(space);
+
+    // Test move that is just a simple jump
+    when(startPos.getRow()).thenReturn(0);
+    when(endPos.getRow()).thenReturn(1);
+    assertFalse(CuT.isValidJumpMove(move, game));
+
+    // Test move that does not jump over a piece
+    when(space.getPiece()).thenReturn(null);
+    when(startPos.getCell()).thenReturn(0);
+    when(endPos.getRow()).thenReturn(2);
+    when(endPos.getCell()).thenReturn(2);
+    assertFalse(CuT.isValidJumpMove(move, game));
+
+    // Test jump over wrong color
+    when(space.getPiece()).thenReturn(piece);
+    when(piece.getColor()).thenReturn(PieceColor.RED);
+    assertFalse(CuT.isValidJumpMove(move, game));
+
+    // Test valid jump
+    when(piece.getColor()).thenReturn(PieceColor.WHITE);
+    assertTrue(CuT.isValidJumpMove(move, game));
+  }
+
+  /**
+   * Handles testing of a mulit-jump. Checks to make sure the move path
+   * follows the rules of checkers
+   */
+  @Test
+  public void testValidMultiJump() {
+    Turn CuT = new Turn(PieceColor.RED);
+    Game game = mock(Game.class);
+    Move move = mock(Move.class);
+    Position startPosFirst = mock(Position.class);
+    Position endPosFirst = mock(Position.class);
+    Position startPosSecond = mock(Position.class);
+    Position endPosSecond = mock(Position.class);
+
+    when(startPosFirst.getRow()).thenReturn(0);
+    when(startPosFirst.getCell()).thenReturn(0);
+    when(endPosFirst.getCell()).thenReturn(1);
+    when(endPosFirst.getCell()).thenReturn(1);
+    when(move.getStart()).thenReturn(startPosFirst);
+    when(move.getEnd()).thenReturn(endPosFirst);
+
+
+    // No previous moves
+    assertTrue(CuT.isValidMultiMove(move, game));
+
+    // Path not possible
+    CuT.getMoves().add(new Move(startPosFirst, endPosFirst));
+
+    when(startPosSecond.getRow()).thenReturn(2);
+    when(startPosFirst.getCell()).thenReturn(2);
+    assertFalse(CuT.isValidMultiMove(new Move(startPosSecond, endPosSecond), game));
+
+    // Past move was not a jump
+    assertFalse(CuT.isValidMultiMove(new Move(endPosFirst, endPosSecond), game));
   }
 }

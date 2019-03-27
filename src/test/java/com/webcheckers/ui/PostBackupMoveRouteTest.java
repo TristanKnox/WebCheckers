@@ -45,7 +45,7 @@ public class PostBackupMoveRouteTest {
     when(request.session()).thenReturn(session);
     when(session.attribute(any())).thenReturn(null);
     when(gameCenter.getGame(any())).thenReturn(game);
-    when(game.getActivateColor()).thenReturn(PieceColor.RED);
+    when(game.getActiveColor()).thenReturn(PieceColor.RED);
 
     gson = new Gson();
     CuT = new PostBackupMoveRoute(gson, gameCenter);

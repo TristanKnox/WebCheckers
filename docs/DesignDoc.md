@@ -153,10 +153,52 @@ As soon as the user enters the page they will be greeted by a message that displ
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The model tier is made up of three main classes. The Game, Player, and 
+Turn each represent major functionality of the application. The Game 
+handles representation of the checkers board over all including the 
+rows, pieces, and spaces on the board. The Player represents a user of
+the game who is currently using the application. The Turn represents 
+the process of a user going through and making a move in the checkers
+application. All interactions with the model tier during game play is 
+handled through the Game which then distributes the responsibility to 
+the other model tier classes.
 
+#### Game
+![The Game UML](game_uml.png)
+
+The Game model handles all of the representation of the checkers board.
+The logic of creation of the board’s initial state including the rows 
+and spaces is handled within the game. The game also keeps track of all
+turns made on it by users. This list is will be used later as part of the
+Replay enhancement but is currently used to keep track of the current turn.
+Interactions with the model tier takes place through the Game model
+including the addition of Moves to a Turn. 
+![The Game Sequence](game_creation_sequence.png)
+When a game is created, the board
+is setup to its initial position and is then interacted through moves to
+modify the game.
+
+#### Player
+![The Player UML](player_uml.png)
+The Player is a simple class which represents a single user via the 
+username. The main use of Player is through the passing of the Player 
+between the front-end and the back-end. Here the player represents how 
+a given user is associated with a given Game. The Player does not handle 
+any functionality directly. See PlayerLobby in the application tier to 
+see more uses of the Player.
+
+#### Turn
+![The Turn UML](turn_uml.png)
+The Turn represents the series of moves that are made during a Player’s
+turn in the game of checkers. The Turn therefore keeps track of the various 
+positions that pieces are being moved to. 
+![Move Validation Sequence Diagram](validate_move_sequence.png)
+In addition, the Turn has the
+logic for validating the Moves that are being added to it. The Turn validated 
+the move based on the rules of checkers and returns a response based on rules 
+that are potentially broken. Later the Turn will be used in the replay enhancement.
+
+The turn also handles the execution of a move in which the piece is moved on the board and and peices are captured
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
