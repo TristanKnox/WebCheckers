@@ -42,12 +42,10 @@ Users should be able to view other users who are looking to play a game and allo
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
 
 ### Definition of MVP
-The minimum viable porduct allows user to log in to the web app and play games of checkers with other users
+The minimum viable product allows user to log into the web app and play games of checkers with other users. 
+This web app enforces standard checkers rules. Users are able to resign from games if they do not wish to finish a game. 
 ### MVP Features
 SignIn <br />
 SignOut <br />
@@ -64,7 +62,8 @@ King Piece <br />
 
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+Watch Replay<br />
+AI Player
 
 
 ## Application Domain
@@ -195,6 +194,12 @@ First, the player is retrieved from the session and is used to verify if the use
 If the player is in a game the PostResignRoute is activated to ensure that the players opponent is notified. 
 Either way, the player is then removed from the player lobby and then the player is removed from the sessions attributes. 
 Finally, the user is redirected to the home page where they will then see the option to sign in.
+
+####Resignation
+
+A user is able to resign from a game before the game is over. When a user is in a game there is a resign button. If the resign button is pushed the PostResignationRoute is activated. The first thing that happens is that the current player is accessed through the session. That player is placed back into the player lobby before the player is passed to the game center’s resignation method. 
+The resignation method flags the game associated with the given player as over and the player is removed from the game. Finally, back in PostResignationRoute, an info message is returnd informing the client side that someone has resigned.
+
 
 
 
