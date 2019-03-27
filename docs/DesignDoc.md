@@ -47,10 +47,21 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
-
+The minimum viable porduct allows user to log in to the web app and play games of checkers with other users
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+SignIn <br />
+SignOut <br />
+Start Game <br />
+Resign Game <br />
+Make Moves <br />
+Make Jump Moves <br />
+Make Miltie Jump Moves <br />
+Capture Pieces <br />
+King Piece <br />
+
+
+
+
 
 ### Roadmap of Enhancements
 > _Provide a list of top-level features in the order you plan to consider them._
