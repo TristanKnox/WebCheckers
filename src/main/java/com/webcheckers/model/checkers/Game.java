@@ -1,6 +1,7 @@
 package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.model.TestBoardBuilder;
 import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Turn.TurnResponse;
 import java.util.ArrayList;
@@ -46,6 +47,26 @@ public class Game implements Iterable<Row> {
     initializeRows();
     this.turns = new ArrayList<>();
     turns.add(new Turn(activeColor));
+  }
+
+  /**
+   * Create a cosome board setup for testing specific game sinarios
+   * @param playerOne - The player to start the game
+   * @param playerTwo - The player invited to the game
+   * @param boardType - The board set up
+   */
+  public Game(Player playerOne, Player playerTwo, TestBoardBuilder.BoardType boardType){
+    //Start game as normal
+    this.redPlayer = playerOne;
+    this.whitePlayer = playerTwo;
+    this.activateColor = PieceColor.RED;
+    rows = new ArrayList<>();
+    initializeRows();
+    this.turns = new ArrayList<>();
+    turns.add(new Turn(activateColor));
+    //Take initialized board and refactor it based on board type given
+    rows = TestBoardBuilder.getTestBoard(rows,boardType);
+
   }
 
   /**
