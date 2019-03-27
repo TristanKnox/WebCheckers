@@ -130,8 +130,8 @@ public class Game implements Iterable<Row> {
    * flips which player is active so that resignation worls properly
    */
   public void resignationEnabler(Player player) {
-    if (this.getPlayerColor(player) == activateColor){
-      activateColor = this.getPlayerColor(player) == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    if (this.getPlayerColor(player) == activeColor){
+      activeColor = this.getPlayerColor(player) == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
     }
   }
   /**
