@@ -3,14 +3,12 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 import spark.Session;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -55,5 +53,4 @@ public class PostResignationRouteTest {
         assertNotNull(CuT);
         assertNotNull(CuT.handle(request, response));
     }
-
 }

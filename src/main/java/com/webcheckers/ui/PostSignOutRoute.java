@@ -60,12 +60,10 @@ public class PostSignOutRoute implements Route {
     if(playerLobby.isInGame(player)){
       // TODO need a method that does this
       PostResignationRoute route = new PostResignationRoute(playerLobby, gameCenter);
+
       route.handle(request,response);
-      System.out.println("HERE");
-      // gameCenter.resign(player);
     }
 
-    // TODO need a method that does this
      playerLobby.signOutPlayer(player);
 
     // start the View-Model
