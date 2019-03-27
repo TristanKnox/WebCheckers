@@ -1,6 +1,6 @@
 package com.webcheckers.util;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
+
 
 import java.util.logging.Logger;
 

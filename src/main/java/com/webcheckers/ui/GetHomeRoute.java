@@ -32,10 +32,8 @@ public class GetHomeRoute implements Route {
   static final String PLAYERS_LIST_ATTR = "players";
 
   // values for use in the session attribute map
-  public static final String PLAYER_KEY = "player";
-
+   public static final String PLAYER_KEY = "player";
   public static final String IN_GAME_ERROR_FLAG = "inGameError";
-
 
   // Attributes
   private final TemplateEngine templateEngine;
@@ -76,6 +74,7 @@ public class GetHomeRoute implements Route {
 
     // check if there is a player in the session map
     if(httpSession.attribute(PLAYER_KEY) == null){
+
       // begin filling the view bucket case: player not yet signed in
       vm.put(TITLE_ATTR, "Welcome!");
       vm.put("message", Message.info(String.format(WELCOME_MSG, playerLobby.getNumberOfUsers())));

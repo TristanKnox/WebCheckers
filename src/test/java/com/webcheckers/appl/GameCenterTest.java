@@ -75,4 +75,12 @@ public class GameCenterTest {
     CuT.removePlayerFromGame(player2);
     assertNull(CuT.getGame(player2));
   }
+  @Test
+  public void test_resign(){
+    CuT.removePlayerFromGame(player2);
+    CuT.removePlayerFromGame(player1);
+    assertNull(CuT.getOtherPlayer(player1));
+    assertNull(CuT.getOtherPlayer(player2));
+  }
+
 }
