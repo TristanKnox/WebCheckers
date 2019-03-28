@@ -140,7 +140,7 @@ Any time the user’s view needs to be updated a get route is used to render the
 The classes in the UI tier are responsible for user stories such as signing in, starting a game, 
 resigning a game and more.
 
-####Starting a Game
+#### Starting a Game
 Once a user has signed in the GetHomeRoute is responsible for providing a list of all players that are available for a game. 
 The user then has the ability to select another player from that list. 
 When an opponent is selected the PostRequestGameRoute is activated and the name of the opponent is posted to the server.
@@ -165,7 +165,7 @@ player, and the active color. Finally, the game associated with the player is ac
 into the ViewGenerator to arrange the board for the given player. The game board is then also added to the viewModel before 
 rendering the game view for the player.
 
-####Making Moves
+#### Making Moves
 When it is users turn the user is notified via the turn marker in the infobox. 
 The player is then able to drag and drop pieces on the board. 
 When a piece is dropped onto a new location the PostMoveRequestRout is activated.
@@ -182,7 +182,7 @@ for a given turn and an info message is generated to inform the user the move is
 Otherwise, an error message is generated containing info on why the move is not valid. Either way, the message generated 
 is converted to JSON and then returned to the user and the Java Script updates the users view acordingly.
 
-####SignOut
+#### SignOut
 
 A user is able to sign out from anywhere once they are signed in. 
 If a user is signed in there is a button toward the top used for signing out. 
@@ -195,7 +195,7 @@ If the player is in a game the PostResignRoute is activated to ensure that the p
 Either way, the player is then removed from the player lobby and then the player is removed from the sessions attributes. 
 Finally, the user is redirected to the home page where they will then see the option to sign in.
 
-####Resignation
+#### Resignation
 
 A user is able to resign from a game before the game is over. When a user is in a game there is a resign button. If the resign button is pushed the PostResignationRoute is activated. The first thing that happens is that the current player is accessed through the session. That player is placed back into the player lobby before the player is passed to the game center’s resignation method. 
 The resignation method flags the game associated with the given player as over and the player is removed from the game. Finally, back in PostResignationRoute, an info message is returnd informing the client side that someone has resigned.
