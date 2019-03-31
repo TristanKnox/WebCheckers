@@ -119,7 +119,8 @@ public class GameCenter {
    */
   public void resignation(Player player){
     Game game = getGame(player);
-    game.endGame();
+    game.endGame(Game.EndGameCondition.OPPONENT_RESIGNED);
+
     game.resignationEnabler(player);
     removePlayerFromGame(player);
   }

@@ -17,7 +17,7 @@ import java.util.List;
 public class Game implements Iterable<Row> {
 
   public static enum EndGameCondition{
-    OPPONENT_RESIGNED, RED_OUT_OF_PIECES
+    OPPONENT_RESIGNED, RED_OUT_OF_PIECES, WHITE_OUT_OF_PIECES, RED_OUT_OF_MOVES, WHITE_OUT_OF_MOVES
   }
 
   /** Max 8 rows per board **/
@@ -35,6 +35,9 @@ public class Game implements Iterable<Row> {
   /** whether the game has ended **/
   private Boolean gameOver;
 
+  /** Why the game has ended */
+  private EndGameCondition endGameCondition;
+
   /** Represents all of the turns made through out the duration of the game */
   private List<Turn> turns;
 
@@ -48,6 +51,7 @@ public class Game implements Iterable<Row> {
     this.whitePlayer = playerTwo;
     this.activeColor = PieceColor.RED;
     this.gameOver = false;
+    this.endGameCondition = null;
     rows = new ArrayList<>();
     initializeRows();
     this.turns = new ArrayList<>();
@@ -147,11 +151,18 @@ public class Game implements Iterable<Row> {
   }
 
   /**
-   * tells a game that it has ended
+   * tells a game that it has ended as well as why
    */
-  public void endGame(){
+  public void endGame(EndGameCondition condition){
+    this.endGameCondition = condition;
     this.gameOver = true;
   }
+
+  /**
+   * A Getter method for endGameCondition
+   * @return - the endGamecondition
+   */
+  public EndGameCondition getEndGameCondition(){ return this.endGameCondition; }
 
   /**
    * flips which player is active so that resignation worls properly
@@ -215,11 +226,15 @@ public class Game implements Iterable<Row> {
     // Flip active color
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
     turns.add(new Turn(activeColor));
-    if(outOfPieces())
-      this.endGame();
+    if(outOfPieces() != null) {
+      if (outOfPieces() == PieceColor.RED)
+        this.endGame(EndGameCondition.RED_OUT_OF_PIECES);
+      if(outOfPieces() == PieceColor.WHITE)
+        this.endGame(EndGameCondition.WHITE_OUT_OF_PIECES);
+    }
   }
 
-  public boolean outOfPieces(){
+  public PieceColor outOfPieces(){
     int whitePieces = 0;
     int redPieces = 0;
     for(Row r : rows){
@@ -236,6 +251,10 @@ public class Game implements Iterable<Row> {
         }
       }
     }
-    return(whitePieces == 0 || redPieces == 0);
+    if(redPieces <= 0)
+      return PieceColor.RED;
+    else if(whitePieces <= 0)
+      return PieceColor.WHITE;
+    return null;
   }
 }
