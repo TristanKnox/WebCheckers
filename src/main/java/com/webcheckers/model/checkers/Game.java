@@ -215,7 +215,7 @@ public class Game implements Iterable<Row> {
   }
 
   public boolean outOfPieces(){
-    int blackPieces = 0;
+    int whitePieces = 0;
     int redPieces = 0;
     for(Row r : rows){
       List<Space> spaces = r.getSpaces();
@@ -227,10 +227,10 @@ public class Game implements Iterable<Row> {
           redPieces++;
         }
         else{
-          blackPieces++;
+          whitePieces++;
         }
       }
     }
-    return(blackPieces == 0 || redPieces == 0);
+    return(whitePieces == 0 || redPieces == 0);
   }
 }
