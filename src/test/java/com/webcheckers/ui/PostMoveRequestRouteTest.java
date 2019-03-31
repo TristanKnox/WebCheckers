@@ -57,7 +57,7 @@ public class PostMoveRequestRouteTest {
   @Test
   public void testValidMove(){
     when(game.addMove(any())).thenReturn(Turn.TurnResponse.VALID_TURN);
-    String expected = gson.toJson(Message.info(PostMoveRequestRoute.VALID_MOVE));
+    String expected = gson.toJson(PostMoveRequestRoute.VALID_MOVE_MSG);
     String actual = null;
     try {
       actual = (String)CuT.handle(request,response);
@@ -74,7 +74,7 @@ public class PostMoveRequestRouteTest {
   @Test
   public void testInvalidMove(){
     when(game.addMove(any())).thenReturn(Turn.TurnResponse.INVALID_DIRECTION);
-    String expected = gson.toJson(Message.error(PostMoveRequestRoute.INVALID_MOVE + Turn.TurnResponse.INVALID_DIRECTION));
+    String expected = gson.toJson(PostMoveRequestRoute.INVALID_DIRECTION_MSG);
     String actual = null;
     try {
       actual = (String)CuT.handle(request,response);
