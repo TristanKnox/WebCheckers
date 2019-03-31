@@ -16,8 +16,12 @@ import java.util.List;
  */
 public class Game implements Iterable<Row> {
 
+  public static enum EndGameCondition{
+    OPPONENT_RESIGNED, RED_OUT_OF_PIECES
+  }
+
   /** Max 8 rows per board **/
-  private static final int MAX_SIZE = 8;
+  public static final int MAX_SIZE = 8;
 
   /** The player initiating the game **/
   private Player redPlayer;
@@ -28,6 +32,7 @@ public class Game implements Iterable<Row> {
   /** The color of the player whose turn it is **/
 
   private PieceColor activeColor;
+  /** whether the game has ended **/
   private Boolean gameOver;
 
   /** Represents all of the turns made through out the duration of the game */

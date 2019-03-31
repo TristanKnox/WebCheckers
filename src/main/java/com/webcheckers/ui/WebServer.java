@@ -67,6 +67,7 @@ public class WebServer {
   
   public static final String RESIGNATION_URL = "/resignGame";
 
+
   public static final String REQUEST_MOVE_URL = "/validateMove";
 
   public static final String REQUEST_TURN_SUBMISSION = "/submitTurn";
@@ -76,6 +77,8 @@ public class WebServer {
   public static final String BACKUP_URL = "/backupMove";
 
   public static final String SIGN_OUT_URL = "/signout";
+
+
 
   //
   // Attributes
@@ -176,7 +179,6 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
 
     post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter));
-
 
     post(REQUEST_MOVE_URL, new PostMoveRequestRoute(gameCenter));
 

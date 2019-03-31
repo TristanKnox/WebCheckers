@@ -159,7 +159,7 @@ public class PlayerLobby {
 
 
   public void makeAvailable(Player player){
-      avalUsers.put(player.getName(),player);
+    avalUsers.put(player.getName(),player);
   }
 /**
  *
@@ -176,7 +176,7 @@ public class PlayerLobby {
    * @param player the player to be signed out
    */
   public void signOutPlayer(Player player){
-      logout(player.getName());
+    logout(player.getName());
   }
 /**
  *
