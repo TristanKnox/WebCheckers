@@ -46,9 +46,9 @@ public class PostMoveRequestRoute implements Route {
     //Sets up the mesage to be returnd
     Message msg;
     if(moveResponce == Turn.TurnResponse.VALID_TURN)
-      msg = Message.info(this.VALID_MOVE);
+      msg = Message.info(VALID_MOVE);
     else
-      msg = Message.error(this.INVALID_MOVE + moveResponce);
+      msg = Message.error(INVALID_MOVE + moveResponce);
     return gson.toJson(msg);
   }
 }
