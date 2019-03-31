@@ -189,19 +189,6 @@ public class TurnTest {
     assertTrue(CuT.moveDirectionValid(kingPiece, move));
     assertFalse(CuT.moveDirectionValid(whitePiece, move));
     assertTrue(CuT.moveDirectionValid(redPiece, move));
-
-    // Moving to random row (no pieces)
-    when(endPos.getRow()).thenReturn(8);
-    assertFalse(CuT.moveDirectionValid(kingPiece, move));
-    assertFalse(CuT.moveDirectionValid(whitePiece, move));
-    assertFalse(CuT.moveDirectionValid(redPiece, move));
-
-    // Move to random cell (no pieces)
-    when(endPos.getRow()).thenReturn(4);
-    when(endPos.getCell()).thenReturn(8);
-    assertFalse(CuT.moveDirectionValid(kingPiece, move));
-    assertFalse(CuT.moveDirectionValid(whitePiece, move));
-    assertFalse(CuT.moveDirectionValid(redPiece, move));
   }
 
   /**
