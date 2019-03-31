@@ -257,4 +257,113 @@ public class Game implements Iterable<Row> {
       return PieceColor.WHITE;
     return null;
   }
+
+  private PieceColor outOfMoves(){
+   return null; //TODO fix this latter
+  }
+
+  /**
+   * Validates if a move is possible for a given piece
+   * @param piecePosition - the position of the piece in question
+   * @param piece - the piece in question
+   * @return - true if a move is possible false if a move is not possible
+   */
+  private boolean pieceCaneMove(Position piecePosition, Piece piece){
+    //If Piece is red check in the positive direction
+    if(piece.getColor() == PieceColor.RED && canMoveInPosotiveDirection(piecePosition,piece.getColor()))
+      return true;
+    //If Piece is white and check in the negative direction
+    if(piece.getColor() == PieceColor.WHITE && canMoveInNegativeDirection(piecePosition,piece.getColor()))
+      return true;
+    //If Piece is a King check in both directions
+    if(piece.getType() == Piece.PieceType.KING){
+      if(canMoveInNegativeDirection(piecePosition,piece.getColor()) || canMoveInPosotiveDirection(piecePosition, piece.getColor()))
+        return true;
+    }
+    return false;
+
+  }
+
+  /**
+   * Validates if a move is possible in the positive direction. the positive direction is the direction in which the row index is increasing
+   * @param piecePosition - the position of the piece that is being checked if it can move or not
+   * @param pieceColor - the color of the piece being checked
+   * @return - true if the piece can move in the positive direction false if it cannot move in the positive direction
+   */
+  private boolean canMoveInPosotiveDirection(Position piecePosition, PieceColor pieceColor){
+    boolean result;
+    //Check to the left
+    result = checkCanMoveWithDirection(1,-1,piecePosition,pieceColor);
+    if(result == true)//If a move is found there is no need to continue
+      return result;
+    //Check to the right
+    result = checkCanMoveWithDirection(1,1,piecePosition,pieceColor);
+    return result;
+  }
+
+  /**
+   * Validates if a move is possible in the negative direction. The negative direction is the direction in which the row index is decreasing
+   * @param piecePosition - the position of the piece that is being checked if it can move or not
+   * @param pieceColor - the color of the piece being checked
+   * @return - true if the piece can move in the negative direction false if it cannot move in the negative direction
+   */
+  private boolean canMoveInNegativeDirection(Position piecePosition, PieceColor pieceColor){
+    boolean result;
+    //Check to the left
+    result = checkCanMoveWithDirection(-1,-1,piecePosition,pieceColor);
+    if(result == true)//If a move is found there is no need to continue
+      return result;
+    //Check to the right
+    result = checkCanMoveWithDirection(-1,1,piecePosition,pieceColor);
+    return result;
+  }
+
+  /**
+   * Checks if a move can be made in a given direction
+   * @param rowDirection - an int representing the direction to look with regards to the rows
+   * @param columDiretion - an int representing the direction to look with regards to the column
+   * @param piecePosition - the position of the piece that is being check if it can move or not
+   * @param pieceColor - the color of the piece that is being checked
+   * @return - true if there is a move available or false if there is no move available
+   */
+  private boolean checkCanMoveWithDirection(int rowDirection, int columDiretion,Position piecePosition, PieceColor pieceColor){
+    //This is the location that will be checked to see if a move can be moved here
+    Position locationInQuestion;
+    Space spaceInQuestion;
+    //Sets the locationInQuestion
+    locationInQuestion = new Position(piecePosition.getRow() + rowDirection,piecePosition.getCell() + columDiretion);
+    //Insure that the locationInQuestion exists on the board
+    if(isValidLocation(locationInQuestion)){
+      //Get the space associated with the locationInQuestion
+      spaceInQuestion = getSpace(locationInQuestion);
+      //If no other piece is there it is possible to move here
+      if(spaceInQuestion.getPiece() == null)
+        return true;
+      //Otherwise as long as the piece that is there is not the same color a jump may be posible
+      else if(spaceInQuestion.getPiece().getColor() != pieceColor)
+        locationInQuestion = new Position(locationInQuestion.getRow() + rowDirection,locationInQuestion.getCell() + columDiretion);//
+      //Insure that the locationInQuestion exists on the board
+      if(isValidLocation(locationInQuestion)){
+        //Get the space associated with the locationInQuestion
+        spaceInQuestion = getSpace(locationInQuestion);
+        //If no other piece is there it is possible to move here
+        if(spaceInQuestion.getPiece() == null)
+          return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Validates that a given position exists on the board
+   * @param position - the postion in question
+   * @return true if its a good location false if not a valid location
+   */
+  private boolean isValidLocation(Position position){
+    boolean result = false;
+    if(position.getRow() >= 0  && position.getRow() <= 7)
+      if(position.getCell() >= 0 && position.getCell() <=7)
+        result = true;
+    return result;
+  }
 }
