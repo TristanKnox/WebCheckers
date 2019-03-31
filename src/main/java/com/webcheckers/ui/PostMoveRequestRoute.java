@@ -21,6 +21,7 @@ public class PostMoveRequestRoute implements Route {
   public static final Message INCORRECT_PIECE_USED_MSG = Message.error("Piece does not belong to you");
   public static final Message MOVE_TO_WHITE_SPACE_MSG = Message.error("Cannot move to white space");
   public static final Message INVALID_MULTI_MOVE_MSG = Message.error("That is not a valid multi jump");
+  public static final Message NOT_DIAGONAL_MSG = Message.error("Move has to be diagonal");
   public static final Message INVALID_DIRECTION_MSG = Message.error("That piece cannot move in that direction");
   public static final Message INVALID_SIMPLE_MOVE_MSG = Message.error("Cannot move piece to here");
   public static final Message MUST_JUMP_MSG = Message.error("You have to jump");
@@ -52,6 +53,8 @@ public class PostMoveRequestRoute implements Route {
         return MOVE_TO_WHITE_SPACE_MSG;
       case INVALID_MULTI_MOVE:
         return INVALID_MULTI_MOVE_MSG;
+      case NOT_DIAGONAL:
+        return NOT_DIAGONAL_MSG;
       case INVALID_DIRECTION:
         return INVALID_DIRECTION_MSG;
       case INVALID_SIMPLE_MOVE:
