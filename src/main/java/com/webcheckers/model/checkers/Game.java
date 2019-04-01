@@ -320,8 +320,8 @@ public class Game implements Iterable<Row> {
 
   /**
    * Checks if a move can be made in a given direction
-   * @param rowDirection - an int representing the direction to look with regards to the rows
-   * @param columDiretion - an int representing the direction to look with regards to the column
+   * @param rowDirection - an int representing the direction to look with regards to the rows. This should be set to 1 if the row direction should increment or -1 if the row direction should decrement
+   * @param columDiretion - an int representing the direction to look with regards to the column. This should be set to 1 if the row direction should increment  or -1 if the row direction should decrement
    * @param piecePosition - the position of the piece that is being check if it can move or not
    * @param pieceColor - the color of the piece that is being checked
    * @return - true if there is a move available or false if there is no move available
