@@ -235,10 +235,11 @@ public class Turn {
 
   /**
    * Check if a given piece can make a jump. The check first generates possible positions that
-   * a piece could move to
-   * @param pos
-   * @param game
-   * @return
+   * a piece could move to then checks each possible position to see if it would capture an
+   * opponents piece
+   * @param pos The position the the piece would start from
+   * @param game The game to check for captures against
+   * @return True if the piece can jump
    */
   public boolean pieceCanJump(Position pos, Game game) {
     Piece piece = game.getSpace(pos).getPiece();
