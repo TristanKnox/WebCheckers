@@ -287,8 +287,33 @@ game scenarios.
 
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+
+
+Our goal for unit testing has been to write unit test any time new 
+functionality has been implemented. Unfortunately just because a test 
+is written for a feature does not mean that the coverage offerd by a test
+is complete. As our code coverage shows our strategy has left holes in code coverage.
+![Over All Code Coverage](OverAllCoverage.PNG) 
+
+####Appl Tier
+As you can see the appl tier has the most coverage with 77%. This is because the 
+PlayerLobby and the GameCenter are the only two classes in this tier and contain relatively simple
+methods that are easily tested.
+![Appl Tier Code Coverage](ApplTierCoverage.PNG)
+
+####Model Tier
+Our model tier has a total of 61% coverage. Looking closer you can see that Turn is responsible 
+for a large portion of the hole in thees tests.
+![Model Tier Code Coverage](ModelTierCoverage.PNG)
+However if you look specifically at the coverage of the Turn class the reson for the lack of coverage 
+is due to the top two methods. Both of thees methods rely heavily on all of the helper methods listed below
+which are clearly fully tested
+![Turn Code Coverage](TurnCoverage.PNG)
+
+####UI Tier
+The UI tier has a total of 56% coverage. One ove the main culprits for the lack of coverage in the UI
+tier is the WebServer, which we have not even considered writing tests for as its only responsibility
+is to hook up the pots and get routes so that they can be found and created when the time is right.
+The other two major routs that are missing unit testing were not thought of during this sprint as they
+were completed in sprint one and not at all on our radar for this deliverable.  
+![UI Tier Code Coverage](UITierCoverage.PNG)
