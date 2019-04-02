@@ -36,8 +36,8 @@ public class ReplayCenter {
 
   /**
    * gets the game at given game id.
-   * @param gameId
-   * @return
+   * @param gameId the games Id from the position in the list
+   * @return the game at the given index
    */
   public Game getGame(int gameId){
     return savedGames.get(gameId);
