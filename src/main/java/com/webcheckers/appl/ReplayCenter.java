@@ -51,4 +51,13 @@ public class ReplayCenter {
     savedGames.add(game);
   }
 
+  /**
+   * gets the game to player mapping.
+   * @param player the player in question
+   * @return the game paired to the player.
+   */
+  public Game getWatchedGames(Player player){
+    return watchedReplays.get(player);
+  }
+
 }
