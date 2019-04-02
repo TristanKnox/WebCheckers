@@ -1,0 +1,8 @@
+Run 'mvn compile exec:java' in root directory
+
+Open a broswer go to 'localhost:4567'
+
+If you want to test against yourself go to 'localhost:4567' in an incognito window, sign in on both browsers, challenge yourself
+
+If you want to test against another player go to , https://whatismyipaddress.com/ and have them type that followed by :4567 in their browser to connect
+
