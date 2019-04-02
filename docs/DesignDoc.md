@@ -147,9 +147,20 @@ As soon as the user enters the page they will be greeted by a message that displ
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+
+The application tier contains three pieces to it. The playerLobby which has all the signed in users
+ as well as players that are available to play a game. The game center which takes care of all 
+ active games. Then a Replay Center that holds a list of saved games and a player to a game mapping
+  that keeps track of the games state. PlayerLobby is is the basic component for all player 
+  to player interactions excluding those that take place in the game. Those interactions are 
+  handled in the Game Center. Which handles all the things that happens in that checkers game 
+  like resignation, and end game and exiting back to the lobby and saving a game. Replay center 
+  hold the functionality of replays going back and forth between the game List. 
+  
+  The interaction between all model tier components is exemplified here:
+  ![The application tier interaction chart](appl-tier-chart.png)
+  
+  
 
 
 ### Model Tier
