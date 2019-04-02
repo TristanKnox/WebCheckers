@@ -5,7 +5,6 @@ import com.webcheckers.util.Message;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import static spark.Spark.halt;
 
@@ -22,7 +21,7 @@ public class PostSignInAttemptRoute implements Route {
   static final String USERNAME_PARAM = "myUserName";
   static final Message TAKEN_USERNAME = Message.error("Username taken. Enter another to login.");
   static final Message INVALID_USERNAME = Message.error("Invalid username. " +
-    "Username must start with a letter, and use only alphanumeric charachters");
+    "Username must start with a letter, and use only alphanumeric characters");
   static final String VIEW_NAME = "signin.ftl";
 
   // Attributes
@@ -57,6 +56,13 @@ public class PostSignInAttemptRoute implements Route {
   public String handle(Request request, Response response) {
     // get the session
     Session httpSession = request.session();
+
+    // if the player is already signed in, redirect them to the home page
+    if(httpSession.attribute(GetHomeRoute.PLAYER_KEY) != null){
+      response.redirect(WebServer.HOME_URL);
+      halt();
+      return null;
+    }
 
     // start the View-Model
     final Map<String, Object> vm = new HashMap<>();

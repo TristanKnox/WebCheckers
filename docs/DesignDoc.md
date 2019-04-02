@@ -42,18 +42,28 @@ Users should be able to view other users who are looking to play a game and allo
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
-
+The minimum viable product allows user to log into the web app and play games of checkers with other users. 
+This web app enforces standard checkers rules. Users are able to resign from games if they do not wish to finish a game. 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+SignIn <br />
+SignOut <br />
+Start Game <br />
+Resign Game <br />
+Make Moves <br />
+Make Jump Moves <br />
+Make Miltie Jump Moves <br />
+Capture Pieces <br />
+King Piece <br />
+
+
+
+
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+Watch Replay<br />
+AI Player
 
 
 ## Application Domain
@@ -123,27 +133,74 @@ As soon as the user enters the page they will be greeted by a message that displ
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
+The UI tier is responsible for all of the communications between the user and the server. 
+Any time the user is submitting information a post route is used to send data to the server. 
+Any time the user’s view needs to be updated a get route is used to render the new view. 
+The classes in the UI tier are responsible for user stories such as signing in, starting a game, 
+resigning a game and more.
 
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
+#### Starting a Game
+Once a user has signed in the GetHomeRoute is responsible for providing a list of all players that are available for a game. 
+The user then has the ability to select another player from that list. 
+When an opponent is selected the PostRequestGameRoute is activated and the name of the opponent is posted to the server.
 
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
+![PostGameRequestRout_SequenceDiogram](PostRequestGameRoute_SequenceDiogram.png)
+
+First, the Player that made the request is accessed from the session. 
+Next, the posted username of the opponent is accessed via the request. 
+The Opponents name is used to get the Player object associated with that name from the player lobby. 
+The availability of both players is then checked. If either of the players is found to be unavailable the player who 
+initiated the request is redirected back to the home page where a message informs them that the other player had already 
+joined a game. Otherwise, if both the players are available the players are passed to the game center to spawn a new game. 
+The game center injects both of the players that it received into the new game that it created and stores that game in a 
+list of games being played. The game is then returned back to the PostGameRequestRout where it is then passed into the 
+ViewGenerator along with the current player, which arranges the board into the correct orientation for the given player. 
+Finally, the game view is rendered for the player.
+
+Meanwhile, the other player is sent to the GetGameRoute. 
+Inside the GetGameRout the current player is accessed from the session and all of the relevant information needed for 
+the game view is put into the viewModel map. The info included in this is the current player, the red player, the white 
+player, and the active color. Finally, the game associated with the player is accessed through the game center and passed 
+into the ViewGenerator to arrange the board for the given player. The game board is then also added to the viewModel before 
+rendering the game view for the player.
+
+#### Making Moves
+When it is users turn the user is notified via the turn marker in the infobox. 
+The player is then able to drag and drop pieces on the board. 
+When a piece is dropped onto a new location the PostMoveRequestRout is activated.
+
+
+![ValidateMove_SequenceDiogram](ValidateMove_SequenceDiogram.png)
+
+First, JSON string is retrieved from the request. 
+The JSON string is then decoded and turned into a Move object using Gson. 
+Next, the game can be accessed by getting the player from the session and passing the player to the game center. 
+Once the game has been retrieved the move can be verified. 
+The move is passed to the game, if the move is valid it is added to a turned object which keeps track of all moves made 
+for a given turn and an info message is generated to inform the user the move is valid. 
+Otherwise, an error message is generated containing info on why the move is not valid. Either way, the message generated 
+is converted to JSON and then returned to the user and the Java Script updates the users view acordingly.
+
+#### SignOut
+
+A user is able to sign out from anywhere once they are signed in. 
+If a user is signed in there is a button toward the top used for signing out. 
+If the user clicks on the sign out button the PostSignOutRoute is activated.
+
+![SignOut_SequenceDiogram](SignOut_SequenceDiogram.png)
+
+First, the player is retrieved from the session and is used to verify if the user is currently in a game via the game center. 
+If the player is in a game the PostResignRoute is activated to ensure that the players opponent is notified. 
+Either way, the player is then removed from the player lobby and then the player is removed from the sessions attributes. 
+Finally, the user is redirected to the home page where they will then see the option to sign in.
+
+#### Resignation
+
+A user is able to resign from a game before the game is over. When a user is in a game there is a resign button. If the resign button is pushed the PostResignationRoute is activated. The first thing that happens is that the current player is accessed through the session. That player is placed back into the player lobby before the player is passed to the game center’s resignation method. 
+The resignation method flags the game associated with the given player as over and the player is removed from the game. Finally, back in PostResignationRoute, an info message is returnd informing the client side that someone has resigned.
+
+
 
 
 ### Application Tier
@@ -164,9 +221,56 @@ The application tier contains three pieces to it. The playerLobby which has all 
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The model tier is made up of three main classes. The Game, Player, and 
+Turn each represent major functionality of the application. The Game 
+handles representation of the checkers board over all including the 
+rows, pieces, and spaces on the board. The Player represents a user of
+the game who is currently using the application. The Turn represents 
+the process of a user going through and making a move in the checkers
+application. All interactions with the model tier during game play is 
+handled through the Game which then distributes the responsibility to 
+the other model tier classes.
+
+#### Game
+![The Game UML](game_uml.png)
+
+The Game model handles all of the representation of the checkers board.
+The logic of creation of the board’s initial state including the rows 
+and spaces is handled within the game. The game also keeps track of all
+turns made on it by users. This list is will be used later as part of the
+Replay enhancement but is currently used to keep track of the current turn.
+Interactions with the model tier takes place through the Game model
+including the addition of Moves to a Turn. 
+![The Game Sequence](game_creation_sequence.png)
+When a game is created, the board
+is setup to its initial position and is then interacted through moves to
+modify the game.
+
+#### Player
+![The Player UML](player_uml.png)
+The Player is a simple class which represents a single user via the 
+username. The main use of Player is through the passing of the Player 
+between the front-end and the back-end. Here the player represents how 
+a given user is associated with a given Game. The Player does not handle 
+any functionality directly. See PlayerLobby in the application tier to 
+see more uses of the Player.
+
+#### Turn
+![The Turn UML](turn_uml.png)
+The Turn represents the series of moves that are made during a Player’s
+turn in the game of checkers. The Turn therefore keeps track of the various 
+positions that pieces are being moved to. 
+![Move Validation Sequence Diagram](validate_move_sequence.png)
+In addition to the Turn keeping track of the moves made using the turn,
+the Turn class also validates each move being added. Each move is validated
+against the rules of checkers by executing the series of methods shows in
+the UML diagram. If any of the method calls fail, the corresponding
+TurnResponse is returned and the move is not added to the list of moves.
+
+After the moves have been added, Turn handles the execution of the move.
+This involves taking in a game on which each move is executed onto. Note
+no validation takes place here. Pieces are captured and others flipped to
+king pieces as needed.
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
@@ -183,11 +287,15 @@ The application tier contains three pieces to it. The playerLobby which has all 
 > and the results of the testing._
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+31 of the 33 acceptance tests pass. The current passing acceptance
+criteria includes the ability to start a game, player sign in, sign
+out, resignation, and most of the move logic. Currently the ability 
+to reach an game scenarios through one of the opponents losing all 
+of their pieces has not passed the acceptance tests yet. The plane 
+for completion of that acceptance criteria has been moved back to 
+Sprint 3 where it will be addressed along with the rest of the end
+game scenarios. 
+
 
 ### Unit Testing and Code Coverage
 > _Discuss your unit testing strategy. Report on the code coverage

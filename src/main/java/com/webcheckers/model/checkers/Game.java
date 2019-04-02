@@ -2,6 +2,7 @@ package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.model.checkers.Turn.TurnResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class Game implements Iterable<Row> {
 
   /** Max 8 rows per board **/
-  private static final int MAX_SIZE = 8;
+  public static final int MAX_SIZE = 8;
 
   /** The player initiating the game **/
   private Player redPlayer;
@@ -24,7 +25,11 @@ public class Game implements Iterable<Row> {
   /** Represents each row of the board **/
   private List<Row> rows;
   /** The color of the player whose turn it is **/
-  private PieceColor activateColor;
+  private PieceColor activeColor;
+  /** whether the game has ended **/
+  private Boolean gameOver;
+  /** Represents all of the turns made through out the duration of the game */
+  private List<Turn> turns;
 
   /**
    * Creates an initial game with the rows initialized each player kept track of
@@ -34,9 +39,13 @@ public class Game implements Iterable<Row> {
   public Game(Player playerOne, Player playerTwo) {
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
-    this.activateColor = PieceColor.RED;
+    this.activeColor = PieceColor.RED;
+    this.gameOver = false;
+
     rows = new ArrayList<>();
     initializeRows();
+    this.turns = new ArrayList<>();
+    turns.add(new Turn(activeColor));
   }
 
   /**
@@ -83,19 +92,11 @@ public class Game implements Iterable<Row> {
   }
 
   /**
-   * Set the color of the player whose turn it is
-   * @param color The color whose turn it is
-   */
-  public void setActivateColor(PieceColor color) {
-    this.activateColor = color;
-  }
-
-  /**
    * Get the color of the player whose turn it is
    * @return The color of the current players turn
    */
-  public PieceColor getActivateColor() {
-    return activateColor;
+  public PieceColor getActiveColor() {
+    return activeColor;
   }
 
   /**
@@ -105,8 +106,88 @@ public class Game implements Iterable<Row> {
    * @return The color associated with the player in the game, null if not in game
    */
   public PieceColor getPlayerColor(Player player) {
-    if(player.equals(redPlayer))
-      return PieceColor.RED;
-    return player.equals(whitePlayer) ? PieceColor.WHITE : null;
+    return player.equals(whitePlayer) ? PieceColor.WHITE : PieceColor.RED;
+  }
+
+  /**
+   * returns true if the game is over, false otherwise
+   * @return the gameOver variable
+   */
+  public boolean isGameOver(){
+    return this.gameOver;
+  }
+
+  /**
+   * tells a game that it has ended
+   */
+  public void endGame(){
+    this.gameOver = true;
+  }
+
+  /**
+   * flips which player is active so that resignation worls properly
+   */
+  public void resignationEnabler(Player player) {
+    if (this.getPlayerColor(player) == activeColor){
+      activeColor = this.getPlayerColor(player) == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    }
+  }
+  /**
+   * Get the space at the given location
+   * @param pos The position to get the space from
+   * @return The space located at a given location
+   */
+  public Space getSpace(Position pos) {
+    return rows.get(pos.getRow()).getSpace(pos.getCell());
+  }
+
+  /**
+   * Handles adding a move to the current active turn. The move is applied to the turn if the move
+   * is valid. The result of the validation is returned based on if any rule was violated
+   * @param move The move to be added to the current turn
+   * @return TurnResponse based on the validity/any broken rules
+   */
+  public TurnResponse addMove(Move move) {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    return currentTurn.addMove(this, move);
+  }
+
+  /**
+   * Handles the logic of backing up a move. Calls backup on the most recent turn.
+   * @precondition most recent turn has at least a single move
+   */
+  public void backupTurn() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    currentTurn.backupMove();
+  }
+
+  /**
+   * Handles checking to make sure that a turn has a valid move. Should be called before attempting
+   * to execute any turn
+   * @return True if there is at least one valid turn in the most recent turn
+   */
+  public boolean currentTurnHasMove() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    return currentTurn.getMoves().size() > 0;
+  }
+
+  /**
+   * Handles applying the current moves to the game sequentially updating the state of the game.
+   * This method also updates the active color of the game.
+   * @precondition There is a turn in the turn list
+   * @precondition The current turn is a valid turn with no errors
+   * @postcondition The next turn is created and the active color is changed to the next user
+   */
+  public void executeTurn() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+
+    currentTurn.execute(this);
+
+    // Flip active color
+    this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    turns.add(new Turn(activeColor));
+  }
+  public void flipActiveColor(){
+    this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
   }
 }

@@ -1,5 +1,7 @@
 package com.webcheckers.util;
 
+
+
 import java.util.logging.Logger;
 
 /**
@@ -113,4 +115,11 @@ public final class Message {
     return "{Msg " + type + " '" + text + "'}";
   }
 
+  @Override
+  public boolean equals(Object other){
+    if(!(other instanceof Message))
+      return false;
+    else
+      return other.toString().equals(this.toString());
+  }
 }

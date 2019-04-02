@@ -7,12 +7,28 @@ import java.util.HashMap;
 
 /**
 * The game center manipulates the holding of the matches and games for the web server
-* @Autor Evan Nolan {@link https://github.com/emn3779}
+* @Author Evan Nolan
 */
 public class GameCenter {
 
   private HashMap<Player, Game> activeGames; //player name to Game obj
   private HashMap<Player, Player> playersInMatch; //player to player for matches
+
+  /**
+   * getter for the active games listing
+   * @return the active games
+   */
+  public HashMap<Player, Game> getActiveGames() {
+    return activeGames;
+  }
+
+  /**
+   * getter for the match list
+   * @return the player list of those who are in a match.
+   */
+  public HashMap<Player, Player> getPlayersInMatch() {
+    return playersInMatch;
+  }
 
   /**
   * creates the game-center object for the server application.
@@ -74,6 +90,11 @@ public class GameCenter {
     return activeGames.get(player);
   }
 
+  /**
+   * removes the players from the match list
+   * @param playerOne first player
+   * @param playerTwo second player
+   */
   public void removePlayersFromMatch(Player playerOne, Player playerTwo){
     playersInMatch.remove(playerOne);
     playersInMatch.remove(playerTwo);
@@ -86,5 +107,27 @@ public class GameCenter {
   public void removePlayerFromGame(Player player){
     activeGames.remove(player);
   }
+  public boolean playerInGame(Player player){
+    return activeGames.containsKey(player);
+  }
 
+  /**
+   * resigns a player and no longer keeps track of their game.
+   * @param player the player who has resigned.
+   */
+  public void resignation(Player player){
+    Game game = getGame(player);
+    game.endGame();
+    game.resignationEnabler(player);
+    removePlayerFromGame(player);
+  }
+
+  /**
+   * exit the player
+   * @param player the player who exits the game.
+   */
+  public void exitGame(Player player){
+    removePlayerFromGame(player);
+    removePlayersFromMatch(getOtherPlayer(player),player);
+  }
 }

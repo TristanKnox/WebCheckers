@@ -66,7 +66,10 @@ public class Row implements Iterable<Space> {
    * @return True if the space is black, false if it is not
    */
   private boolean isSpaceBlack(int index, int col) {
-    return index - col % 2 == 0;
+    if(index % 2 == 0) {
+      return col % 2 != 0;
+    }
+    return col % 2 == 0;
   }
 
   /**
@@ -79,11 +82,21 @@ public class Row implements Iterable<Space> {
       Space space = null;
       if(initSpaceWithPiece(index, col))
         space = new Space(col, new Piece(PieceType.SINGLE, color), SpaceType.BLACK);
-      else
-        space = new Space(col, null,
-            isSpaceBlack(index, col) ? SpaceType.BLACK : SpaceType.WHITE);
+      else {
+        SpaceType spaceType= isSpaceBlack(index, col) ? SpaceType.BLACK : SpaceType.WHITE;
+        space = new Space(col, null, spaceType);
+      }
       spaces.add(space);
     }
+  }
+
+  /**
+   * Get a space located at a given col 0 to MAX_SIZE - 1 inclusive
+   * @param col The column to get the space from
+   * @return Space at a given location
+   */
+  public Space getSpace(int col) {
+    return spaces.get(col);
   }
 
   /**
