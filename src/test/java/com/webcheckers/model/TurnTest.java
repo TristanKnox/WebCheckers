@@ -335,4 +335,21 @@ public class TurnTest {
     // Valid position for white piece
     assertTrue(CuT.isKingRow(PieceColor.WHITE, 0));
   }
+
+  @Test
+  public void testPieceCanJump() {
+    Turn CuT = new Turn(PieceColor.RED);
+    Game game = mock(Game.class);
+    Space space = mock(Space.class);
+
+    when(game.getSpace(any())).thenReturn(space);
+
+    // Null piece cannot jump
+    when(space.getPiece()).thenReturn(null);
+    assertFalse(CuT.pieceCanJump(null, game));
+
+    // Cannot make a jump if the end position is on a piece
+    Position endPos = mock(Position.class);
+
+  }
 }
