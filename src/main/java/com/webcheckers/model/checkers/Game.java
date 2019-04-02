@@ -187,4 +187,7 @@ public class Game implements Iterable<Row> {
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
     turns.add(new Turn(activeColor));
   }
+  public void flipActiveColor(){
+    this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+  }
 }
