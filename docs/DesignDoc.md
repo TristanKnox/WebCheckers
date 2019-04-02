@@ -215,6 +215,7 @@ The application tier contains three pieces to it. The playerLobby which has all 
   hold the functionality of replays going back and forth between the game List. 
   
   The interaction between all model tier components is exemplified here:
+  
   ![The application tier interaction chart](appl-tier-chart.png)
   
   
@@ -283,8 +284,7 @@ king pieces as needed.
 > suggested design improvements to address those hot spots._
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+
 
 ### Acceptance Testing
 31 of the 33 acceptance tests pass. The current passing acceptance
@@ -304,27 +304,33 @@ Our goal for unit testing has been to write unit test any time new
 functionality has been implemented. Unfortunately just because a test 
 is written for a feature does not mean that the coverage offerd by a test
 is complete. As our code coverage shows our strategy has left holes in code coverage.
+
 ![Over All Code Coverage](OverAllCoverage.PNG) 
 
-####Appl Tier
+#### Appl Tier
 As you can see the appl tier has the most coverage with 77%. This is because the 
 PlayerLobby and the GameCenter are the only two classes in this tier and contain relatively simple
 methods that are easily tested.
+
 ![Appl Tier Code Coverage](ApplTierCoverage.PNG)
 
-####Model Tier
+#### Model Tier
 Our model tier has a total of 61% coverage. Looking closer you can see that Turn is responsible 
 for a large portion of the hole in thees tests.
+
 ![Model Tier Code Coverage](ModelTierCoverage.PNG)
+
 However if you look specifically at the coverage of the Turn class the reson for the lack of coverage 
 is due to the top two methods. Both of thees methods rely heavily on all of the helper methods listed below
 which are clearly fully tested
+
 ![Turn Code Coverage](TurnCoverage.PNG)
 
-####UI Tier
+#### UI Tier
 The UI tier has a total of 56% coverage. One ove the main culprits for the lack of coverage in the UI
 tier is the WebServer, which we have not even considered writing tests for as its only responsibility
 is to hook up the pots and get routes so that they can be found and created when the time is right.
 The other two major routs that are missing unit testing were not thought of during this sprint as they
-were completed in sprint one and not at all on our radar for this deliverable.  
+were completed in sprint one and not at all on our radar for this deliverable. 
+ 
 ![UI Tier Code Coverage](UITierCoverage.PNG)
