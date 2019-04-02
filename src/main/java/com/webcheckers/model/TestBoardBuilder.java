@@ -16,7 +16,8 @@ public class TestBoardBuilder {
   public enum BoardType{
     KING_PIECE,
     MULTY_JUMP,
-    KING_MULTY_JUMP
+    KING_MULTY_JUMP,
+    OUT_OF_MOVES
   }
 
 
@@ -36,6 +37,9 @@ public class TestBoardBuilder {
         break;
       case KING_MULTY_JUMP:
         rows = kingJumpSetUp(rows);
+        break;
+      case OUT_OF_MOVES:
+        rows = outOfMovesSetUp(rows);
         break;
     }
     return rows;
@@ -78,6 +82,33 @@ public class TestBoardBuilder {
     rows = multyJumpSetUp(rows);
     rows.get(1).getSpace(2).setPiece(new Piece(Piece.PieceType.KING, Piece.PieceColor.RED));
     rows.get(2).getSpace(5).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));
+    return rows;
+  }
+
+  private static List<Row> outOfMovesSetUp(List<Row> rows){
+    rows = removeAllPieces(rows);
+    rows.get(0).getSpace(1).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    //Up to the Left 2 away
+    rows.get(1).getSpace(6).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    //Up to the left 1 away
+    rows.get(2).getSpace(3).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    //Up to the right 1 away
+    rows.get(2).getSpace(5).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    //Center White piece that cant move
+    rows.get(3).getSpace(4).setPiece(new Piece(Piece.PieceType.KING, Piece.PieceColor.WHITE));
+    //Down to the left 1 away
+    rows.get(4).getSpace(3).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));
+    //Down to the right 1 away
+    rows.get(4).getSpace(5).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));
+    //Down to the left 2 away
+   // rows.get(5).getSpace(2).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    //Down to the right 2 away
+    //rows.get(5).getSpace(6).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    rows.get(2).getSpace(1).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    rows.get(3).getSpace(2).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    rows.get(3).getSpace(6).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    rows.get(2).getSpace(7).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+
     return rows;
   }
 

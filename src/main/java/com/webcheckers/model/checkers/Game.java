@@ -143,6 +143,16 @@ public class Game implements Iterable<Row> {
   }
 
   /**
+   * Return the opponent of the given player
+   * @param player - the player you want the opponent for
+   * @return - the opponent
+   */
+  public Player getOponent(Player player){
+    PieceColor playerColor = getPlayerColor(player);
+    return playerColor == PieceColor.RED ? whitePlayer : redPlayer;
+  }
+
+  /**
    * returns true if the game is over, false otherwise
    * @return the gameOver variable
    */
@@ -226,11 +236,31 @@ public class Game implements Iterable<Row> {
     // Flip active color
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
     turns.add(new Turn(activeColor));
+
+    checkEndGame();
+  }
+
+  /**
+   * Checks both end game conditions ( OutOfPieces and OutOfMoves )
+   * If either are true then the end game is triggered and the EndGameCondition is set
+   */
+  private void checkEndGame(){
+    //Checks and sets EndGameConditions for outOfPieces
     if(outOfPieces() != null) {
       if (outOfPieces() == PieceColor.RED)
         this.endGame(EndGameCondition.RED_OUT_OF_PIECES);
       if(outOfPieces() == PieceColor.WHITE)
         this.endGame(EndGameCondition.WHITE_OUT_OF_PIECES);
+    }
+    //Checks and sets EndGameConditions for outOfMoves
+    //Only check for this condition if the game has not already been set to game over
+    if(!gameOver) {
+      if (outOfMoves(activeColor)) {
+        if (activeColor == PieceColor.RED)
+          this.endGame(EndGameCondition.RED_OUT_OF_MOVES);
+        if (activeColor == PieceColor.WHITE)
+          this.endGame(EndGameCondition.WHITE_OUT_OF_MOVES);
+      }
     }
   }
 
@@ -258,8 +288,36 @@ public class Game implements Iterable<Row> {
     return null;
   }
 
-  private PieceColor outOfMoves(){
-   return null; //TODO fix this latter
+  /**
+   * Checks to see if the active color can move
+   * PreCondition - this should be called after the activeColor has been switched to the color of the player who is about
+   * to take their turn but before they are notified it is their turn
+   * @param activeColor - the color of the player who is about to take their turn
+   * @return - true if the activeColor cannot move false if the activeColor can move
+   */
+  private boolean outOfMoves(PieceColor activeColor){
+    //Loop through each row
+    for(int rowIndex = 0; rowIndex < rows.size(); rowIndex++){
+      Row row = rows.get(rowIndex);
+      List<Space> spaces = row.getSpaces();
+      //Loop through all spaces of current row
+      for(int spaceIndex = 0; spaceIndex < spaces.size(); spaceIndex++){
+        Space space = spaces.get(spaceIndex);
+        //Make sure there is a piece at the current space
+        if(space.getPiece() != null){
+          Piece piece = space.getPiece();
+          //We only care about the activeColor because this method will be used at the end of executing a turn after the active color is switched to the next player
+          //The only time the end game should be triggered is if the player who is about to take their turn is un able to move so we only chick if that player can move
+          if(piece.getColor() == activeColor){
+            //If the current piece can move then the job is done
+            if(pieceCaneMove(new Position(rowIndex,spaceIndex),piece))
+              return false;
+          }
+        }
+      }
+    }
+    //If we get all the way to the end and have not found a piece that can move the the active color cannot move
+    return true;
   }
 
   /**

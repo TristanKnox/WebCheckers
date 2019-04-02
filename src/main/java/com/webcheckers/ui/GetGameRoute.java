@@ -111,34 +111,35 @@ public class GetGameRoute implements Route {
    */
   private String getEndGameMessage(Game game, Player player){
     String msg = "Game Over: ";
+    String oponentsName = game.getOponent(player).getName();
     Piece.PieceColor playerColor = game.getPlayerColor(player);
     switch (game.getEndGameCondition()){
       case OPPONENT_RESIGNED:
-        msg += "Your opponent has resigned";
+        msg += oponentsName + " has resigned";
         break;
       case RED_OUT_OF_MOVES:
         if(playerColor == Piece.PieceColor.RED)
           msg += "You are out of moves. YOU LOSE";
         else
-          msg += "Your opponent is out of moves. YOU WIN";
+          msg += oponentsName + " is out of moves. YOU WIN";
         break;
       case RED_OUT_OF_PIECES:
         if(playerColor == Piece.PieceColor.RED)
           msg += "You are out of pieces. YOU LOSE";
         else
-          msg += "Your opponent is out of pieces. YOU WIN";
+          msg += oponentsName + " is out of pieces. YOU WIN";
         break;
       case WHITE_OUT_OF_MOVES:
         if(playerColor == Piece.PieceColor.WHITE)
           msg += "You are out of moves. YOU LOSE";
         else
-          msg += "Your opponent is out of moves. YOU WIN";
+          msg += oponentsName + " is out of moves. YOU WIN";
         break;
       case WHITE_OUT_OF_PIECES:
         if(playerColor == Piece.PieceColor.WHITE)
           msg += "You are out of pieces. YOU LOSE";
         else
-          msg += "Your opponent is out of pieces. YOU WIN";
+          msg += oponentsName + " is out of pieces. YOU WIN";
         break;
     }
     return msg;
