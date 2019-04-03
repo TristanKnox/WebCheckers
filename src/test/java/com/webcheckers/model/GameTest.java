@@ -5,7 +5,11 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.model.checkers.Move;
+import com.webcheckers.model.checkers.Piece;
 import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.model.checkers.Position;
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -75,8 +79,28 @@ public class GameTest {
 //  }
   @Test
   public void testEndGame(){
+    //Out of Pices
     game = new Game(p1,p2, TestBoardBuilder.BoardType.OUT_OF_MOVES);
     assertNull(game.outOfPieces());
+
+    game = new Game(p1,p2,TestBoardBuilder.BoardType.OUT_OF_PIECES);
+    game.checkEndGame();
+    assertTrue(game.isGameOver());
+    assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_PIECES);
+
+
+
+    //Out of  Moves
+    game = new Game(p1,p2, TestBoardBuilder.BoardType.OUT_OF_MOVES);
+    game.checkEndGame();
+    assertNull(game.getEndGameCondition());
+    assertFalse(game.isGameOver());
+    game.addMove(new Move(new Position(0,1), new Position(1,2)));
+    game.executeTurn();
+    game.checkEndGame();
+    assertTrue(game.isGameOver());
+    assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_MOVES, "Expected White to be out of Pieces but got " + game.getEndGameCondition());
+
   }
 
 

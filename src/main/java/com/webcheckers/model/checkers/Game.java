@@ -244,7 +244,7 @@ public class Game implements Iterable<Row> {
    * Checks both end game conditions ( OutOfPieces and OutOfMoves )
    * If either are true then the end game is triggered and the EndGameCondition is set
    */
-  private void checkEndGame(){
+  public void checkEndGame(){
     //Checks and sets EndGameConditions for outOfPieces
     if(outOfPieces() != null) {
       if (outOfPieces() == PieceColor.RED)

@@ -17,7 +17,8 @@ public class TestBoardBuilder {
     KING_PIECE,
     MULTY_JUMP,
     KING_MULTY_JUMP,
-    OUT_OF_MOVES
+    OUT_OF_MOVES,
+    OUT_OF_PIECES
   }
 
 
@@ -40,6 +41,9 @@ public class TestBoardBuilder {
         break;
       case OUT_OF_MOVES:
         rows = outOfMovesSetUp(rows);
+        break;
+      case OUT_OF_PIECES:
+        rows = onePieceOnBoard(rows);
         break;
     }
     return rows;
@@ -109,6 +113,12 @@ public class TestBoardBuilder {
     rows.get(3).getSpace(6).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
     rows.get(2).getSpace(7).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
 
+    return rows;
+  }
+
+  private static List<Row> onePieceOnBoard(List<Row> rows){
+    rows = removeAllPieces(rows);
+    rows.get(3).getSpace(2).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
     return rows;
   }
 
