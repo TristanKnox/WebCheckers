@@ -92,16 +92,27 @@ public class GameTest {
 //  }
   @Test
   public void testEndGame(){
+    //EndGame Method
+    game = new Game(p1,p2);
+    assertNull(game.getEndGameCondition());
+    assertFalse(game.isGameOver());
+    game.endGame(Game.EndGameCondition.RED_OUT_OF_PIECES);
+    assertEquals(game.getEndGameCondition(), Game.EndGameCondition.RED_OUT_OF_PIECES);
+    assertTrue(game.isGameOver());
+    game.endGame(Game.EndGameCondition.RED_OUT_OF_MOVES);
+    assertEquals(game.getEndGameCondition(), Game.EndGameCondition.RED_OUT_OF_MOVES);
+    assertTrue(game.isGameOver());
+    game.endGame(Game.EndGameCondition.WHITE_OUT_OF_MOVES);
+    assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_MOVES);
+    assertTrue(game.isGameOver());
+
     //Out of Pices
     game = new Game(p1,p2, TestBoardBuilder.BoardType.OUT_OF_MOVES);
     assertNull(game.outOfPieces());
-
     game = new Game(p1,p2,TestBoardBuilder.BoardType.OUT_OF_PIECES);
     game.checkEndGame();
     assertTrue(game.isGameOver());
     assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_PIECES);
-
-
 
     //Out of  Moves
     game = new Game(p1,p2, TestBoardBuilder.BoardType.OUT_OF_MOVES);
