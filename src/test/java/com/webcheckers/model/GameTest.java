@@ -73,10 +73,12 @@ public class GameTest {
 //  public void testResignationEnabler(){
 //
 //  }
-//  @Test
-//  public void testEndGame(){
-//
-//  }
+  @Test
+  public void testEndGame(){
+    game = new Game(p1,p2, TestBoardBuilder.BoardType.OUT_OF_MOVES);
+    assertNull(game.outOfPieces());
+  }
+
 
 
 

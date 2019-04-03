@@ -264,6 +264,10 @@ public class Game implements Iterable<Row> {
     }
   }
 
+  /**
+   * Checks to see if either player is out of pieces
+   * @return - the PieceColor of the player that is out of pieces or null if neither player is out of pieces
+   */
   public PieceColor outOfPieces(){
     int whitePieces = 0;
     int redPieces = 0;
