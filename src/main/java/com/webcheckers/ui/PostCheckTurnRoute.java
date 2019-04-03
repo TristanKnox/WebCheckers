@@ -50,7 +50,8 @@ public class PostCheckTurnRoute implements Route {
     Session session = request.session();
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Game game = gameCenter.getGame(player);
-    return game.getPlayerColor(player) == game.getActiveColor() ? gson.toJson(IS_PLAYER_TURN)
+    return game.getPlayerColor(player) == game.getActiveColor()
+        ? gson.toJson(IS_PLAYER_TURN)
         : gson.toJson(IS_OPPONENT_TURN);
   }
 }

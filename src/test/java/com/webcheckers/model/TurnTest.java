@@ -120,6 +120,33 @@ public class TurnTest {
   }
 
   /**
+   * Handles testing the ability to check if a move if diagonal or not
+   */
+  @Test
+  public void testMoveDiagonal() {
+    Turn CuT = new Turn(null);
+    Position startPos = mock(Position.class);
+    Position endPos = mock(Position.class);
+    Move move = mock(Move.class);
+
+    when(startPos.getRow()).thenReturn(0);
+    when(startPos.getCell()).thenReturn(0);
+
+    when(move.getStart()).thenReturn(startPos);
+    when(move.getEnd()).thenReturn(endPos);
+
+    // Not diagonal
+    when(endPos.getRow()).thenReturn(4);
+    when(endPos.getCell()).thenReturn(5);
+    assertFalse(CuT.moveIsDiagonal(move));
+
+    // Diagonal
+    when(endPos.getRow()).thenReturn(1);
+    when(endPos.getCell()).thenReturn(1);
+    assertTrue(CuT.moveIsDiagonal(move));
+  }
+
+  /**
    * Test validation for pieces moving. This tests a king piece, white piece, and red piece
    * in a number of different directions to make sure each is valid at the correct time
    */
@@ -162,19 +189,6 @@ public class TurnTest {
     assertTrue(CuT.moveDirectionValid(kingPiece, move));
     assertFalse(CuT.moveDirectionValid(whitePiece, move));
     assertTrue(CuT.moveDirectionValid(redPiece, move));
-
-    // Moving to random row (no pieces)
-    when(endPos.getRow()).thenReturn(8);
-    assertFalse(CuT.moveDirectionValid(kingPiece, move));
-    assertFalse(CuT.moveDirectionValid(whitePiece, move));
-    assertFalse(CuT.moveDirectionValid(redPiece, move));
-
-    // Move to random cell (no pieces)
-    when(endPos.getRow()).thenReturn(4);
-    when(endPos.getCell()).thenReturn(8);
-    assertFalse(CuT.moveDirectionValid(kingPiece, move));
-    assertFalse(CuT.moveDirectionValid(whitePiece, move));
-    assertFalse(CuT.moveDirectionValid(redPiece, move));
   }
 
   /**

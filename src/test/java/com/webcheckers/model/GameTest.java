@@ -6,10 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Move;
-import com.webcheckers.model.checkers.Piece;
+
 import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Position;
-import javafx.geometry.Pos;
+
+import com.webcheckers.model.checkers.Turn;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -20,14 +23,23 @@ import org.junit.jupiter.api.Test;
  */
 @Tag("Model Tier")
 public class GameTest {
+
   private Game game;
   private Player p1;
   private Player p2;
+  private Turn turn;
+  private List<Turn> turns;
+
+  /**
+   * sets up the things to test for the game class.
+   */
   @BeforeEach
   public void setup(){
     p1 = mock(Player.class);
     p2 = mock(Player.class);
+    turn = mock(Turn.class);
     game = new Game(p1,p2);
+
   }
   //Constructor Test
   @Test
@@ -55,7 +67,8 @@ public class GameTest {
    */
   public void testTurnSwitch(){
     testStartingTurn();
-    game.executeTurn();
+    turn.addMove(game, mock(Move.class));
+    game.flipActiveColor();
     assertEquals(game.getActiveColor(), PieceColor.WHITE);
     assertNotEquals(game.getActiveColor(), (PieceColor.RED));
   }

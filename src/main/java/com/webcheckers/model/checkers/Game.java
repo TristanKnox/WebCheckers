@@ -137,9 +137,7 @@ public class Game implements Iterable<Row> {
    * @return The color associated with the player in the game, null if not in game
    */
   public PieceColor getPlayerColor(Player player) {
-    if(player.equals(redPlayer))
-      return PieceColor.RED;
-    return player.equals(whitePlayer) ? PieceColor.WHITE : null;
+    return player.equals(whitePlayer) ? PieceColor.WHITE : PieceColor.RED;
   }
 
   /**
@@ -427,5 +425,8 @@ public class Game implements Iterable<Row> {
       if(position.getCell() >= 0 && position.getCell() <=7)
         result = true;
     return result;
+  }
+  public void flipActiveColor(){
+    this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
   }
 }

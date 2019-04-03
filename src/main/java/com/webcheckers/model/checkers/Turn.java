@@ -25,6 +25,7 @@ public class Turn {
     INCORRECT_PIECE_USED,
     MOVE_TO_WHITE_SPACE,
     INVALID_MULTI_MOVE,
+    NOT_DIAGONAL,
     INVALID_DIRECTION,
     INVALID_SIMPLE_MOVE,
     MUST_JUMP,
@@ -85,10 +86,22 @@ public class Turn {
   }
 
   /**
+   * Check to make sure that a move is diagonal, all moves must be diagonal regardless of piece
+   * type or color
+   * @param move The move being made
+   * @return True if the move is diagonal
+   */
+  public boolean moveIsDiagonal(Move move) {
+    int moveRowOffset = move.getStart().getRow() - move.getEnd().getRow();
+    int moveCellOffset = move.getStart().getCell() - move.getEnd().getCell();
+    return Math.abs(moveRowOffset) == Math.abs(moveCellOffset);
+  }
+
+  /**
    * Handles checking if a piece is moving in a valid direction based on its type and color.
-   * Kings are moving in the correct direction if they are moving diagonal in any direction. Red
-   * pieces are moving in the correct direction if they are moving diagonal in the positive
-   * direction. White pieces are moving in the correct direction if they are moving diagonal in
+   * Kings are moving in the correct direction if they are moving in any direction. Red
+   * pieces are moving in the correct direction if they are moving in the positive
+   * direction. White pieces are moving in the correct direction if they are moving in
    * the negative direction.
    * @param piece The piece being moved
    * @param move The move being attempted
@@ -96,10 +109,7 @@ public class Turn {
    */
   public boolean moveDirectionValid(Piece piece, Move move) {
     int moveRowOffset = move.getStart().getRow() - move.getEnd().getRow();
-    int moveCellOffset = move.getStart().getCell() - move.getEnd().getCell();
-    boolean moveIsDiagonal = Math.abs(moveRowOffset) == Math.abs(moveCellOffset);
-    if(!moveIsDiagonal)
-      return false;
+
     // King can move in any direction
     if(piece.getType() == PieceType.KING)
       return true;
@@ -217,6 +227,8 @@ public class Turn {
     if(!isValidMultiMove(move, game))
       return TurnResponse.INVALID_MULTI_MOVE;
     // Check direction of the move
+    if(!moveIsDiagonal(move))
+      return TurnResponse.NOT_DIAGONAL;
     if(!moveDirectionValid(piece, move))
       return TurnResponse.INVALID_DIRECTION;
     // Check that a jump is not possible and the user is making a simple move
