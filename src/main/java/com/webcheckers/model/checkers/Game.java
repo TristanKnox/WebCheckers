@@ -190,4 +190,10 @@ public class Game implements Iterable<Row> {
   public void flipActiveColor(){
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
   }
+
+  /**
+   * Returns the list of turns stored in this game
+   * @return list of turns
+   */
+  public List<Turn> getTurnList(){return this.turns;};
 }
