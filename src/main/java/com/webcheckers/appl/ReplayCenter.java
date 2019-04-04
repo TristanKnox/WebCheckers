@@ -1,9 +1,11 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Replay;
 import com.webcheckers.model.checkers.Game;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -12,15 +14,15 @@ import java.util.List;
  * @Author Evan
  */
 public class ReplayCenter {
-  private HashMap<Player, Game> watchedReplays;
-  private List<Game> savedGames;
+  private HashMap<Player, Game> activeReplays;
+  private HashMap<Integer,Replay> archivedReplays;
 
   /**
    * makes the replay center
    */
   public ReplayCenter(){
-    watchedReplays = new HashMap<>();
-    savedGames = new ArrayList<>();
+    activeReplays = new HashMap<>();
+    archivedReplays = new HashMap<>();
   }
 
   /**
@@ -31,7 +33,7 @@ public class ReplayCenter {
    * @param game the game
    */
   public void addReplayer(Player player, Game game){
-    watchedReplays.put(player,game);
+    activeReplays.put(player,game);
   }
 
   /**
@@ -39,17 +41,15 @@ public class ReplayCenter {
    * @param gameId the games Id from the position in the list
    * @return the game at the given index
    */
-  public Game getGame(int gameId){
-    return savedGames.get(gameId);
+  public Replay getReplay(int gameId){
+    return archivedReplays.get(gameId);
   }
 
   /**
    * adds a game to the saved game list.
-   * @param game the game to be saved
+   * @param replay - the replay to archive
    */
-  public void addGame(Game game){
-    savedGames.add(game);
-  }
+  public void archiveReplay(Replay replay){ archivedReplays.put(replay.hashCode(),replay);  }
 
   /**
    * gets the game to player mapping.
@@ -57,7 +57,18 @@ public class ReplayCenter {
    * @return the game paired to the player.
    */
   public Game getReplay(Player player){
-    return watchedReplays.get(player);
+    return activeReplays.get(player);
+  }
+
+  /**
+   * Creates a new game to watch a replay of
+   * @param watcher - the player that will be watching the replay
+   * @param replayID - the id of the replay to watch
+   */
+  public void startReplay(Player watcher, int replayID){
+    Replay replay = getReplay(replayID);
+    Game game = new Game(replay.getPlayer1(),replay.getPlayer2(),replay.turns());
+    activeReplays.put(watcher,game);
   }
 
 }
