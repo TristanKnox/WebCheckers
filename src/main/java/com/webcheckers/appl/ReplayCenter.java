@@ -67,7 +67,7 @@ public class ReplayCenter {
    */
   public void startReplay(Player watcher, int replayID){
     Replay replay = getReplay(replayID);
-    Game game = new Game(replay.getPlayer1(),replay.getPlayer2(),replay.turns());
+    Game game = new Game(replay.getPlayer1(), replay.getPlayer2(), replay.getTurnList());
     activeReplays.put(watcher,game);
   }
 
