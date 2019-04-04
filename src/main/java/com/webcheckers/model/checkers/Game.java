@@ -49,6 +49,21 @@ public class Game implements Iterable<Row> {
   }
 
   /**
+   * An overloaded constructor for the creation of a replay
+   * @param playerOne the first player
+   * @param playerTwo the second player
+   * @param turns the list of turns.
+   */
+  public Game(Player playerOne, Player playerTwo, List<Turn> turns){
+    this.redPlayer = playerOne;
+    this.whitePlayer = playerTwo;
+    this.activeColor = PieceColor.RED;
+    this.gameOver=false;
+    rows = new ArrayList<>();
+    this.turns = turns;
+  }
+
+  /**
    * Handles initializing the boards. Each row initializes its own state
    */
   private void initializeRows() {
@@ -195,5 +210,5 @@ public class Game implements Iterable<Row> {
    * Returns the list of turns stored in this game
    * @return list of turns
    */
-  public List<Turn> getTurnList(){return this.turns;};
+  public List<Turn> getTurnList(){return this.turns;}
 }

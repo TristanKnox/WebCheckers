@@ -45,7 +45,7 @@ public class ReplayCenter {
 
   /**
    * adds a game to the saved game list.
-   * @param game
+   * @param game the game to be saved
    */
   public void addGame(Game game){
     savedGames.add(game);

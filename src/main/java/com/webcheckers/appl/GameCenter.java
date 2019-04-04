@@ -123,7 +123,7 @@ public class GameCenter {
   }
 
   /**
-   * exit the player
+   * exit the player from the game and the game is cleaned.
    * @param player the player who exits the game.
    */
   public void exitGame(Player player){
