@@ -56,7 +56,7 @@ public class ReplayCenter {
    * @param player the player in question
    * @return the game paired to the player.
    */
-  public Game getWatchedGames(Player player){
+  public Game getReplay(Player player){
     return watchedReplays.get(player);
   }
 
