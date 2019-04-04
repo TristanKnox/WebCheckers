@@ -336,6 +336,10 @@ public class TurnTest {
     assertTrue(CuT.isKingRow(PieceColor.WHITE, 0));
   }
 
+  /**
+   * Test the piece can jump method, tests different cases, no piece is being moved, not jumping
+   * over anything, jumping over the wrong piece, valid jump
+   */
   @Test
   public void testPieceCanJump() {
     Turn CuT = new Turn(PieceColor.RED);
@@ -349,7 +353,42 @@ public class TurnTest {
     assertFalse(CuT.pieceCanJump(null, game));
 
     // Cannot make a jump if the end position is on a piece
-    Position endPos = mock(Position.class);
+    Position startPos = mock(Position.class);
+    when(startPos.getRow()).thenReturn(0);
+    when(startPos.getCell()).thenReturn(0);
+    when(space.getPiece()).thenReturn(new Piece(PieceType.SINGLE, PieceColor.WHITE));
+    assertFalse(CuT.pieceCanJump(startPos, game));
 
+    // Jumping over nothing is invalid
+    Position testPosition = new Position(1, 2);
+    when(game.getSpace(testPosition)).thenReturn(space);
+    when(space.getPiece()).thenReturn(null);
+    assertFalse(CuT.pieceCanJump(startPos, game));
+
+    // Cannot jump over piece of same color
+    Piece piece = mock(Piece.class);
+    when(game.getSpace(testPosition)).thenReturn(null);
+    when(piece.getColor()).thenReturn(PieceColor.RED);
+    when(space.getPiece()).thenReturn(piece);
+    assertFalse(CuT.pieceCanJump(startPos, game));
+
+    // Valid jump
+    Space startSpace = mock(Space.class);
+    Piece startPiece = mock(Piece.class);
+    // Setup the start piece
+    when(startPiece.getColor()).thenReturn(PieceColor.RED);
+    when(startPiece.getType()).thenReturn(PieceType.SINGLE);
+    // Setup game to return start piece @start positions
+    when(game.getSpace(startPos)).thenReturn(startSpace);
+    when(startSpace.getPiece()).thenReturn(startPiece);
+    // When getting the jump position (from 0,0), return no piece at that location
+    when(game.getSpace(new Position(2, 2))).thenReturn(new Space(0, null, SpaceType.BLACK));
+    // Setup getting the captured piece type
+    Piece capturedPiece = mock(Piece.class);
+    Space capturedSpace = mock(Space.class);
+    when(capturedSpace.getPiece()).thenReturn(capturedPiece);
+    when(capturedPiece.getColor()).thenReturn(PieceColor.WHITE);
+    when(game.getSpace(new Position(1, 1))).thenReturn(capturedSpace);
+    assertTrue(CuT.pieceCanJump(startPos, game));
   }
 }
