@@ -15,9 +15,14 @@ public class Replay {
     player1 = game.getRedPlayer();
     player2 = game.getWhitePlayer();
     turnList = game.getTurnList();
-    id = replayCount;
     synchronized (Replay.class) {
+      id = replayCount;
       replayCount++;
     }
+  }
+
+  @Override
+  public int hashCode(){
+    return id;
   }
 }
