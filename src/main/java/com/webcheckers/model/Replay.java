@@ -21,6 +21,14 @@ public class Replay {
     }
   }
 
+  public Player getPlayer1(){return player1;}
+
+  public Player getPlayer2(){return player2;}
+
+  public int getId(){return id;}
+
+  public List<Turn> getTurnList(){return turnList;}
+
   @Override
   public int hashCode(){
     return id;

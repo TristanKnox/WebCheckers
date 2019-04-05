@@ -1,14 +1,13 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.ui.ReplayRoutes.*;
 import static spark.Spark.*;
-
 import com.webcheckers.appl.GameCenter;
 import java.util.Objects;
 import java.util.logging.Logger;
-
 import com.google.gson.Gson;
-
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayCenter;
 import spark.TemplateEngine;
 
 
@@ -78,6 +77,8 @@ public class WebServer {
 
   public static final String SIGN_OUT_URL = "/signout";
 
+  public static final String REPLAY_URL = "/replay";
+
 
 
   //
@@ -87,7 +88,8 @@ public class WebServer {
   private final TemplateEngine templateEngine;
   private final Gson gson;
   private final PlayerLobby playerLobby;
-  private GameCenter gameCenter;
+  private final GameCenter gameCenter;
+  private final ReplayCenter replayCenter;
 
   //
   // Constructor
@@ -113,6 +115,7 @@ public class WebServer {
     this.gson = gson;
     this.playerLobby = new PlayerLobby();
     this.gameCenter = new GameCenter();
+    this.replayCenter = new ReplayCenter();
   }
 
   //
@@ -188,7 +191,9 @@ public class WebServer {
 
     post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
-    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby,gameCenter,templateEngine));
+    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, templateEngine));
+
+    get(REPLAY_URL, new GetReplayRoute(replayCenter, playerLobby));
     LOG.config("WebServer is initialized.");
   }
 
