@@ -145,7 +145,7 @@ public class Game implements Iterable<Row> {
    * @param player - the player you want the opponent for
    * @return - the opponent
    */
-  public Player getOponent(Player player){
+  public Player getOpponent(Player player){
     PieceColor playerColor = getPlayerColor(player);
     return playerColor == PieceColor.RED ? whitePlayer : redPlayer;
   }
@@ -244,10 +244,10 @@ public class Game implements Iterable<Row> {
    */
   public void checkEndGame(){
     //Checks and sets EndGameConditions for outOfPieces
-    if(outOfPieces() != null) {
-      if (outOfPieces() == PieceColor.RED)
+    if(getOutOfPieces() != null) {
+      if (getOutOfPieces() == PieceColor.RED)
         this.endGame(EndGameCondition.RED_OUT_OF_PIECES);
-      if(outOfPieces() == PieceColor.WHITE)
+      if(getOutOfPieces() == PieceColor.WHITE)
         this.endGame(EndGameCondition.WHITE_OUT_OF_PIECES);
     }
     //Checks and sets EndGameConditions for outOfMoves
@@ -266,7 +266,7 @@ public class Game implements Iterable<Row> {
    * Checks to see if either player is out of pieces
    * @return - the PieceColor of the player that is out of pieces or null if neither player is out of pieces
    */
-  public PieceColor outOfPieces(){
+  public PieceColor getOutOfPieces(){
     int whitePieces = 0;
     int redPieces = 0;
     for(Row r : rows){
@@ -312,7 +312,7 @@ public class Game implements Iterable<Row> {
           //The only time the end game should be triggered is if the player who is about to take their turn is un able to move so we only chick if that player can move
           if(piece.getColor() == activeColor){
             //If the current piece can move then the job is done
-            if(pieceCaneMove(new Position(rowIndex,spaceIndex),piece))
+            if(pieceCanMove(new Position(rowIndex,spaceIndex),piece))
               return false;
           }
         }
@@ -328,7 +328,7 @@ public class Game implements Iterable<Row> {
    * @param piece - the piece in question
    * @return - true if a move is possible false if a move is not possible
    */
-  private boolean pieceCaneMove(Position piecePosition, Piece piece){
+  private boolean pieceCanMove(Position piecePosition, Piece piece){
     //If Piece is red check in the positive direction
     if(piece.getColor() == PieceColor.RED && canMoveInPosotiveDirection(piecePosition,piece.getColor()))
       return true;

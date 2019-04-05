@@ -111,7 +111,7 @@ public class GetGameRoute implements Route {
    */
   private String getEndGameMessage(Game game, Player player){
     String msg = "Game Over: ";
-    String oponentsName = game.getOponent(player).getName();
+    String oponentsName = game.getOpponent(player).getName();
     Piece.PieceColor playerColor = game.getPlayerColor(player);
     switch (game.getEndGameCondition()){
       case OPPONENT_RESIGNED:
