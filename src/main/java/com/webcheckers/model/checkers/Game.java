@@ -1,5 +1,6 @@
 package com.webcheckers.model.checkers;
 
+import com.webcheckers.model.BoardState;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Turn.TurnResponse;

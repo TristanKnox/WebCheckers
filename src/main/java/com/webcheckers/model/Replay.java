@@ -56,7 +56,7 @@ public class Replay {
 
   public int getId(){return id;}
 
-  public List<Turn> getTurnList(){return turnList;}
+  public List<BoardState> getTurnList(){return turnStates;}
 
   /**
    *
@@ -67,7 +67,7 @@ public class Replay {
     return id;
   }
   public BoardState getNextBoardState(){
-    if
+
     currentTurnIndex++;
     return turnStates.get(currentTurnIndex);
   }
