@@ -26,14 +26,12 @@ public class ReplayCenter {
   }
 
   /**
-   * adds a replayer to a given game.
-   * the game needs to be a copy of the game that it is in the list, so other players can look at
-   * the same game from the beginning.
-   * @param player the player session
-   * @param game the game
+   * Converts a game to a replay and archives it
+   * @param game - the game to be archived
    */
-  public void addReplayer(Player player, Game game){
-    activeReplays.put(player,game);
+  public void storeReplay( Game game){
+    Replay replay = new Replay(game);
+    archivedReplays.put(replay.hashCode(),replay);
   }
 
   /**
@@ -45,11 +43,6 @@ public class ReplayCenter {
     return archivedReplays.get(gameId);
   }
 
-  /**
-   * adds a game to the saved game list.
-   * @param replay - the replay to archive
-   */
-  public void archiveReplay(Replay replay){ archivedReplays.put(replay.hashCode(),replay);  }
 
   /**
    * gets the game to player mapping.
