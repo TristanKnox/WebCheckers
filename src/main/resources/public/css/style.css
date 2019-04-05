@@ -143,6 +143,19 @@ button.player {
   display: block;
 }
 
+button#replay {
+  background-color: #f1f1f1;
+  width: 100px;
+  height: 50px;
+  margin: 30px;
+  background: #DEE9FF;
+  border: 1px solid #1057FF;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  padding: 4px;
+  font-size: 13px;
+}
+
 button.game {
   background-color: #fff1f1;
   width: 100px;
@@ -158,4 +171,9 @@ button.game {
   border-bottom: 2px solid black;
   text-align: center;
   font-weight: bold;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 80% 20%;
 }
