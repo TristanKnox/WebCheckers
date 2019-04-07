@@ -187,6 +187,10 @@ public class Game implements Iterable<Row> {
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
     turns.add(new Turn(activeColor));
   }
+
+  /**
+   * Flips the active color to the other player. Signaling the end of a turn
+   */
   public void flipActiveColor(){
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
   }
