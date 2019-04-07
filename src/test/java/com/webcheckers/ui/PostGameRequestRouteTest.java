@@ -9,8 +9,10 @@ import com.webcheckers.model.checkers.Piece;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import spark.*;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -63,10 +65,19 @@ public class PostGameRequestRouteTest {
         CuT = new PostGameRequestRoute(engine,playerLobby,gameCenter);
     }
 
+  /**
+   * tests the constructors are not null.
+   */
+  @Test
+    public void testCtor(){
+        PostGameRequestRoute route = new PostGameRequestRoute(engine,playerLobby,gameCenter);
+        assertNotNull(route);
+    }
+
     /**
      * Tests PostRequestGameRout when the selected player is not available for a game
      */
-    //@Test
+    @Test
     public void player2_not_available(){
         when(playerLobby.getPlayer(POSTED_USER_NAME)).thenReturn(player2);
         when(playerLobby.isInGame(player2)).thenReturn(true);

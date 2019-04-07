@@ -10,7 +10,6 @@ import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Position;
 import com.webcheckers.model.checkers.Turn;
 import java.util.List;
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
