@@ -41,24 +41,7 @@ public class Game implements Iterable<Row> {
 
   /** Represents all of the turns made through out the duration of the game */
   private List<Turn> turns;
-
-  /**
-   * Creates an initial game with the rows initialized each player kept track of
-   * @param playerOne The player to start the game
-   * @param playerTwo The player invited to play the game
-   */
- /* public Game(Player playerOne, Player playerTwo) {
-    this.redPlayer = playerOne;
-    this.whitePlayer = playerTwo;
-    this.activeColor = PieceColor.RED;
-    this.gameOver = false;
-    this.endGameCondition = null;
-    rows = new ArrayList<>();
-    initializeRows();
-    this.turns = new ArrayList<>();
-    turns.add(new Turn(activeColor));
-  }*/
-
+  
   /**
    * Constructor - this will create a new game with a given board type
    * To create a standard game the board type should be standard
