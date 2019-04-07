@@ -213,7 +213,7 @@ public class Turn {
    * @param piece The piece that could potentially jump
    * @return List of positions that a jump could potentially exist
    */
-  private List<Position> getPossibleJumpPositions(Position pos, Piece piece) {
+  public List<Position> getPossibleJumpPositions(Position pos, Piece piece) {
     PieceColor pieceColor = piece.getColor();
     PieceType pieceType = piece.getType();
 
