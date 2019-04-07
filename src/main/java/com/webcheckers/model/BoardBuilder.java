@@ -126,6 +126,7 @@ public class BoardBuilder {
   private static List<Row> onePieceOnBoard(List<Row> rows){
     rows = removeAllPieces(rows);
     rows.get(3).getSpace(2).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    rows.get(4).getSpace(3).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));
     return rows;
   }
 

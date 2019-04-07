@@ -46,7 +46,8 @@ public class GameCenter {
   * @return the {@link Game} that is created
   */
   public Game spawnGame(Player playerOne, Player playerTwo){
-    Game game = new Game(playerOne,playerTwo, BoardBuilder.BoardType.OUT_OF_MOVES);//TODO change this for testing
+    //By changing the BoardType here you can test different game scenarios
+    Game game = new Game(playerOne,playerTwo, BoardBuilder.BoardType.OUT_OF_PIECES);
     addPlayersToMatch(playerOne,playerTwo);
     addPlayerToGame(playerOne,game);
     addPlayerToGame(playerTwo,game);
