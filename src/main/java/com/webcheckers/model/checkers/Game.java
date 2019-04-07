@@ -399,7 +399,7 @@ public class Game implements Iterable<Row> {
       //If no other piece is there it is possible to move here
       if(spaceInQuestion.getPiece() == null)
         return true;
-      //Otherwise as long as the piece that is there is not the same color a jump may be posible
+      //Otherwise as long as the piece that is there is not the same color a jump may be possible
       else if(spaceInQuestion.getPiece().getColor() != pieceColor)
         locationInQuestion = new Position(locationInQuestion.getRow() + rowDirection,locationInQuestion.getCell() + columDiretion);//
       //Insure that the locationInQuestion exists on the board
