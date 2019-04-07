@@ -41,7 +41,7 @@ public class Game implements Iterable<Row> {
 
   /** Represents all of the turns made through out the duration of the game */
   private List<Turn> turns;
-  
+
   /**
    * Constructor - this will create a new game with a given board type
    * To create a standard game the board type should be standard

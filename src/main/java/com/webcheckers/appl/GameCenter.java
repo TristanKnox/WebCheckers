@@ -47,7 +47,7 @@ public class GameCenter {
   */
   public Game spawnGame(Player playerOne, Player playerTwo){
     //By changing the BoardType here you can test different game scenarios
-    Game game = new Game(playerOne,playerTwo, BoardBuilder.BoardType.OUT_OF_PIECES);
+    Game game = new Game(playerOne,playerTwo, BoardBuilder.BoardType.STANDARD);
     addPlayersToMatch(playerOne,playerTwo);
     addPlayerToGame(playerOne,game);
     addPlayerToGame(playerTwo,game);
