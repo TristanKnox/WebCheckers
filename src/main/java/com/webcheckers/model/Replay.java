@@ -71,4 +71,12 @@ public class Replay {
     currentTurnIndex++;
     return turnStates.get(currentTurnIndex);
   }
+
+  /**
+   *
+   */
+  @Override
+  public String toString(){
+    return getPlayer1().getName() + " vs. " + getPlayer2().getName();
+  }
 }
