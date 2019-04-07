@@ -1,7 +1,7 @@
 package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.Player;
-import com.webcheckers.model.TestBoardBuilder;
+import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Piece.PieceType;
 import com.webcheckers.model.checkers.Turn.TurnResponse;
@@ -47,7 +47,7 @@ public class Game implements Iterable<Row> {
    * @param playerOne The player to start the game
    * @param playerTwo The player invited to play the game
    */
-  public Game(Player playerOne, Player playerTwo) {
+ /* public Game(Player playerOne, Player playerTwo) {
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
     this.activeColor = PieceColor.RED;
@@ -57,15 +57,16 @@ public class Game implements Iterable<Row> {
     initializeRows();
     this.turns = new ArrayList<>();
     turns.add(new Turn(activeColor));
-  }
+  }*/
 
   /**
-   * Create a cosome board setup for testing specific game sinarios
+   * Constructor - this will create a new game with a given board type
+   * To create a standard game the board type should be standard
    * @param playerOne - The player to start the game
    * @param playerTwo - The player invited to the game
    * @param boardType - The board set up
    */
-  public Game(Player playerOne, Player playerTwo, TestBoardBuilder.BoardType boardType){
+  public Game(Player playerOne, Player playerTwo, BoardBuilder.BoardType boardType){
     //Start game as normal
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
@@ -76,7 +77,7 @@ public class Game implements Iterable<Row> {
     turns.add(new Turn(activeColor));
     gameOver = false;
     //Take initialized board and refactor it based on board type given
-    rows = TestBoardBuilder.getTestBoard(rows,boardType);
+    rows = BoardBuilder.getTestBoard(rows,boardType);
 
   }
 
@@ -306,6 +307,8 @@ public class Game implements Iterable<Row> {
     return null;
   }
 
+
+
   /**
    * Checks to see if the active color can move
    * PreCondition - this should be called after the activeColor has been switched to the color of the player who is about
@@ -314,7 +317,17 @@ public class Game implements Iterable<Row> {
    * @return - true if the activeColor cannot move false if the activeColor can move
    */
   private boolean outOfMoves(PieceColor activeColor){
-    //Loop through each row
+    Turn turn = new Turn(activeColor);
+    List<Position> piecePositions = this.getPiecePositions(activeColor);
+    for(Position piecePosition: piecePositions) {
+      if(turn.pieceCanSimpleMove(piecePosition,this))
+        return false;
+      if(turn.pieceCanJump(piecePosition, this))
+        return false;
+    }
+    return true;
+
+    /*//Loop through each row
     for(int rowIndex = 0; rowIndex < rows.size(); rowIndex++){
       Row row = rows.get(rowIndex);
       List<Space> spaces = row.getSpaces();
@@ -335,8 +348,9 @@ public class Game implements Iterable<Row> {
       }
     }
     //If we get all the way to the end and have not found a piece that can move the the active color cannot move
-    return true;
+    return true;*/
   }
+
 
   /**
    * Validates if a move is possible for a given piece
@@ -344,7 +358,7 @@ public class Game implements Iterable<Row> {
    * @param piece - the piece in question
    * @return - true if a move is possible false if a move is not possible
    */
-  private boolean pieceCanMove(Position piecePosition, Piece piece){
+  /*private boolean pieceCanMove(Position piecePosition, Piece piece){
     //If Piece is red check in the positive direction
     if(piece.getColor() == PieceColor.RED && canMoveInPosotiveDirection(piecePosition,piece.getColor()))
       return true;
@@ -358,7 +372,7 @@ public class Game implements Iterable<Row> {
     }
     return false;
 
-  }
+  }*/
 
   /**
    * Validates if a move is possible in the positive direction. the positive direction is the direction in which the row index is increasing
@@ -366,7 +380,7 @@ public class Game implements Iterable<Row> {
    * @param pieceColor - the color of the piece being checked
    * @return - true if the piece can move in the positive direction false if it cannot move in the positive direction
    */
-  private boolean canMoveInPosotiveDirection(Position piecePosition, PieceColor pieceColor){
+  /*private boolean canMoveInPosotiveDirection(Position piecePosition, PieceColor pieceColor){
     boolean result;
     //Check to the left
     result = checkCanMoveWithDirection(1,-1,piecePosition,pieceColor);
@@ -375,7 +389,7 @@ public class Game implements Iterable<Row> {
     //Check to the right
     result = checkCanMoveWithDirection(1,1,piecePosition,pieceColor);
     return result;
-  }
+  }*/
 
   /**
    * Validates if a move is possible in the negative direction. The negative direction is the direction in which the row index is decreasing
@@ -383,7 +397,7 @@ public class Game implements Iterable<Row> {
    * @param pieceColor - the color of the piece being checked
    * @return - true if the piece can move in the negative direction false if it cannot move in the negative direction
    */
-  private boolean canMoveInNegativeDirection(Position piecePosition, PieceColor pieceColor){
+  /*private boolean canMoveInNegativeDirection(Position piecePosition, PieceColor pieceColor){
     boolean result;
     //Check to the left
     result = checkCanMoveWithDirection(-1,-1,piecePosition,pieceColor);
@@ -392,7 +406,7 @@ public class Game implements Iterable<Row> {
     //Check to the right
     result = checkCanMoveWithDirection(-1,1,piecePosition,pieceColor);
     return result;
-  }
+  }*/
 
   /**
    * Checks if a move can be made in a given direction
@@ -402,7 +416,7 @@ public class Game implements Iterable<Row> {
    * @param pieceColor - the color of the piece that is being checked
    * @return - true if there is a move available or false if there is no move available
    */
-  private boolean checkCanMoveWithDirection(int rowDirection, int columDiretion,Position piecePosition, PieceColor pieceColor){
+  /*private boolean checkCanMoveWithDirection(int rowDirection, int columDiretion,Position piecePosition, PieceColor pieceColor){
     //This is the location that will be checked to see if a move can be moved here
     Position locationInQuestion;
     Space spaceInQuestion;
@@ -428,20 +442,20 @@ public class Game implements Iterable<Row> {
       }
     }
     return false;
-  }
+  }*/
 
   /**
    * Validates that a given position exists on the board
    * @param position - the postion in question
    * @return true if its a good location false if not a valid location
    */
-  private boolean isValidLocation(Position position){
+ /* private boolean isValidLocation(Position position){
     boolean result = false;
     if(position.getRow() >= 0  && position.getRow() <= 7)
       if(position.getCell() >= 0 && position.getCell() <=7)
         result = true;
     return result;
-  }
+  }*/
   public void flipActiveColor(){
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
   }

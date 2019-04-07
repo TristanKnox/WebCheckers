@@ -259,6 +259,55 @@ public class Turn {
   }
 
   /**
+   * Checks to see if a piece at the given possition can make a simple move
+   * @param pos - the position of the piece in question
+   * @param game -
+   * @return
+   */
+  public boolean pieceCanSimpleMove(Position pos, Game game){
+    Piece piece = game.getSpace(pos).getPiece();
+    if(piece == null)
+      return false;
+    List<Position> possibleMoves = getPossibleSimpleMoves(pos);
+    for(Position possibleMove: possibleMoves){
+      Move atemptedMove = new Move(pos,possibleMove);
+      if(this.addMove(game,atemptedMove) == TurnResponse.VALID_TURN)
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Creates a list of possible simple move portions. This method is not concerned with piece type it the list will always be up to the left and right and down to the left and right
+   * @param pos - the position the move will be made from
+   * @return - list of 4 possible move positions
+   */
+  private List<Position> getPossibleSimpleMoves(Position pos){
+    List<Position> movePositions = new ArrayList<>();
+    for(int row = pos.getRow() -1; row <= pos.getRow() +1; row += 2){
+      for(int col = pos.getCell() -1; col <= pos.getCell() +1; col +=2){
+        Position movePosition = new Position(row,col);
+        if(isValidLocation(movePosition))
+          movePositions.add(movePosition);
+      }
+    }
+    return movePositions;
+  }
+
+  /**
+   * Validates that a given position exists on the board
+   * @param position - the postion in question
+   * @return true if its a good location false if not a valid location
+   */
+  private boolean isValidLocation(Position position){
+    boolean result = false;
+    if(position.getRow() >= 0  && position.getRow() <= 7)
+      if(position.getCell() >= 0 && position.getCell() <=7)
+        result = true;
+    return result;
+  }
+
+  /**
    * Checks to see that a jump is possible for a given piece color. The turn gets the list of
    * all positions of the pieces of the given color then checks to see if any of them can make a
    * jump

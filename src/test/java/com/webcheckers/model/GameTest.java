@@ -38,7 +38,7 @@ public class GameTest {
     p1 = mock(Player.class);
     p2 = mock(Player.class);
     turn = mock(Turn.class);
-    game = new Game(p1,p2);
+    game = new Game(p1,p2, BoardBuilder.BoardType.STANDARD);
 
   }
   //Constructor Test
@@ -46,7 +46,7 @@ public class GameTest {
   public void testCtor(){
     Player p1 = mock(Player.class);
     Player p2 = mock(Player.class);
-    Game game = new Game(p1,p2);
+    Game game = new Game(p1,p2, BoardBuilder.BoardType.STANDARD);
     assertNotNull(game);
   }
 
@@ -94,15 +94,15 @@ public class GameTest {
   public void testEndGame(){
 
     //Out of Pices
-    game = new Game(p1,p2, TestBoardBuilder.BoardType.OUT_OF_MOVES);
-    assertNull(game.outOfPieces());
-    game = new Game(p1,p2,TestBoardBuilder.BoardType.OUT_OF_PIECES);
+    game = new Game(p1,p2, BoardBuilder.BoardType.OUT_OF_MOVES);
+    assertNull(game.getOutOfPieces());
+    game = new Game(p1,p2,BoardBuilder.BoardType.OUT_OF_PIECES);
     game.checkEndGame();
     assertTrue(game.isGameOver());
     assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_PIECES);
 
     //Out of  Moves
-    game = new Game(p1,p2, TestBoardBuilder.BoardType.OUT_OF_MOVES);
+    game = new Game(p1,p2, BoardBuilder.BoardType.OUT_OF_MOVES);
     game.checkEndGame();
     assertNull(game.getEndGameCondition());
     assertFalse(game.isGameOver());

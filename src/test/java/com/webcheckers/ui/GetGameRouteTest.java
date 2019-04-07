@@ -119,7 +119,7 @@ public class GetGameRouteTest {
     // when checking if the gave is over, return true
     when(game.isGameOver()).thenReturn(true);
 
-    when(game.getOponent(playerOne)).thenReturn(playerTwo);
+    when(game.getOpponent(playerOne)).thenReturn(playerTwo);
     when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.OPPONENT_RESIGNED);
 
     Gson gson = new Gson();

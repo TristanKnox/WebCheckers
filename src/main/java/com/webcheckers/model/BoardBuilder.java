@@ -11,9 +11,10 @@ import java.util.List;
  * This class is for creating customized boards for the purpose of setting specific testing scenarios
  */
 
-public class TestBoardBuilder {
+public class BoardBuilder {
 
   public enum BoardType{
+    STANDARD,
     KING_PIECE,
     MULTY_JUMP,
     KING_MULTY_JUMP,
@@ -45,6 +46,8 @@ public class TestBoardBuilder {
       case OUT_OF_PIECES:
         rows = onePieceOnBoard(rows);
         break;
+      case STANDARD:
+        return rows;
     }
     return rows;
   }
@@ -113,14 +116,20 @@ public class TestBoardBuilder {
     rows.get(3).getSpace(6).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
     rows.get(2).getSpace(7).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
 
+    rows.get(5).getSpace(4).setPiece((new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE)));
+
+
     return rows;
   }
+
 
   private static List<Row> onePieceOnBoard(List<Row> rows){
     rows = removeAllPieces(rows);
     rows.get(3).getSpace(2).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
     return rows;
   }
+
+
 
   /**
    * Remove all pieces from the board
