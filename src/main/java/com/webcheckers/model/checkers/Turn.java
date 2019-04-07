@@ -233,6 +233,15 @@ public class Turn {
     return checkPositions;
   }
 
+  private boolean pieceCanJumpToPos(Move move, Game game) {
+    if (game.getSpace(move.getEnd()).getPiece() == null) {
+      Space capturedSpace = getCaptureSpace(move, game);
+      if (capturedSpace.getPiece() != null && capturedSpace.getPiece().getColor() != turnColor)
+        return true;
+    }
+    return false;
+  }
+
   /**
    * Check if a given piece can make a jump. The check first generates possible positions that
    * a piece could move to then checks each possible position to see if it would capture an
@@ -248,12 +257,8 @@ public class Turn {
 
     List<Position> possibleJumps = getPossibleJumpPositions(pos, piece);
     for(Position endPos: possibleJumps) {
-      // If the end position is not on top of a piece (illegal in checkers)
-      if (game.getSpace(endPos).getPiece() == null) {
-        Space capturedSpace = getCaptureSpace(new Move(pos, endPos), game);
-        if (capturedSpace.getPiece() != null && capturedSpace.getPiece().getColor() != turnColor)
-          return true;
-      }
+      if(pieceCanJumpToPos(new Move(pos, endPos), game))
+        return true;
     }
     return false;
   }
@@ -372,6 +377,22 @@ public class Turn {
         capturedSpace.setPiece(null);
       }
     }
+  }
+
+  /**
+   * Check that a move is complete. A move is complete if it is a simple move, single jump, and
+   * a multi move that has made all jumps possible.
+   * @return True if the turn is in a complete state
+   */
+  public boolean isComplete(Game game) {
+    Move firstMove = moves.get(0);
+    Move lastMove = moves.get(moves.size() - 1);
+    List<Position> possibleJumpPositions = getPossibleJumpPositions(lastMove.getEnd(), getPiece(game, firstMove.getStart()));
+    // Don't check for where the piece just came from
+    possibleJumpPositions.remove(lastMove.getStart());
+
+    // If another jump is possible, the turn is not complete
+    return !jumpIsPossible(game);
   }
 
   /**
