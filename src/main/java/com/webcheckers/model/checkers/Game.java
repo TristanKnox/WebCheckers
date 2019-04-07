@@ -2,6 +2,7 @@ package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.model.checkers.Piece.PieceType;
 import com.webcheckers.model.checkers.Turn.TurnResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -142,6 +143,20 @@ public class Game implements Iterable<Row> {
   }
 
   /**
+   * Gets a list of positions for each piece of the given color.
+   * @param color The color of the piece to get the positions of
+   * @return List of positions where each piece of a given color are
+   */
+  public List<Position> getPiecePositions(PieceColor color) {
+    List<Position> positions = new ArrayList<>();
+    for(Row row: rows)
+      for(Space space: row.getSpaces())
+        if(space.getPiece() != null && space.getPiece().getColor() == color)
+          positions.add(new Position(row.getIndex(), space.getCellIdx()));
+    return positions;
+  }
+
+  /**
    * Handles adding a move to the current active turn. The move is applied to the turn if the move
    * is valid. The result of the validation is returned based on if any rule was violated
    * @param move The move to be added to the current turn
@@ -170,6 +185,7 @@ public class Game implements Iterable<Row> {
     Turn currentTurn = turns.get(turns.size() - 1);
     return currentTurn.getMoves().size() > 0;
   }
+
 
   /**
    * Handles applying the current moves to the game sequentially updating the state of the game.
