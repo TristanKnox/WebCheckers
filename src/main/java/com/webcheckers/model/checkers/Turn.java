@@ -383,16 +383,21 @@ public class Turn {
    * Check that a move is complete. A move is complete if it is a simple move, single jump, and
    * a multi move that has made all jumps possible.
    * @return True if the turn is in a complete state
+   * @precondition there is at least a single move in the turn
    */
   public boolean isComplete(Game game) {
     Move firstMove = moves.get(0);
+    if(moves.size() == 1 && isValidSimpleMove(firstMove))
+      return true;
     Move lastMove = moves.get(moves.size() - 1);
     List<Position> possibleJumpPositions = getPossibleJumpPositions(lastMove.getEnd(), getPiece(game, firstMove.getStart()));
     // Don't check for where the piece just came from
     possibleJumpPositions.remove(lastMove.getStart());
+    for(Position possibleJump: possibleJumpPositions)
+      if(pieceCanJumpToPos(new Move(lastMove.getEnd(), possibleJump), game))
+        return false;
 
-    // If another jump is possible, the turn is not complete
-    return !jumpIsPossible(game);
+    return true;
   }
 
   /**
