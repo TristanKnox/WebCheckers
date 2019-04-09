@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayCenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ public class PostResignationRouteTest {
     private Response response;
     private GameCenter gameCenter;
     private PlayerLobby playerLobby;
+    private ReplayCenter replayCenter;
     private Gson gson;
 
     @BeforeEach
@@ -38,10 +40,11 @@ public class PostResignationRouteTest {
       response = mock(Response.class);
       gameCenter = mock(GameCenter.class);
       playerLobby = mock(PlayerLobby.class);
+      replayCenter = mock(ReplayCenter.class);
       gson = new Gson();
 
       // create a unique CuT for each test
-      CuT = new PostResignationRoute(playerLobby, gameCenter);
+      CuT = new PostResignationRoute(playerLobby, gameCenter, replayCenter);
     }
 
     /**
