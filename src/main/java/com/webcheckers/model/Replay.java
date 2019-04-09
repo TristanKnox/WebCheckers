@@ -23,6 +23,7 @@ public class Replay {
   public Replay(Game game){
     player1 = game.getRedPlayer();
     player2 = game.getWhitePlayer();
+    boardStateList = new ArrayList<>();
     List<Turn> turnList = game.getTurnList();
     synchronized (Replay.class) {
       id = replayCount;
@@ -41,8 +42,8 @@ public class Replay {
     Game game = new Game(player1,player2);
     storeBoardState(game);
     for (Turn turn : turnList) {
-      turn.execute(game);
-      storeBoardState(game);
+        turn.execute(game);
+        storeBoardState(game);
     }
   }
   private void storeBoardState(Game game){

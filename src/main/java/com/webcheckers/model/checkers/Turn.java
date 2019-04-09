@@ -277,6 +277,9 @@ public class Turn {
    * @param game The game to execute on
    */
   public void execute(Game game) {
+    //Ensure that there are actually moves to make
+    if(moves.isEmpty())
+      return;
     // Move piece from start to end location
     Move firstMove = moves.get(0);
     Move lastMove = moves.get(moves.size() - 1);
