@@ -66,7 +66,6 @@ public class WebServer {
   
   public static final String RESIGNATION_URL = "/resignGame";
 
-
   public static final String REQUEST_MOVE_URL = "/validateMove";
 
   public static final String REQUEST_TURN_SUBMISSION = "/submitTurn";
@@ -181,7 +180,7 @@ public class WebServer {
 
     get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
 
-    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter));
+    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter, replayCenter));
 
     post(REQUEST_MOVE_URL, new PostMoveRequestRoute(gameCenter));
 
@@ -191,9 +190,9 @@ public class WebServer {
 
     post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
-    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, templateEngine));
+    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, replayCenter, templateEngine));
 
-    get(REPLAY_URL, new GetReplayRoute(replayCenter, playerLobby));
+    get(REPLAY_URL, new GetReplayRoute(replayCenter, playerLobby, templateEngine));
     LOG.config("WebServer is initialized.");
   }
 

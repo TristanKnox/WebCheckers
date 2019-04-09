@@ -13,7 +13,7 @@ public class Replay {
   private int id;
   private Player player1;
   private Player player2;
-  private List<BoardState> turnStates;
+  private List<BoardState> boardStateList;
   private int currentTurnIndex;
 
   /**
@@ -28,26 +28,26 @@ public class Replay {
       id = replayCount;
       replayCount++;
     }
-    runThroughTurns(turnList);
-    currentTurnIndex =0;
-    turnStates.get(currentTurnIndex);
+    convertTurnsToBoardStates(turnList);
+    currentTurnIndex = 0;
+    boardStateList.get(currentTurnIndex);
   }
 
   /**
    * runs through a given turn list and stores the game
    * @param turnList
    */
-  private void runThroughTurns(List<Turn> turnList){
+  private void convertTurnsToBoardStates(List<Turn> turnList){
     Game game = new Game(player1,player2);
     storeBoardState(game);
-    for (Turn turn: turnList) {
+    for (Turn turn : turnList) {
       turn.execute(game);
       storeBoardState(game);
     }
   }
   private void storeBoardState(Game game){
     BoardState boardState = new BoardState(game);
-    turnStates.add(boardState);
+    boardStateList.add(boardState);
   }
 
   public Player getPlayer1(){return player1;}
@@ -56,7 +56,12 @@ public class Replay {
 
   public int getId(){return id;}
 
-  public List<BoardState> getTurnList(){return turnStates;}
+  public List<BoardState> getTurnList(){return boardStateList;}
+
+  public BoardState getNextBoardState(){
+    currentTurnIndex++;
+    return boardStateList.get(currentTurnIndex);
+  }
 
   /**
    *
@@ -65,11 +70,6 @@ public class Replay {
   @Override
   public int hashCode(){
     return id;
-  }
-  public BoardState getNextBoardState(){
-
-    currentTurnIndex++;
-    return turnStates.get(currentTurnIndex);
   }
 
   /**

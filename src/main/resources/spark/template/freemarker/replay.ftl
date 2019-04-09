@@ -20,9 +20,6 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl">
 
-    <!-- Check if there is a player signed in. -->
-    <#if currentUser??>
-
       <div class = "grid-container">
 
         <div>
@@ -31,7 +28,7 @@
             Available Replays
           </p>
 
-          <!-- Add clickable buttons with available users. -->
+          <!-- Add clickable buttons with available replays. -->
           <form action="./requestReplay" method="POST">
             <#list replays as replay>
                 <button class = "replay grid-item" name = "replay" type="submit" value = ${replay.hashCode()}>${replay.toString()}</button>
@@ -39,7 +36,6 @@
           </form>
         </div>
       </div>
-    </#if>
   </div>
 
 </div>
