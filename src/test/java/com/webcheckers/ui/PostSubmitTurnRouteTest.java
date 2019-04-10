@@ -79,7 +79,7 @@ public class PostSubmitTurnRouteTest {
   /**
    * Make sure an info message is returned when a successful execution request is made
    */
- // @Test
+  @Test
   public void successfulMoveExecution() {
     when(game.getActiveColor()).thenReturn(PieceColor.RED);
     when(game.getPlayerColor(any())).thenReturn(PieceColor.RED);
