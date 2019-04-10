@@ -51,7 +51,7 @@ public class GameTest {
   }
 
   /**
-   * Tests the starting game conditons
+   * Tests the starting game conditions
    *
    */
   @Test
@@ -81,23 +81,7 @@ public class GameTest {
   public void testGetRows(){
     assertNotNull(game.getCopyRows());
   }
-//  @Test todo
-//  public void testResign(){
-//
-//
-//  }
-//  @Test
-//  public void testValidMove(){
-//
-//  }
-//  @Test
-//  public void testBackUpMove(){
-//
-//  }
-//  @Test
-//  public void testResignationEnabler(){
-//
-//  }
+
   @Test
   public void testEndGame(){
 
