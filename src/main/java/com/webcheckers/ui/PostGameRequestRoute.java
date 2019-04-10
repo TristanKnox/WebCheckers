@@ -56,7 +56,7 @@ public class PostGameRequestRoute implements Route {
     playerOne = playerLobby.getPlayerForGame(playerOne.getName());
     Player playerTwo = playerLobby.getPlayerForGame(playerTwoName);
 
-    //Inject players into game center to retrev game
+    //Inject players into game center to retrieve game
     Game game = gameCenter.spawnGame(playerOne,playerTwo);
 
     //Adding data to vm
