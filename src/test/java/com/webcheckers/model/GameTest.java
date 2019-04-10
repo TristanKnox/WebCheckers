@@ -105,6 +105,9 @@ public class GameTest {
     game = new Game(p1,p2, BoardBuilder.BoardType.OUT_OF_MOVES);
     assertNull(game.getOutOfPieces());
     game = new Game(p1,p2,BoardBuilder.BoardType.OUT_OF_PIECES);
+    Move move = new Move(new Position(3,2), new Position(5,4));
+    game.addMove(move);
+    game.executeTurn();
     game.checkEndGame();
     assertTrue(game.isGameOver());
     assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_PIECES);
