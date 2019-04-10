@@ -6,6 +6,7 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.checkers.Piece;
 import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import java.util.HashMap;
@@ -104,7 +105,7 @@ public class GetGameRoute implements Route {
       Gson gson = new Gson();
       Map<String, Object> modeOptions = new HashMap<String, Object>();
       modeOptions.put("isGameOver", true);
-      modeOptions.put("gameOverMessage", "Your opponent has resigned");
+      modeOptions.put("gameOverMessage", getEndGameMessage(game, player));
       vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
     }
 
@@ -115,5 +116,48 @@ public class GetGameRoute implements Route {
     
     // render the View
     return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+  }
+
+  /**
+   * Hleper method to build the end game message
+   * @param game - the game the message is for
+   * @param player - the player the message is for
+   * @return - the message fro the player
+   */
+  private String getEndGameMessage(Game game, Player player){
+    String msg = "Game Over: ";
+    String oponentsName = game.getOpponent(player).getName();
+    Piece.PieceColor playerColor = game.getPlayerColor(player);
+    switch (game.getEndGameCondition()){
+      case OPPONENT_RESIGNED:
+        msg += oponentsName + " has resigned";
+        break;
+      case RED_OUT_OF_MOVES:
+        if(playerColor == Piece.PieceColor.RED)
+          msg += "You are out of moves. YOU LOSE";
+        else
+          msg += oponentsName + " is out of moves. YOU WIN";
+        break;
+      case RED_OUT_OF_PIECES:
+        if(playerColor == Piece.PieceColor.RED)
+          msg += "You are out of pieces. YOU LOSE";
+        else
+          msg += oponentsName + " is out of pieces. YOU WIN";
+        break;
+      case WHITE_OUT_OF_MOVES:
+        if(playerColor == Piece.PieceColor.WHITE)
+          msg += "You are out of moves. YOU LOSE";
+        else
+          msg += oponentsName + " is out of moves. YOU WIN";
+        break;
+      case WHITE_OUT_OF_PIECES:
+        if(playerColor == Piece.PieceColor.WHITE)
+          msg += "You are out of pieces. YOU LOSE";
+        else
+          msg += oponentsName + " is out of pieces. YOU WIN";
+        break;
+    }
+    return msg;
+
   }
 }
