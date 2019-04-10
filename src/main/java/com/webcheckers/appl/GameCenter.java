@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.BoardBuilder.BoardType;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.model.checkers.Game;
@@ -47,7 +48,7 @@ public class GameCenter {
   */
   public Game spawnGame(Player playerOne, Player playerTwo){
     //By changing the BoardType here you can test different game scenarios
-    Game game = new Game(playerOne,playerTwo, BoardBuilder.BoardType.STANDARD);
+    Game game = new Game(playerOne,playerTwo, BoardType.STANDARD);
     addPlayersToMatch(playerOne,playerTwo);
     addPlayerToGame(playerOne,game);
     addPlayerToGame(playerTwo,game);

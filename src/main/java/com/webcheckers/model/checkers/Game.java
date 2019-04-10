@@ -251,6 +251,8 @@ public class Game implements Iterable<Row> {
   }
 
   /**
+
+   * Flips the active color to the other player. Signaling the end of a turn
    * Checks both end game conditions ( OutOfPieces and OutOfMoves )
    * If either are true then the end game is triggered and the EndGameCondition is set
    */

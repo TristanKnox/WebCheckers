@@ -1,7 +1,11 @@
 call mvn compile 
 start mvn exec:java
 
+<<<<<<< HEAD
+timeout 20
+=======
 timeout 5
+>>>>>>> master
 
 start chrome 127.0.0.1:4567 --new-window
 
