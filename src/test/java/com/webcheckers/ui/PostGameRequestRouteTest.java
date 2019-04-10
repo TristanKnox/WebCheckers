@@ -9,6 +9,7 @@ import com.webcheckers.model.checkers.Piece;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import spark.*;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -66,7 +67,7 @@ public class PostGameRequestRouteTest {
     /**
      * Tests PostRequestGameRout when the selected player is not available for a game
      */
-    //@Test
+    @Test
     public void player2_not_available(){
         when(playerLobby.getPlayer(POSTED_USER_NAME)).thenReturn(player2);
         when(playerLobby.isInGame(player2)).thenReturn(true);
@@ -81,15 +82,13 @@ public class PostGameRequestRouteTest {
     /**
      * Tests PostRequestGameRout when current user is not available for a game
      */
-    //@Test
+    @Test
     public void player1_not_available(){
         when(playerLobby.isInGame(player1)).thenReturn(true);
 
         try {
             CuT.handle(request, response);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        }catch(Exception e){}
         verify(response).redirect(WebServer.HOME_URL);
         verify(session).attribute(eq(GetHomeRoute.IN_GAME_ERROR_FLAG),eq(true));
     }
@@ -97,7 +96,7 @@ public class PostGameRequestRouteTest {
     /**
      * Tests the PostRequestGameRout when both players are available for a game
      */
-    //@Test
+    @Test
     public void game_started(){
         //The posted name should be found in the player loby and that player should be avialable to play
         when(playerLobby.getPlayer(POSTED_USER_NAME)).thenReturn(player2);
