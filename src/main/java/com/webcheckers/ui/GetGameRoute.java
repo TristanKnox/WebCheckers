@@ -109,7 +109,7 @@ public class GetGameRoute implements Route {
    * @param player - the player the message is for
    * @return - the message fro the player
    */
-  private String getEndGameMessage(Game game, Player player){
+  public String getEndGameMessage(Game game, Player player){
     String msg = "Game Over: ";
     String oponentsName = game.getOpponent(player).getName();
     Piece.PieceColor playerColor = game.getPlayerColor(player);
