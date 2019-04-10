@@ -13,14 +13,14 @@ public class TestWebServer {
   private Gson gson;
   private WebServer CuT;
   @BeforeEach
-  private void setUp(){
+  public void setUp(){
     templateEngine = mock(TemplateEngine.class);
-    gson = mock(Gson.class);
+    gson = new Gson();
   }
   @Test
-  private void testCtor(){
+  public void testCtor(){
     templateEngine = mock(TemplateEngine.class);
-    gson = mock(Gson.class);
+    gson = new Gson();
     WebServer webServer = new WebServer(templateEngine,gson);
     assertNotNull(webServer);
   }
