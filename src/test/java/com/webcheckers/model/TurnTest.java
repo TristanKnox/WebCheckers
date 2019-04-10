@@ -10,8 +10,12 @@ import com.webcheckers.model.checkers.Space;
 import com.webcheckers.model.checkers.Space.SpaceType;
 import com.webcheckers.model.checkers.Turn;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -390,5 +394,36 @@ public class TurnTest {
     when(capturedPiece.getColor()).thenReturn(PieceColor.WHITE);
     when(game.getSpace(new Position(1, 1))).thenReturn(capturedSpace);
     assertTrue(CuT.pieceCanJump(startPos, game));
+  }
+
+  /**
+   * Tests for completion of a turn. A turn is complete if it is a valid simple
+   * move or it is a jump move that has completed all possible multi-jumps
+   */
+  @Test
+  public void testMoveIsComplete() {
+    Turn CuT = new Turn(PieceColor.RED);
+
+    // Simple move is complete
+    CuT.getMoves().add(new Move(new Position(0, 0), new Position(1, 1)));
+    assertTrue(CuT.isComplete(null));
+
+    // Unfinished jump move is incomplete
+    Turn turn = new Turn(PieceColor.RED);
+    CuT = Mockito.spy(turn);
+    CuT.getMoves().add(new Move(new Position(0, 0), new Position(2, 2)));
+
+    List<Position> possiblePositions = new ArrayList<>();
+    possiblePositions.add(new Position(4, 4));
+    possiblePositions.add(new Position(0,0));
+    Mockito.doReturn(possiblePositions).when(CuT).getPossibleJumpPositions(any(), any());
+    Mockito.doReturn(true).when(CuT).pieceCanJumpToPos(any(), any());
+    Mockito.doReturn(null).when(CuT).getPiece(any(), any());
+
+    assertFalse(CuT.isComplete(null));
+
+    // Finished if no jump possible
+    Mockito.doReturn(false).when(CuT).pieceCanJumpToPos(any(), any());
+    assertTrue(CuT.isComplete(null));
   }
 }

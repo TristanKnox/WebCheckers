@@ -233,7 +233,7 @@ public class Turn {
     return checkPositions;
   }
 
-  private boolean pieceCanJumpToPos(Move move, Game game) {
+  public boolean pieceCanJumpToPos(Move move, Game game) {
     if (game.getSpace(move.getEnd()).getPiece() == null) {
       Space capturedSpace = getCaptureSpace(move, game);
       if (capturedSpace.getPiece() != null && capturedSpace.getPiece().getColor() != turnColor)
