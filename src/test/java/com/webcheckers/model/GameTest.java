@@ -6,9 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Move;
+
 import com.webcheckers.model.checkers.Piece.PieceColor;
+import com.webcheckers.model.checkers.Position;
+
 import com.webcheckers.model.checkers.Turn;
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -34,7 +38,7 @@ public class GameTest {
     p1 = mock(Player.class);
     p2 = mock(Player.class);
     turn = mock(Turn.class);
-    game = new Game(p1,p2);
+    game = new Game(p1,p2, BoardBuilder.BoardType.STANDARD);
 
   }
   //Constructor Test
@@ -42,7 +46,7 @@ public class GameTest {
   public void testCtor(){
     Player p1 = mock(Player.class);
     Player p2 = mock(Player.class);
-    Game game = new Game(p1,p2);
+    Game game = new Game(p1,p2, BoardBuilder.BoardType.STANDARD);
     assertNotNull(game);
   }
 
@@ -69,6 +73,7 @@ public class GameTest {
     assertNotEquals(game.getActiveColor(), (PieceColor.RED));
   }
 
+
   /**
    * test of getters
    */
@@ -76,6 +81,49 @@ public class GameTest {
   public void testGetRows(){
     assertNotNull(game.getCopyRows());
   }
+//  @Test todo
+//  public void testResign(){
+//
+//
+//  }
+//  @Test
+//  public void testValidMove(){
+//
+//  }
+//  @Test
+//  public void testBackUpMove(){
+//
+//  }
+//  @Test
+//  public void testResignationEnabler(){
+//
+//  }
+  @Test
+  public void testEndGame(){
+
+    //Out of Pices
+    game = new Game(p1,p2, BoardBuilder.BoardType.OUT_OF_MOVES);
+    assertNull(game.getOutOfPieces());
+    game = new Game(p1,p2,BoardBuilder.BoardType.OUT_OF_PIECES);
+    game.checkEndGame();
+    assertTrue(game.isGameOver());
+    assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_PIECES);
+
+    //Out of  Moves
+    game = new Game(p1,p2, BoardBuilder.BoardType.OUT_OF_MOVES);
+    game.checkEndGame();
+    assertNull(game.getEndGameCondition());
+    assertFalse(game.isGameOver());
+    game.addMove(new Move(new Position(0,1), new Position(1,2)));
+    game.executeTurn();
+    game.checkEndGame();
+    assertTrue(game.isGameOver());
+    assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_MOVES, "Expected White to be out of Pieces but got " + game.getEndGameCondition());
+
+  }
+
+
+
 
   /**
    * tests player Color getter.
