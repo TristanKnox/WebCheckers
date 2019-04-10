@@ -218,6 +218,18 @@ public class Game implements Iterable<Row> {
     return currentTurn.getMoves().size() > 0;
   }
 
+  /**
+   * Checks to make sure that the turn is complete. A turn is complete if it is a single move,
+   * single jump, or multi move that has made all jumps possible
+   * @return True if the turn meets the above criteria
+   * @precondition The list of turns is not empty
+   * @precondition There is at least one move to check in turns
+   */
+  public boolean turnIsComplete() {
+    Turn currentTurn = turns.get(turns.size() - 1);
+    return currentTurn.isComplete(this);
+  }
+
 
   /**
    * Handles applying the current moves to the game sequentially updating the state of the game.
