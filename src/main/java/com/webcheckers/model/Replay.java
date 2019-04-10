@@ -15,6 +15,7 @@ public class Replay {
   private Player player2;
   private List<BoardState> boardStateList;
   private int currentTurnIndex;
+  private Game game;
 
   /**
    * runs through a replayed games turns to get the board state to making a replay
@@ -30,6 +31,7 @@ public class Replay {
       replayCount++;
     }
     convertTurnsToBoardStates(turnList);
+    this.game = new Game(player1, player2);
     currentTurnIndex = 0;
     boardStateList.get(currentTurnIndex);
   }
@@ -39,11 +41,11 @@ public class Replay {
    * @param turnList
    */
   private void convertTurnsToBoardStates(List<Turn> turnList){
-    Game game = new Game(player1,player2);
-    storeBoardState(game);
+    Game newGame = new Game(player1,player2);
+    storeBoardState(newGame);
     for (Turn turn : turnList) {
-        turn.execute(game);
-        storeBoardState(game);
+        turn.execute(newGame);
+        storeBoardState(newGame);
     }
   }
   private void storeBoardState(Game game){
@@ -63,6 +65,8 @@ public class Replay {
     currentTurnIndex++;
     return boardStateList.get(currentTurnIndex);
   }
+
+  public Game getGame(){return game;}
 
   /**
    *

@@ -34,6 +34,7 @@ public class GetHomeRoute implements Route {
   // values for use in the session attribute map
   public static final String PLAYER_KEY = "player";
   public static final String IN_GAME_ERROR_FLAG = "inGameError";
+  public static final String VIEW_MODE_ATTR = "viewMode";
 
   // Attributes
   private final TemplateEngine templateEngine;
@@ -68,6 +69,9 @@ public class GetHomeRoute implements Route {
 
     // retrieve the session
     Session httpSession = request.session();
+
+    // reset view mode
+    httpSession.attribute(VIEW_MODE_ATTR, null);
 
     // create the view-model bucket
     Map<String, Object> vm = new HashMap<>();

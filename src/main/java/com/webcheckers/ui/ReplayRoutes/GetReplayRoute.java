@@ -57,6 +57,8 @@ public class GetReplayRoute implements Route {
     vm.put(CURRENT_USER_ATTR, currentPlayer);
     vm.put(REPLAY_LIST_ATTR, replayCenter.getReplayList());
 
+    httpSession.attribute(GetHomeRoute.VIEW_MODE_ATTR, "REPLAY");
+
     // remove the user from available players
     playerLobby.removePlayer(currentPlayer.getName());
 
