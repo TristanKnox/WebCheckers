@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -62,6 +63,15 @@ public class PostGameRequestRouteTest {
         when(session.attribute(GetHomeRoute.PLAYER_KEY)).thenReturn(player1);
 
         CuT = new PostGameRequestRoute(engine,playerLobby,gameCenter);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testCtor(){
+        PostGameRequestRoute route = new PostGameRequestRoute(engine,playerLobby,gameCenter);
+        assertNotNull(route);
     }
 
     /**
@@ -119,7 +129,7 @@ public class PostGameRequestRouteTest {
         //Ensure ViewModel Exists and is a Map
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
-        //Check all need attributes are present and acurate
+        //Check all need attributes are present and accurate
         testHelper.assertViewModelAttribute("title", GetGameRoute.GAME_TITLE);
         testHelper.assertViewModelAttribute("currentUser", player1);
         testHelper.assertViewModelAttribute("redPlayer", player1);
@@ -128,8 +138,6 @@ public class PostGameRequestRouteTest {
         testHelper.assertViewModelAttribute("viewMode", "PLAY");
         testHelper.assertViewModelAttribute("board", ViewGenerator.getView(game,game.getPlayerColor(player1)));
     }
-
-
 }
 
 

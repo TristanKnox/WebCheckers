@@ -61,7 +61,7 @@ public class GetGameRouteTest {
     playerTwo = new Player("bob");
 
     // create a unique CuT for each test
-    CuT = new GetGameRoute(engine, gameCenter,playerLobby);
+    CuT = new GetGameRoute(engine, gameCenter, playerLobby);
   }
 
   /**
@@ -119,10 +119,13 @@ public class GetGameRouteTest {
     // when checking if the gave is over, return true
     when(game.isGameOver()).thenReturn(true);
 
+    when(game.getOpponent(playerOne)).thenReturn(playerTwo);
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.OPPONENT_RESIGNED);
+
     Gson gson = new Gson();
     Map<String, Object> modeOptions = new HashMap<String, Object>();
     modeOptions.put("isGameOver", true);
-    modeOptions.put("gameOverMessage", "Your opponent has resigned");
+    modeOptions.put("gameOverMessage", "Game Over: " + playerTwo.getName() + " has resigned");
 
     CuT.handle(request, response);
     testHelper.assertViewModelExists();

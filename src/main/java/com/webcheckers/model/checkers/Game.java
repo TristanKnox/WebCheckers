@@ -1,6 +1,7 @@
 package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Piece.PieceType;
 import com.webcheckers.model.checkers.Turn.TurnResponse;
@@ -16,6 +17,10 @@ import java.util.List;
  */
 public class Game implements Iterable<Row> {
 
+  public static enum EndGameCondition{
+    OPPONENT_RESIGNED, RED_OUT_OF_PIECES, WHITE_OUT_OF_PIECES, RED_OUT_OF_MOVES, WHITE_OUT_OF_MOVES
+  }
+
   /** Max 8 rows per board **/
   public static final int MAX_SIZE = 8;
 
@@ -26,27 +31,37 @@ public class Game implements Iterable<Row> {
   /** Represents each row of the board **/
   private List<Row> rows;
   /** The color of the player whose turn it is **/
+
   private PieceColor activeColor;
   /** whether the game has ended **/
   private Boolean gameOver;
+
+  /** Why the game has ended */
+  private EndGameCondition endGameCondition;
+
   /** Represents all of the turns made through out the duration of the game */
   private List<Turn> turns;
 
   /**
-   * Creates an initial game with the rows initialized each player kept track of
-   * @param playerOne The player to start the game
-   * @param playerTwo The player invited to play the game
+   * Constructor - this will create a new game with a given board type
+   * To create a standard game the board type should be standard
+   * @param playerOne - The player to start the game
+   * @param playerTwo - The player invited to the game
+   * @param boardType - The board set up
    */
-  public Game(Player playerOne, Player playerTwo) {
+  public Game(Player playerOne, Player playerTwo, BoardBuilder.BoardType boardType){
+    //Start game as normal
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
     this.activeColor = PieceColor.RED;
-    this.gameOver = false;
-
     rows = new ArrayList<>();
     initializeRows();
     this.turns = new ArrayList<>();
     turns.add(new Turn(activeColor));
+    gameOver = false;
+    //Take initialized board and refactor it based on board type given
+    rows = BoardBuilder.getTestBoard(rows,boardType);
+
   }
 
   /**
@@ -111,6 +126,16 @@ public class Game implements Iterable<Row> {
   }
 
   /**
+   * Return the opponent of the given player
+   * @param player - the player you want the opponent for
+   * @return - the opponent
+   */
+  public Player getOpponent(Player player){
+    PieceColor playerColor = getPlayerColor(player);
+    return playerColor == PieceColor.RED ? whitePlayer : redPlayer;
+  }
+
+  /**
    * returns true if the game is over, false otherwise
    * @return the gameOver variable
    */
@@ -119,11 +144,18 @@ public class Game implements Iterable<Row> {
   }
 
   /**
-   * tells a game that it has ended
+   * tells a game that it has ended as well as why
    */
-  public void endGame(){
+  public void endGame(EndGameCondition condition){
+    this.endGameCondition = condition;
     this.gameOver = true;
   }
+
+  /**
+   * A Getter method for endGameCondition
+   * @return - the endGamecondition
+   */
+  public EndGameCondition getEndGameCondition(){ return this.endGameCondition; }
 
   /**
    * flips which player is active so that resignation worls properly
@@ -202,7 +234,89 @@ public class Game implements Iterable<Row> {
     // Flip active color
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
     turns.add(new Turn(activeColor));
+
+    checkEndGame();
   }
+
+  /**
+
+   * Flips the active color to the other player. Signaling the end of a turn
+   * Checks both end game conditions ( OutOfPieces and OutOfMoves )
+   * If either are true then the end game is triggered and the EndGameCondition is set
+   */
+  public void checkEndGame(){
+    //Checks and sets EndGameConditions for outOfPieces
+    if(getOutOfPieces() != null) {
+      if (getOutOfPieces() == PieceColor.RED)
+        this.endGame(EndGameCondition.RED_OUT_OF_PIECES);
+      if(getOutOfPieces() == PieceColor.WHITE)
+        this.endGame(EndGameCondition.WHITE_OUT_OF_PIECES);
+    }
+    //Checks and sets EndGameConditions for outOfMoves
+    //Only check for this condition if the game has not already been set to game over
+    if(!gameOver) {
+      if (outOfMoves(activeColor)) {
+        if (activeColor == PieceColor.RED)
+          this.endGame(EndGameCondition.RED_OUT_OF_MOVES);
+        if (activeColor == PieceColor.WHITE)
+          this.endGame(EndGameCondition.WHITE_OUT_OF_MOVES);
+      }
+    }
+  }
+
+  /**
+   * Checks to see if either player is out of pieces
+   * @return - the PieceColor of the player that is out of pieces or null if neither player is out of pieces
+   */
+  public PieceColor getOutOfPieces(){
+    int whitePieces = 0;
+    int redPieces = 0;
+    for(Row r : rows){
+      List<Space> spaces = r.getSpaces();
+      for(Space s : spaces){
+        if(s.getPiece() == null){
+          continue;
+        }
+        else if( s.getPiece().getColor() == PieceColor.RED){
+          redPieces++;
+        }
+        else{
+          whitePieces++;
+        }
+      }
+    }
+    if(redPieces <= 0)
+      return PieceColor.RED;
+    else if(whitePieces <= 0)
+      return PieceColor.WHITE;
+    return null;
+  }
+
+
+
+  /**
+   * Checks to see if the active color can move
+   * PreCondition - this should be called after the activeColor has been switched to the color of the player who is about
+   * to take their turn but before they are notified it is their turn
+   * @param activeColor - the color of the player who is about to take their turn
+   * @return - true if the activeColor cannot move false if the activeColor can move
+   */
+  private boolean outOfMoves(PieceColor activeColor){
+    Turn turn = new Turn(activeColor);
+    List<Position> piecePositions = this.getPiecePositions(activeColor);
+    for(Position piecePosition: piecePositions) {
+      if(turn.pieceCanSimpleMove(piecePosition,this))
+        return false;
+      if(turn.pieceCanJump(piecePosition, this))
+        return false;
+    }
+    return true;
+  }
+
+
+  /**
+   * Flips the active color
+   */
   public void flipActiveColor(){
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
   }
