@@ -65,7 +65,9 @@ public class PostSignInAttemptTest {
     assertNotNull(route);
   }
 
-
+  /**
+   * Tests the redirect for the valid Login Query
+   */
   @Test
   public void test_Valid_Login_Query(){
     outCome = Outcome.SUCCESS;
@@ -77,8 +79,11 @@ public class PostSignInAttemptTest {
     }catch (Exception e){}
 
     verify(response).redirect(WebServer.HOME_URL);
-
   }
+
+  /**
+   * Tests the Invalid login.
+   */
   @Test
   public void test_Invalid_Login_Query(){
     outCome = Outcome.INVALID;
