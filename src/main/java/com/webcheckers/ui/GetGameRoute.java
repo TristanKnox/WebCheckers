@@ -85,7 +85,7 @@ public class GetGameRoute implements Route {
       vm.put(GetHomeRoute.VIEW_MODE_ATTR, "REPLAY");
       vm.put(GAME_TITLE_ATTR, "Replay");
       Integer replayID = Integer.parseInt(request.queryParams("replayID"));
-      game = replayCenter.getReplay(replayID).getGame();
+      game = new Game(replayCenter.getReplay(replayID).getPlayer1(), replayCenter.getReplay(replayID).getPlayer2());
     }
     else {
       vm.put(GetHomeRoute.VIEW_MODE_ATTR, "PLAY");
@@ -95,9 +95,11 @@ public class GetGameRoute implements Route {
 
     vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(player)));
 
-    if(game.isGameOver()){
+    if(game.isGameOver() && !session.attribute(GetHomeRoute.VIEW_MODE_ATTR).equals("REPLAY")){
       gameCenter.exitGame(player);
       playerLobby.makeAvailable(player);
+
+      replayCenter.storeReplay(game);
 
       Gson gson = new Gson();
       Map<String, Object> modeOptions = new HashMap<String, Object>();
