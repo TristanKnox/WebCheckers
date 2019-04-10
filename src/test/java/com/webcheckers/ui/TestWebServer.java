@@ -19,7 +19,6 @@ public class TestWebServer {
     templateEngine = mock(TemplateEngine.class);
     gson = new Gson();
     CuT = new WebServer(templateEngine,gson);
-    LOG = new Logger(Logger.getLogger(WebServer.class.getName()));
   }
   @Test
   public void testCtor(){
@@ -31,6 +30,7 @@ public class TestWebServer {
   @Test
   public void testInitialize(){
     CuT.initialize();
+    assertNotNull("Initial");
 
   }
 
