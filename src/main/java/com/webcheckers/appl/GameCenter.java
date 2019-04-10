@@ -1,6 +1,8 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.BoardBuilder.BoardType;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.model.checkers.Game;
 
 import java.util.HashMap;
@@ -45,7 +47,8 @@ public class GameCenter {
   * @return the {@link Game} that is created
   */
   public Game spawnGame(Player playerOne, Player playerTwo){
-    Game game = new Game(playerOne,playerTwo);
+    //By changing the BoardType here you can test different game scenarios
+    Game game = new Game(playerOne,playerTwo, BoardType.STANDARD);
     addPlayersToMatch(playerOne,playerTwo);
     addPlayerToGame(playerOne,game);
     addPlayerToGame(playerTwo,game);
@@ -117,7 +120,8 @@ public class GameCenter {
    */
   public void resignation(Player player){
     Game game = getGame(player);
-    game.endGame();
+    game.endGame(Game.EndGameCondition.OPPONENT_RESIGNED);
+
     game.resignationEnabler(player);
     removePlayerFromGame(player);
   }
