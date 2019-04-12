@@ -98,6 +98,6 @@ public class Replay {
    */
   @Override
   public String toString(){
-    return getPlayer1().getName() + " vs. " + getPlayer2().getName();
+    return getPlayer1().getName() + " vs. " + getPlayer2().getName() + ": " + boardStateList.size() + " Turns";
   }
 }
