@@ -80,6 +80,8 @@ public class WebServer {
 
   public static final String REQUEST_REPLAY_URL = "/replay/game";
 
+  public static final String REPLAY_NEXT_TURN_URL = "/replay/nextTurn";
+
 
 
   //
@@ -195,6 +197,8 @@ public class WebServer {
     post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, replayCenter, templateEngine));
     
     post(REQUEST_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
+
+    post(REPLAY_NEXT_TURN_URL, PostNextTurnRoute(replayCenter));
 
 
     get(REPLAY_URL, new GetReplayHomeRoute(replayCenter, playerLobby, templateEngine));

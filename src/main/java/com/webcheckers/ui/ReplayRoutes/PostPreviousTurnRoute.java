@@ -17,11 +17,10 @@ import spark.Session;
 public class PostPreviousTurnRoute implements Route {
 
   private ReplayCenter replayCenter;
-  private Gson gson;
 
-  public PostPreviousTurnRoute(Gson gson,ReplayCenter rCenter){
+  public PostPreviousTurnRoute(ReplayCenter rCenter){
     replayCenter = rCenter;
-    this.gson = gson;
+
 
   }
 
