@@ -1,6 +1,7 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ai.AIPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -51,21 +52,45 @@ public class PlayerLobbyTest {
     assertNotNull(playLobby.getPlayer(VALID_NAME1));
     playLobby.addPlayer(INVALID_NAME1);
     assertTrue(playLobby.getPlayer(VALID_NAME1) instanceof Player);
-}
-@Test
+  }
+
+  @Test
   public void logout_test(){
     PlayerLobby playLobby = new PlayerLobby();
     playLobby.addPlayer(VALID_NAME1);
     assertNotNull(playLobby.getPlayer(VALID_NAME1));
     playLobby.logout(VALID_NAME1);
     assertNull(playLobby.getPlayer(VALID_NAME1));
-}
-@Test
-  public void leaveForGame_test(){
+  }
+
+    @Test
+    public void leaveForGame_test(){
     PlayerLobby playLobby = new PlayerLobby();
     playLobby.addPlayer(VALID_NAME1);
     assertNotNull(playLobby.getPlayer(VALID_NAME1));
     playLobby.removePlayer(VALID_NAME1);
     assertSame(playLobby.getAllAvalPlayers().contains(playLobby.getPlayer(VALID_NAME1)),false);
-}
+  }
+
+  /**
+   * Basic tests for the AI player in the player lobby. AI players are available players
+   * by default and cannot be added to / removed from the player lobby after the lobby
+   * is created.
+   */
+  @Test
+  public void addRemoveAI() {
+    PlayerLobby CuT = new PlayerLobby();
+    AIPlayer easyAI = PlayerLobby.easyAI;
+    AIPlayer hardAI = PlayerLobby.hardAI;
+
+    // Both AI players should be in the lobby by default
+    assertEquals(CuT.getPlayer(easyAI.getName()), easyAI);
+    assertEquals(CuT.getPlayer(hardAI.getName()), hardAI);
+
+    // Cannot remove AIs from list of available users
+    CuT.getPlayerForGame(easyAI.getName());
+    CuT.getPlayerForGame(hardAI.getName());
+    assertFalse(CuT.isInGame(easyAI));
+    assertFalse(CuT.isInGame(hardAI));
+  }
 }

@@ -12,8 +12,10 @@ import java.util.*;
  *
  */
 public class PlayerLobby {
-  private static final AIPlayer easyAI = new AIPlayer("Easy AI \uD83E\uDD16", Difficulty.EASY);
-  private static final AIPlayer hardAI = new AIPlayer("Hard AI \uD83E\uDD16", Difficulty.HARD);
+  /** Represents the easy AI in the game */
+  public static final AIPlayer easyAI = new AIPlayer("Easy AI \uD83E\uDD16", Difficulty.EASY);
+  /** Represents the hard AI in the game */
+  public static final AIPlayer hardAI = new AIPlayer("Hard AI \uD83E\uDD16", Difficulty.HARD);
 
   private Map<String, Player> currentUsers;
   private Map<String, Player> avalUsers;

@@ -8,6 +8,8 @@ import com.webcheckers.model.checkers.Piece.PieceColor;
  * The AIPlayer represents the AI that humans can play against. The AIPlayer
  * can check for when it is its turn then make a move depending on its difficulty
  * level.
+ *
+ * @author Collin Bolles
  */
 public class AIPlayer extends Player {
 
@@ -35,10 +37,11 @@ public class AIPlayer extends Player {
     }
 
     /**
-     * The call to make a move against the passed in turn
+     * The call to make a move against the passed in turn. When this method is
+     * called, a move is decided on and executed on the game
      * @param game The game to make the move on
      */
-    public void makeMove(Game game) {
+    public synchronized void makeMove(Game game) {
 
     }
 }
