@@ -70,7 +70,7 @@ define(function(require){
       this._controller.displayMessage(message);
       // put the turn state back
       this._controller.putTurnBackAfterFailedSubmit();
-      this._controller.setState(playModeConstants.STABLE_TURN);
+      this._controller.setState(PlayModeConstants.STABLE_TURN);
     }
   }
 
