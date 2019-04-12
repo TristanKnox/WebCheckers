@@ -75,6 +75,7 @@ public class GameTest {
   }
 
 
+
 //  @Test
 //  public void testTurnsAdded(){
 //
@@ -94,6 +95,7 @@ public class GameTest {
 //  }
 
 
+
   /**
    * test of getters
    */
@@ -101,8 +103,7 @@ public class GameTest {
   public void testGetRows(){
     assertNotNull(game.getCopyRows());
   }
-
-
+  
   @Test
   public void testEndGame(){
 
