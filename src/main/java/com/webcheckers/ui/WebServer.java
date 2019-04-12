@@ -202,7 +202,7 @@ public class WebServer {
 
     post(REPLAY_NEXT_TURN_URL, new PostNextTurnRoute(replayCenter));
 
-    post(REPLAY_PREVIOUS_TURN_URL, new PostPreviousTurnRoute(gson,replayCenter));
+    post(REPLAY_PREVIOUS_TURN_URL, new PostPreviousTurnRoute(replayCenter));
 
 
     get(REPLAY_URL, new GetReplayHomeRoute(replayCenter, playerLobby, templateEngine));
