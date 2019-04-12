@@ -111,6 +111,22 @@ public class Replay {
   }
 
   /**
+   * does the game have a next board state?
+   * @return
+   */
+  public boolean hasNext(){
+    return !isEndOfGame();
+  }
+
+  /**
+   * does the game have a previous?
+   * @return
+   */
+  public boolean hasPrev(){
+    return !isBeginingOfGame();
+  }
+
+  /**
    *
    */
   @Override

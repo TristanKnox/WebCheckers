@@ -193,8 +193,9 @@ public class WebServer {
     post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
     post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, replayCenter, templateEngine));
-
+    
     post(REQUEST_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
+
 
     get(REPLAY_URL, new GetReplayHomeRoute(replayCenter, playerLobby, templateEngine));
     LOG.config("WebServer is initialized.");
