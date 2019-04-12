@@ -30,7 +30,7 @@ public class TestWebServer {
   @Test
   public void testInitialize(){
     CuT.initialize();
-    assertNotNull("Initial");
+    assertNotNull(CuT);
 
   }
 
