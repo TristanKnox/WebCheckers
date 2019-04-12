@@ -103,7 +103,7 @@ public class GameTest {
   public void testGetRows(){
     assertNotNull(game.getCopyRows());
   }
-  
+
   @Test
   public void testEndGame(){
 

@@ -10,6 +10,8 @@ public class BoardState {
 
     private List<Row> rows;
     private Piece.PieceColor activePlayer;
+    private boolean gameOver;
+    private Game.EndGameCondition endGameCondition;
 
     /**
      * Constructor
@@ -31,4 +33,7 @@ public class BoardState {
      * @return - activePlayer
      */
     public Piece.PieceColor getActivePlayer(){ return activePlayer; }
+
+    public boolean isGameOver(){ return gameOver; }
+    public Game.EndGameCondition getEndGameCondition(){ return endGameCondition; }
 }

@@ -71,13 +71,12 @@ public class Game implements Iterable<Row> {
    * @param playerTwo the second player
    * @param turns the list of turns.
    */
-  public Game(Player playerOne, Player playerTwo, List<Turn> turns){
+  public Game(Player playerOne, Player playerTwo, BoardState boardState){
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
-    this.activeColor = PieceColor.RED;
+    this.activeColor = boardState.getActivePlayer();
     this.gameOver=false;
-    rows = new ArrayList<>();
-    this.turns = turns;
+    rows = boardState.getRows();
   }
 
   /**
