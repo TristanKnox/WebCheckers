@@ -6,8 +6,10 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Replay;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Piece;
+import com.webcheckers.ui.GetGameRoute;
 import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import spark.*;
@@ -42,9 +44,25 @@ public class GetReplayRoute implements Route {
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
 
-        String replayId = request.queryParams("replayID");
+        int replayId = Integer.parseInt(request.queryParams("replayID"));
 
-       // replayCenter.startReplay();
-        return null;
+        replayCenter.startReplay(player, replayId);
+        Replay replay = replayCenter.getReplay(player);
+
+        Map<String, Object> vm  = new HashMap<>();
+        vm.put(GetGameRoute.GAME_TITLE_ATTR,GetGameRoute.GAME_TITLE);
+        vm.put("currentUser",player);
+        vm.put("viewMode", "REPLAY");
+        Map<String,Object> modeOptions = new HashMap<>();
+        modeOptions.put("hasNext",true);//TODO must not hard code this
+        modeOptions.put("hasPrevious",true);//TODO must not hard code this
+        Gson gson = new Gson();
+        vm.put("modeOptionsAsJSON",gson.toJson(modeOptions));
+        vm.put("redPlayer", replay.getPlayer1());
+        vm.put("whitePlayer", replay.getPlayer2());
+        Game game = new Game(replay.getPlayer1(),replay.getPlayer2(), replay.getCurrentBoardState());
+        vm.put("activeColor", game.getActiveColor());
+        vm.put("board",ViewGenerator.getView(game, Piece.PieceColor.RED));
+        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }

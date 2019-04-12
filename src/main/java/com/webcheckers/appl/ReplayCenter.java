@@ -49,9 +49,7 @@ public class ReplayCenter {
    * @param player the player in question
    * @return the game paired to the player.
    */
-  public Replay getReplay(Player player){
-    return activeReplays.get(player);
-  }
+  public Replay getReplay(Player player){ return activeReplays.get(player);  }
 
 
 

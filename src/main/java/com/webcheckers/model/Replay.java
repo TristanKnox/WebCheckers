@@ -100,6 +100,7 @@ public class Replay {
     return getBoardState(currentTurnIndex);
   }
 
+  public BoardState getCurrentBoardState(){ return getBoardState(currentTurnIndex); }
   /**
    * gets the board state at a given turn
    * @param turn the TURRRN

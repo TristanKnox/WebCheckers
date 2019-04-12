@@ -78,6 +78,8 @@ public class WebServer {
 
   public static final String REPLAY_URL = "/replay";
 
+  public static final String REQUEST_REPLAY_URL = "/replay/game";
+
 
 
   //
@@ -178,7 +180,7 @@ public class WebServer {
 
     post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby,replayCenter));
 
     post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter, replayCenter));
 
@@ -191,6 +193,8 @@ public class WebServer {
     post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
     post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, replayCenter, templateEngine));
+
+    post(REQUEST_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
 
     get(REPLAY_URL, new GetReplayHomeRoute(replayCenter, playerLobby, templateEngine));
     LOG.config("WebServer is initialized.");
