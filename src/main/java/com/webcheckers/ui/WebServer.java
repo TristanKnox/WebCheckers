@@ -82,6 +82,8 @@ public class WebServer {
 
   public static final String REPLAY_NEXT_TURN_URL = "/replay/nextTurn";
 
+  public static final String REPLAY_PREVIOUS_TURN_URL = "/replay/previousTurn";
+
 
 
   //
@@ -195,10 +197,12 @@ public class WebServer {
     post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
     post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, replayCenter, templateEngine));
-    
+
     post(REQUEST_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
 
     post(REPLAY_NEXT_TURN_URL, new PostNextTurnRoute(replayCenter));
+
+    post(REPLAY_PREVIOUS_TURN_URL, new PostPreviousTurnRoute(gson,replayCenter));
 
 
     get(REPLAY_URL, new GetReplayHomeRoute(replayCenter, playerLobby, templateEngine));
