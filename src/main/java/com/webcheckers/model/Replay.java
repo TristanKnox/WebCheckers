@@ -39,7 +39,7 @@ public class Replay {
    * @param turnList
    */
   private void convertTurnsToBoardStates(List<Turn> turnList){
-    Game newGame = new Game(player1,player2);
+    Game newGame = new Game(player1,player2, BoardBuilder.BoardType.STANDARD);
     storeBoardState(newGame);
     for (Turn turn : turnList) {
         turn.execute(newGame);

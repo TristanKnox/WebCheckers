@@ -66,7 +66,7 @@ public class GetGameRouteTest {
 
 
     // create a unique CuT for each test
-    CuT = new GetGameRoute(engine, gameCenter,playerLobby, replayCenter);
+    CuT = new GetGameRoute(engine, gameCenter,playerLobby);
   }
 
   /**

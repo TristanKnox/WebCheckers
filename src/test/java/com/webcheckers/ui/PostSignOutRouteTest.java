@@ -53,7 +53,7 @@ public class PostSignOutRouteTest {
     when(request.session()).thenReturn(session);
     when(session.attribute(any())).thenReturn(null);
     gson = new Gson();
-    CuT = new PostSignOutRoute(playerLobby,gameCenter,templateEngine);
+    CuT = new PostSignOutRoute(playerLobby,gameCenter,replayCenter,templateEngine);
   }
 
   /**
@@ -67,7 +67,7 @@ public class PostSignOutRouteTest {
 
   @Test
   public void testHandle(){
-    CuT = new PostSignOutRoute(playerLobby,gameCenter,templateEngine);
+    CuT = new PostSignOutRoute(playerLobby,gameCenter,replayCenter,templateEngine);
     try{
       CuT.handle(request,responce);
     }catch(Exception e){}

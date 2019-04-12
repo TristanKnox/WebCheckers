@@ -178,7 +178,7 @@ public class WebServer {
 
     post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby, replayCenter));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
 
     post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter, replayCenter));
 
@@ -192,7 +192,7 @@ public class WebServer {
 
     post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, replayCenter, templateEngine));
 
-    get(REPLAY_URL, new GetReplayRoute(replayCenter, playerLobby, templateEngine));
+    get(REPLAY_URL, new GetReplayHomeRoute(replayCenter, playerLobby, templateEngine));
     LOG.config("WebServer is initialized.");
   }
 

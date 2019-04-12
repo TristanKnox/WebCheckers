@@ -73,6 +73,28 @@ public class GameTest {
     assertNotEquals(game.getActiveColor(), (PieceColor.RED));
   }
 
+
+
+//  @Test
+//  public void testTurnsAdded(){
+//
+//
+//  }
+//  @Test
+//  public void testValidMove(){
+//
+//  }
+//  @Test
+//  public void testBackUpMove(){
+//
+//  }
+//  @Test
+//  public void testResignationEnabler(){
+//
+//  }
+
+
+
   /**
    * test of getters
    */
@@ -80,7 +102,7 @@ public class GameTest {
   public void testGetRows(){
     assertNotNull(game.getCopyRows());
   }
-
+  
   @Test
   public void testEndGame(){
 
