@@ -34,8 +34,5 @@ public class PostPreviousTurnRoute implements Route {
     return bs;
 
 
-
-
-    return null;
   }
 }
