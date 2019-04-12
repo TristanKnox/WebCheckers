@@ -52,7 +52,7 @@ public class GameTest {
   }
 
   /**
-   * Tests the starting game conditons
+   * Tests the starting game conditions
    *
    */
   @Test
@@ -74,23 +74,14 @@ public class GameTest {
     assertNotEquals(game.getActiveColor(), (PieceColor.RED));
   }
 
-//  @Test
-//  public void testTurnsAdded(){
-//
-//
-//  }
-//  @Test
-//  public void testValidMove(){
-//
-//  }
-//  @Test
-//  public void testBackUpMove(){
-//
-//  }
-//  @Test
-//  public void testResignationEnabler(){
-//
-//  }
+  /**
+   * test of getters
+   */
+  @Test
+  public void testGetRows(){
+    assertNotNull(game.getCopyRows());
+  }
+
   @Test
   public void testEndGame(){
 
@@ -98,6 +89,9 @@ public class GameTest {
     game = new Game(p1,p2, BoardBuilder.BoardType.OUT_OF_MOVES);
     assertNull(game.getOutOfPieces());
     game = new Game(p1,p2,BoardBuilder.BoardType.OUT_OF_PIECES);
+    Move move = new Move(new Position(3,2), new Position(5,4));
+    game.addMove(move);
+    game.executeTurn();
     game.checkEndGame();
     assertTrue(game.isGameOver());
     assertEquals(game.getEndGameCondition(), Game.EndGameCondition.WHITE_OUT_OF_PIECES);
@@ -117,5 +111,14 @@ public class GameTest {
 
 
 
+
+  /**
+   * tests player Color getter.
+   */
+  @Test
+  public void testGetPlayerColor(){
+    PieceColor playerColor = game.getPlayerColor(p1);
+    assertEquals(PieceColor.RED, playerColor );
+  }
 
 }

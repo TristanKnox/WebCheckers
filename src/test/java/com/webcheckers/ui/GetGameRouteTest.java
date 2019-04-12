@@ -24,6 +24,7 @@ import spark.TemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -62,6 +63,7 @@ public class GetGameRouteTest {
     game = mock(Game.class);
     playerOne = new Player("sam");
     playerTwo = new Player("bob");
+
 
     // create a unique CuT for each test
     CuT = new GetGameRoute(engine, gameCenter,playerLobby, replayCenter);
@@ -145,5 +147,45 @@ public class GetGameRouteTest {
             "activeColor", PieceColor.RED);
     testHelper.assertViewModelAttribute(
             "modeOptionsAsJSON", gson.toJson(modeOptions));
+  }
+
+  @Test
+  public void testEndGameMsg(){
+    when(game.getOpponent(playerOne)).thenReturn(playerTwo);
+    when(game.getOpponent(playerTwo)).thenReturn(playerOne);
+    when(game.getRedPlayer()).thenReturn(playerOne);
+    when(game.getWhitePlayer()).thenReturn(playerTwo);
+    when(game.getPlayerColor(playerOne)).thenReturn(PieceColor.RED);
+    when(game.getPlayerColor(playerTwo)).thenReturn(PieceColor.WHITE);
+    String endGameMsg;
+    //Test Resigned msg
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.OPPONENT_RESIGNED);
+    endGameMsg = CuT.getEndGameMessage(game,playerOne);
+    assertEquals("Game Over: " + playerTwo.getName() + " has resigned",endGameMsg);
+    //Test Red out of moves
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.RED_OUT_OF_MOVES);
+    endGameMsg = CuT.getEndGameMessage(game,playerOne);
+    assertEquals("Game Over: You are out of moves. YOU LOSE",endGameMsg);
+    endGameMsg = CuT.getEndGameMessage(game, playerTwo);
+    assertEquals("Game Over: " + playerOne.getName() + " is out of moves. YOU WIN",endGameMsg);
+    //Test Whit out of moves
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.WHITE_OUT_OF_MOVES);
+    endGameMsg = CuT.getEndGameMessage(game,playerTwo);
+    assertEquals("Game Over: You are out of moves. YOU LOSE",endGameMsg);
+    endGameMsg = CuT.getEndGameMessage(game, playerOne);
+    assertEquals("Game Over: " + playerTwo.getName() + " is out of moves. YOU WIN",endGameMsg);
+    //Test Red out of pieces
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.RED_OUT_OF_PIECES);
+    endGameMsg = CuT.getEndGameMessage(game,playerOne);
+    assertEquals("Game Over: You are out of pieces. YOU LOSE",endGameMsg);
+    endGameMsg = CuT.getEndGameMessage(game,playerTwo);
+    assertEquals("Game Over: " + playerOne.getName() + " is out of pieces. YOU WIN",endGameMsg);
+    //Test White out of pieces
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.WHITE_OUT_OF_PIECES);
+    endGameMsg = CuT.getEndGameMessage(game,playerTwo);
+    assertEquals("Game Over: You are out of pieces. YOU LOSE",endGameMsg);
+    endGameMsg = CuT.getEndGameMessage(game,playerOne);
+    assertEquals("Game Over: " + playerTwo.getName() + " is out of pieces. YOU WIN",endGameMsg);
+
   }
 }
