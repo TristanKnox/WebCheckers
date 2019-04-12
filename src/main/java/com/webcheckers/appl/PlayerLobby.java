@@ -1,6 +1,8 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ai.AIPlayer;
+import com.webcheckers.model.ai.AIPlayer.Difficulty;
 import java.util.*;
 
 
@@ -10,6 +12,11 @@ import java.util.*;
  *
  */
 public class PlayerLobby {
+  /** Represents the easy AI in the game */
+  public static final AIPlayer easyAI = new AIPlayer("Easy AI \uD83E\uDD16", Difficulty.EASY);
+  /** Represents the hard AI in the game */
+  public static final AIPlayer hardAI = new AIPlayer("Hard AI \uD83E\uDD16", Difficulty.HARD);
+
   private Map<String, Player> currentUsers;
   private Map<String, Player> avalUsers;
 
@@ -19,7 +26,11 @@ public class PlayerLobby {
     currentUsers = new HashMap<>();
     avalUsers = new HashMap<>();
 
-    }
+    avalUsers.put(easyAI.getName(), easyAI);
+    avalUsers.put(hardAI.getName(), hardAI);
+    currentUsers.put(easyAI.getName(), easyAI);
+    currentUsers.put(hardAI.getName(), hardAI);
+  }
 
     /**
      * Adds a new user to currentUsers providing the username dose not already exist
@@ -130,7 +141,9 @@ public class PlayerLobby {
  * @param username Username to remove from the list
  */
   public void removePlayer(String username) {
-    avalUsers.remove(username);
+    Player player = avalUsers.get(username);
+    if(!(player instanceof AIPlayer))
+      avalUsers.remove(username);
   }
 
 /**
@@ -158,8 +171,9 @@ public class PlayerLobby {
   }
 
 
-  public void makeAvailable(Player player){
-    avalUsers.put(player.getName(),player);
+  public void makeAvailable(Player player) {
+    if(!(player instanceof AIPlayer))
+      avalUsers.put(player.getName(),player);
   }
 /**
  *
