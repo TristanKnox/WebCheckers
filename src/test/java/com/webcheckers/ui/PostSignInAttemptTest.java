@@ -5,11 +5,13 @@ import static com.webcheckers.ui.PostSignInAttemptRoute.MESSAGE_ATTR;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.PlayerLobby.Outcome;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +33,7 @@ public class PostSignInAttemptTest {
   private static final String TEST_NAME_VALID4 = "Sh1nGL3Z";
   private static final String TEST_NAME_INVALID = "1gangnamstyletogoplease";
   private static final int EMPTY = 0;
+  private static PlayerLobby.Outcome outCome;
 
   private PostSignInAttemptRoute CuT;
 
@@ -50,35 +53,46 @@ public class PostSignInAttemptTest {
     templateEngine = mock(TemplateEngine.class);
 
     playerLobby = mock(PlayerLobby.class);
+    CuT = new PostSignInAttemptRoute(playerLobby,templateEngine);
   }
 
-  //@Test
+  /**
+   * test for the constructor of PostSignInAttempt route
+   */
+  @Test
+  public void testCtor(){
+    PostSignInAttemptRoute route = new PostSignInAttemptRoute(playerLobby,templateEngine);
+    assertNotNull(route);
+  }
+
+  /**
+   * Tests the redirect for the valid Login Query
+   */
+  @Test
   public void test_Valid_Login_Query(){
-    when(request.queryParams(USERNAME)).thenReturn(TEST_NAME_VALID);
-    when(playerLobby.getPlayer(TEST_NAME_VALID)).thenReturn(new Player(TEST_NAME_VALID));
+    outCome = Outcome.SUCCESS;
+    when(playerLobby.addPlayer(TEST_NAME_VALID)).thenReturn(outCome);
+    when(request.queryParams(any(String.class))).thenReturn(TEST_NAME_VALID);
 
     try {
       CuT.handle(request, response);
     }catch (Exception e){}
-    assertNotNull(session.attributes());
 
-    verify(session).attribute(eq(GetHomeRoute.PLAYER_KEY),any(Player.class));
-    verify(session).attribute(eq(GetHomeRoute.IN_GAME_ERROR_FLAG),eq(Boolean.FALSE));
     verify(response).redirect(WebServer.HOME_URL);
-
   }
-  //@Test
-  public void test_Invalid_Login_Query(){
-    when(request.queryParams(USERNAME)).thenReturn(TEST_NAME_INVALID);
 
-    TemplateEngineTester engineTester = new TemplateEngineTester();
+  /**
+   * Tests the Invalid login.
+   */
+  @Test
+  public void test_Invalid_Login_Query(){
+    outCome = Outcome.INVALID;
+    when(playerLobby.addPlayer(TEST_NAME_INVALID)).thenReturn(outCome);
     try {
       CuT.handle(request, response);
     } catch (Exception e){ }
     assertNotNull(session.attributes());
-    engineTester.assertViewModelAttribute(MESSAGE_ATTR, INVALID_USERNAME);
-
-
+    assertEquals(outCome, playerLobby.addPlayer(TEST_NAME_INVALID));
 
   }
 

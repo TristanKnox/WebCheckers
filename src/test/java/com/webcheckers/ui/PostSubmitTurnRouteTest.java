@@ -84,6 +84,7 @@ public class PostSubmitTurnRouteTest {
     when(game.getActiveColor()).thenReturn(PieceColor.RED);
     when(game.getPlayerColor(any())).thenReturn(PieceColor.RED);
     when(game.currentTurnHasMove()).thenReturn(true);
+    when(game.turnIsComplete()).thenReturn(true);
     String expectedValue = gson.toJson(PostSubmitTurnRoute.TURN_EXECUTED);
     String actualValue = (String) CuT.handle(request, null);
     assertEquals(expectedValue, actualValue);

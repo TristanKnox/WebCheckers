@@ -45,7 +45,7 @@ public class PostGameRequestRoute implements Route {
      //Get playerTwo username from posted data
     String playerTwoName = request.queryParams("otherUser");
 
-    if(playerLobby.isInGame(playerLobby.getPlayer(playerTwoName))){
+    if(playerLobby.isInGame(playerLobby.getPlayer(playerTwoName)) || playerLobby.isInGame(playerOne)){
       session.attribute(GetHomeRoute.IN_GAME_ERROR_FLAG, true);
       response.redirect(WebServer.HOME_URL);
       halt();
@@ -56,7 +56,7 @@ public class PostGameRequestRoute implements Route {
     playerOne = playerLobby.getPlayerForGame(playerOne.getName());
     Player playerTwo = playerLobby.getPlayerForGame(playerTwoName);
 
-    //Inject players into game center to retrev game
+    //Inject players into game center to retrieve game
     Game game = gameCenter.spawnGame(playerOne,playerTwo);
 
     //Adding data to vm
