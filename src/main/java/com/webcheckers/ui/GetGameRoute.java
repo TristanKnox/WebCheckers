@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Piece;
@@ -36,10 +35,8 @@ public class GetGameRoute implements Route {
   private final TemplateEngine templateEngine;
   /** Keeps track of the current games and the players in them **/
   private GameCenter gameCenter;
-  /** Keeps track of the players logged into webcheckers **/
-  private PlayerLobby playerLobby;
-  /** Keeps track of the replays saved by the server **/
-  private ReplayCenter replayCenter;
+  /** keeps track of which players are available to play games **/
+  private final PlayerLobby playerLobby;
   /** The title of the game screen on the UI **/
   public static final String GAME_TITLE = "Checkers";
 
@@ -50,11 +47,10 @@ public class GetGameRoute implements Route {
    * @param templateEngine The template engine to render the client UI
    * @param gameCenter The object that keeps track of all games and the users in the game
    */
-  public GetGameRoute(final TemplateEngine templateEngine, GameCenter gameCenter, PlayerLobby playerLobby, ReplayCenter replayCenter) {
+  public GetGameRoute(final TemplateEngine templateEngine, GameCenter gameCenter,PlayerLobby playerLobby) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     this.gameCenter = gameCenter;
     this.playerLobby = playerLobby;
-    this.replayCenter = replayCenter;
     LOG.config("GetGameRoute is initialized.");
   }
 
@@ -71,36 +67,19 @@ public class GetGameRoute implements Route {
     LOG.finer("GetGameRoute is invoked.");
 
     final Session session = request.session();
-
-    Map<String, Object> vm = new HashMap<>();
     /*
      * TODO
      * Create permanent variable for player attribute key
      */
     final Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
+    Game game = gameCenter.getGame(player);
 
-    Game game = null;
+    Map<String, Object> vm = new HashMap<>();
+    vm.put(GAME_TITLE_ATTR, GAME_TITLE);
 
-    if(session.attribute(GetHomeRoute.VIEW_MODE_ATTR) != null &&
-            session.attribute(GetHomeRoute.VIEW_MODE_ATTR).equals("REPLAY")) {
-      vm.put(GetHomeRoute.VIEW_MODE_ATTR, "REPLAY");
-      vm.put(GAME_TITLE_ATTR, "Replay");
-      Integer replayID = Integer.parseInt(request.queryParams("replayID"));
-      game = new Game(replayCenter.getReplay(replayID).getPlayer1(), replayCenter.getReplay(replayID).getPlayer2());
-    }
-    else {
-      vm.put(GetHomeRoute.VIEW_MODE_ATTR, "PLAY");
-      vm.put(GAME_TITLE_ATTR, GAME_TITLE);
-      game = gameCenter.getGame(player);
-    }
-
-    vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(player)));
-
-    if(game.isGameOver() && !session.attribute(GetHomeRoute.VIEW_MODE_ATTR).equals("REPLAY")){
+    if(game.isGameOver()){
       gameCenter.exitGame(player);
       playerLobby.makeAvailable(player);
-
-      replayCenter.storeReplay(game);
 
       Gson gson = new Gson();
       Map<String, Object> modeOptions = new HashMap<String, Object>();
@@ -113,7 +92,13 @@ public class GetGameRoute implements Route {
     vm.put("redPlayer", game.getRedPlayer());
     vm.put("whitePlayer", game.getWhitePlayer());
     vm.put("activeColor", game.getActiveColor());
-    
+    /*
+     * TODO
+     * Add ability to select game view (will be an enhancement down the road)
+     */
+    vm.put("viewMode", "PLAY");
+    vm.put("board", ViewGenerator.getView(game, game.getPlayerColor(player)));
+
     // render the View
     return templateEngine.render(new ModelAndView(vm , "game.ftl"));
   }
@@ -124,7 +109,7 @@ public class GetGameRoute implements Route {
    * @param player - the player the message is for
    * @return - the message fro the player
    */
-  private String getEndGameMessage(Game game, Player player){
+  public String getEndGameMessage(Game game, Player player){
     String msg = "Game Over: ";
     String oponentsName = game.getOpponent(player).getName();
     Piece.PieceColor playerColor = game.getPlayerColor(player);

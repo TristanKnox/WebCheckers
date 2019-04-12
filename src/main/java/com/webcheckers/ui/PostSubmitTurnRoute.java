@@ -20,8 +20,9 @@ import spark.Session;
  */
 public class PostSubmitTurnRoute implements Route {
 
-  public static final Message NO_MOVES_TO_EXECUTE = Message.error("No move to execute!");
-  public static final Message NOT_PLAYERS_TURN = Message.error("It is not your turn!");
+  public static final Message NO_MOVES_TO_EXECUTE = Message.error("No move to execute");
+  public static final Message NOT_PLAYERS_TURN = Message.error("It is not your turn");
+  public static final Message MULTI_MOVE_INCOMPLETE = Message.error("You need to finish your multi jump");
   public static final Message TURN_EXECUTED = Message.info("Turn Executed");
 
   /** Handles logic for rendering response to player */
@@ -53,12 +54,12 @@ public class PostSubmitTurnRoute implements Route {
     Session session = request.session();
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Game game = gameCenter.getGame(player);
-    if(game.getActiveColor() != game.getPlayerColor(player)) {
+    if(game.getActiveColor() != game.getPlayerColor(player))
       return gson.toJson(NOT_PLAYERS_TURN);
-    }
-    if(!game.currentTurnHasMove()) {
+    if(!game.currentTurnHasMove())
       return gson.toJson(NO_MOVES_TO_EXECUTE);
-    }
+    if(!game.turnIsComplete())
+      return gson.toJson(MULTI_MOVE_INCOMPLETE);
     game.executeTurn();
     return gson.toJson(TURN_EXECUTED);
   }
