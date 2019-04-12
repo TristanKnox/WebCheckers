@@ -13,7 +13,7 @@ public class Replay {
   private int id;
   private Player player1;
   private Player player2;
-  private List<BoardState> boardStates;
+  private List<BoardState> boardStateList;
   private int currentTurnIndex;
 
   /**
@@ -23,7 +23,7 @@ public class Replay {
   public Replay(Game game){
     player1 = game.getRedPlayer();
     player2 = game.getWhitePlayer();
-    boardStates = new ArrayList<>();
+    boardStateList = new ArrayList<>();
     List<Turn> turnList = game.getTurnList();
     synchronized (Replay.class) {
 
@@ -31,12 +31,12 @@ public class Replay {
     }
     convertTurnsToBoardStates(turnList);
     currentTurnIndex =0;
-    boardStates.get(currentTurnIndex);
+    boardStateList.get(currentTurnIndex);
   }
 
   /**
    * runs through a given turn list and stores the game
-   * @param turnList
+   * @param turnList the turn list
    */
   private void convertTurnsToBoardStates(List<Turn> turnList){
     Game newGame = new Game(player1,player2, BoardBuilder.BoardType.STANDARD);
@@ -48,7 +48,7 @@ public class Replay {
   }
   private void storeBoardState(Game game){
     BoardState boardState = new BoardState(game);
-    boardStates.add(boardState);
+    boardStateList.add(boardState);
   }
 
   public Player getPlayer1(){return player1;}
@@ -64,7 +64,7 @@ public class Replay {
    * @return the total number of boardstates
    */
   public int getTotalTurns(){
-    return boardStates.size();
+    return boardStateList.size();
   }
 
   public boolean isEndOfGame(){
@@ -82,16 +82,31 @@ public class Replay {
     return id;
   }
 
+  /**
+   * gets the next board state
+   * @return the next board state
+   */
   public BoardState getNextBoardState(){
     currentTurnIndex++;
     return getBoardState(currentTurnIndex);
   }
+
+  /**
+   * gets the previous board state
+   * @return the previous board state
+   */
   public BoardState getPreviousBoardState(){
     currentTurnIndex--;
     return getBoardState(currentTurnIndex);
   }
+
+  /**
+   * gets the board state at a given turn
+   * @param turn the TURRRN
+   * @return the board state
+   */
   private BoardState getBoardState(int turn) {
-    return boardStates.get(turn);
+    return boardStateList.get(turn);
   }
 
   /**
@@ -99,6 +114,6 @@ public class Replay {
    */
   @Override
   public String toString(){
-    return getPlayer1().getName() + " vs. " + getPlayer2().getName() + ": " + boardStates.size() + " Turns";
+    return getPlayer1().getName() + " vs. " + getPlayer2().getName() + ": " + boardStateList.size() + " Turns";
   }
 }
