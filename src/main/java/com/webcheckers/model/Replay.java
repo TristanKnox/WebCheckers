@@ -23,13 +23,14 @@ public class Replay {
   public Replay(Game game){
     player1 = game.getRedPlayer();
     player2 = game.getWhitePlayer();
+    boardStates = new ArrayList<>();
     List<Turn> turnList = game.getTurnList();
     synchronized (Replay.class) {
 
       replayCount++;
     }
-    runThroughTurns(turnList);
-    currentTurnIndex = 0;
+    convertTurnsToBoardStates(turnList);
+    currentTurnIndex =0;
     boardStates.get(currentTurnIndex);
   }
 
@@ -37,12 +38,12 @@ public class Replay {
    * runs through a given turn list and stores the game
    * @param turnList
    */
-  private void runThroughTurns(List<Turn> turnList){
-    Game game = new Game(player1,player2);
-    storeBoardState(game);
-    for (Turn turn: turnList) {
-      turn.execute(game);
-      storeBoardState(game);
+  private void convertTurnsToBoardStates(List<Turn> turnList){
+    Game newGame = new Game(player1,player2);
+    storeBoardState(newGame);
+    for (Turn turn : turnList) {
+        turn.execute(newGame);
+        storeBoardState(newGame);
     }
   }
   private void storeBoardState(Game game){
@@ -91,5 +92,12 @@ public class Replay {
   }
   private BoardState getBoardState(int turn){
     return boardStates.get(turn);
+
+  /**
+   *
+   */
+  @Override
+  public String toString(){
+    return getPlayer1().getName() + " vs. " + getPlayer2().getName();
   }
 }

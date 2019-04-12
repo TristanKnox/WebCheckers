@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
@@ -45,6 +46,7 @@ public class GetHomeRouteTest {
   private Session session;
   private TemplateEngine engine;
   private Player player;
+  private GameCenter gameCenter;
 
   /**
    * standard setup to be performed before each test.
@@ -59,6 +61,7 @@ public class GetHomeRouteTest {
     engine = mock(TemplateEngine.class);
     playerLobby = mock(PlayerLobby.class);
     player = mock(Player.class);
+    gameCenter = mock(GameCenter.class);
 
     // create a unique CuT for each test
     CuT = new GetHomeRoute(engine, playerLobby);

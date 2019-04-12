@@ -29,7 +29,7 @@ public class ReplayCenter {
    * Converts a game to a replay and archives it
    * @param game - the game to be archived
    */
-  public void storeReplay( Game game){
+  public void storeReplay(Game game){
     Replay replay = new Replay(game);
     archivedReplays.put(replay.hashCode(),replay);
   }
@@ -53,6 +53,8 @@ public class ReplayCenter {
     return activeReplays.get(player);
   }
 
+
+
   /**
    * Creates a new game to watch a replay of
    * @param watcher - the player that will be watching the replay
@@ -64,4 +66,12 @@ public class ReplayCenter {
    // activeReplays.put(watcher,game);
   }
 
+  /**
+   * Will return a list of replays which users can select to watch
+   *
+   * @return a list of replays
+   */
+  public List<Replay> getReplayList(){
+    return new ArrayList<>(archivedReplays.values());
+  }
 }

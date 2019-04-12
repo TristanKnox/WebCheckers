@@ -205,6 +205,124 @@ public class Turn {
   }
 
   /**
+   * Get a list of possible jump positions for a given piece. This checks the color and type of the
+   * piece. Kings can jump in any diagonal direction as long as it is within the board, red can
+   * only jump forward, white can only jump backward relative to the board. Note this method
+   * does not return a list of all VALID jumps, simply POSSIBLE jumps
+   * @param pos The position of the piece being checked
+   * @param piece The piece that could potentially jump
+   * @return List of positions that a jump could potentially exist
+   */
+  public List<Position> getPossibleJumpPositions(Position pos, Piece piece) {
+    PieceColor pieceColor = piece.getColor();
+    PieceType pieceType = piece.getType();
+
+    List<Position> checkPositions = new ArrayList<>();
+    if(pieceColor == PieceColor.RED || pieceType == PieceType.KING) {
+      if(pos.getRow() + 2 < Game.MAX_SIZE && pos.getCell() + 2 < Game.MAX_SIZE)
+        checkPositions.add(new Position(pos.getRow() + 2, pos.getCell() + 2));
+      if(pos.getRow() + 2 < Game.MAX_SIZE && pos.getCell() - 2 >= 0)
+        checkPositions.add(new Position(pos.getRow() + 2, pos.getCell() - 2));
+    }
+    if(pieceColor == PieceColor.WHITE || pieceType == PieceType.KING) {
+      if(pos.getRow() - 2 >= 0 && pos.getCell() + 2 < Game.MAX_SIZE)
+        checkPositions.add(new Position(pos.getRow() - 2, pos.getCell() + 2));
+      if(pos.getRow() - 2 >= 0 && pos.getCell() - 2 >= 0)
+        checkPositions.add(new Position(pos.getRow() - 2, pos.getCell() - 2));
+    }
+    return checkPositions;
+  }
+
+  /**
+   * Check if a given piece can make a jump. The check first generates possible positions that
+   * a piece could move to then checks each possible position to see if it would capture an
+   * opponents piece
+   * @param pos The position the the piece would start from
+   * @param game The game to check for captures against
+   * @return True if the piece can jump
+   */
+  public boolean pieceCanJump(Position pos, Game game) {
+    Piece piece = game.getSpace(pos).getPiece();
+    if(piece == null)
+      return false;
+
+    List<Position> possibleJumps = getPossibleJumpPositions(pos, piece);
+    for(Position endPos: possibleJumps) {
+      // If the end position is not on top of a piece (illegal in checkers)
+      if (game.getSpace(endPos).getPiece() == null) {
+        Space capturedSpace = getCaptureSpace(new Move(pos, endPos), game);
+        if (capturedSpace.getPiece() != null && capturedSpace.getPiece().getColor() != turnColor)
+          return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Checks to see if a piece at the given possition can make a simple move
+   * @param pos - the position of the piece in question
+   * @param game -
+   * @return
+   */
+  public boolean pieceCanSimpleMove(Position pos, Game game){
+    Piece piece = game.getSpace(pos).getPiece();
+    if(piece == null)
+      return false;
+    List<Position> possibleMoves = getPossibleSimpleMoves(pos);
+    for(Position possibleMove: possibleMoves){
+      Move atemptedMove = new Move(pos,possibleMove);
+      if(this.addMove(game,atemptedMove) == TurnResponse.VALID_TURN)
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Creates a list of possible simple move portions. This method is not concerned with piece type it the list will always be up to the left and right and down to the left and right
+   * @param pos - the position the move will be made from
+   * @return - list of 4 possible move positions
+   */
+  private List<Position> getPossibleSimpleMoves(Position pos){
+    List<Position> movePositions = new ArrayList<>();
+    for(int row = pos.getRow() -1; row <= pos.getRow() +1; row += 2){
+      for(int col = pos.getCell() -1; col <= pos.getCell() +1; col +=2){
+        Position movePosition = new Position(row,col);
+        if(isValidLocation(movePosition))
+          movePositions.add(movePosition);
+      }
+    }
+    return movePositions;
+  }
+
+  /**
+   * Validates that a given position exists on the board
+   * @param position - the postion in question
+   * @return true if its a good location false if not a valid location
+   */
+  private boolean isValidLocation(Position position){
+    boolean result = false;
+    if(position.getRow() >= 0  && position.getRow() <= 7)
+      if(position.getCell() >= 0 && position.getCell() <=7)
+        result = true;
+    return result;
+  }
+
+  /**
+   * Checks to see that a jump is possible for a given piece color. The turn gets the list of
+   * all positions of the pieces of the given color then checks to see if any of them can make a
+   * jump
+   * @param game The game to check for jumps in
+   * @return True if any piece of the turn color can jump false if none
+   */
+  public boolean jumpIsPossible(Game game) {
+    List<Position> piecePositions = game.getPiecePositions(turnColor);
+    for(Position pos: piecePositions)
+      if(pieceCanJump(pos, game))
+        return true;
+    return false;
+  }
+
+  /**
    * Handles adding the move to the list of moves if the move is valid. Validation occurs in here
    * and the result of the validation is returned. If the addition of the move would make the turn
    * to be invalid, the move will not be added and the broken rule will be returned. If the addition
@@ -236,6 +354,8 @@ public class Turn {
     if(!spaceIsEmpty(game, move))
       return TurnResponse.SPACE_TAKEN;
     // Check for type of move and validate accordingly
+    if(isValidSimpleMove(move) && jumpIsPossible(game))
+      return TurnResponse.MUST_JUMP;
     if(!isValidSimpleMove(move)) {
       if (isValidJumpMove(move, game)) {
         moves.add(move);
@@ -277,6 +397,9 @@ public class Turn {
    * @param game The game to execute on
    */
   public void execute(Game game) {
+    //Ensure that there are actually moves to make
+    if(moves.isEmpty())
+      return;
     // Move piece from start to end location
     Move firstMove = moves.get(0);
     Move lastMove = moves.get(moves.size() - 1);

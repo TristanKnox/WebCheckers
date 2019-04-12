@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Piece.PieceColor;
@@ -43,6 +44,7 @@ public class GetGameRouteTest {
   private TemplateEngine engine;
   private GameCenter gameCenter;
   private PlayerLobby playerLobby;
+  private ReplayCenter replayCenter;
   private Game game;
   private Player playerOne;
   private Player playerTwo;
@@ -56,12 +58,13 @@ public class GetGameRouteTest {
     engine = mock(TemplateEngine.class);
     gameCenter = mock(GameCenter.class);
     playerLobby = mock(PlayerLobby.class);
+    replayCenter = mock(ReplayCenter.class);
     game = mock(Game.class);
     playerOne = new Player("sam");
     playerTwo = new Player("bob");
 
     // create a unique CuT for each test
-    CuT = new GetGameRoute(engine, gameCenter,playerLobby);
+    CuT = new GetGameRoute(engine, gameCenter,playerLobby, replayCenter);
   }
 
   /**
@@ -119,10 +122,13 @@ public class GetGameRouteTest {
     // when checking if the gave is over, return true
     when(game.isGameOver()).thenReturn(true);
 
+    when(game.getOpponent(playerOne)).thenReturn(playerTwo);
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.OPPONENT_RESIGNED);
+
     Gson gson = new Gson();
     Map<String, Object> modeOptions = new HashMap<String, Object>();
     modeOptions.put("isGameOver", true);
-    modeOptions.put("gameOverMessage", "Your opponent has resigned");
+    modeOptions.put("gameOverMessage", "Game Over: " + playerTwo.getName() + " has resigned");
 
     CuT.handle(request, response);
     testHelper.assertViewModelExists();
