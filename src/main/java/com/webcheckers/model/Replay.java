@@ -90,14 +90,15 @@ public class Replay {
     currentTurnIndex--;
     return getBoardState(currentTurnIndex);
   }
-  private BoardState getBoardState(int turn){
+  private BoardState getBoardState(int turn) {
     return boardStates.get(turn);
+  }
 
   /**
    *
    */
   @Override
   public String toString(){
-    return getPlayer1().getName() + " vs. " + getPlayer2().getName() + ": " + boardStateList.size() + " Turns";
+    return getPlayer1().getName() + " vs. " + getPlayer2().getName() + ": " + boardStates.size() + " Turns";
   }
 }
