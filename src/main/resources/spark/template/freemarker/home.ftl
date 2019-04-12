@@ -32,7 +32,7 @@
       <form action="./requestgame" method="POST">
         <#list players as player>
           <#if currentUser != player>
-            <button class = "player" name = "otherUser" type="submit" value = ${player.getName()}>${player.getName()}</button>
+            <button class = "player" name = "otherUser" type="submit" value = "${player.getName()}">${player.getName()}</button>
           </#if>
         </#list>
       </form>
