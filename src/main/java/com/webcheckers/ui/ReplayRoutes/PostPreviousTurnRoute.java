@@ -1,11 +1,14 @@
 package com.webcheckers.ui.ReplayRoutes;
 
+import static spark.Spark.halt;
+
 import com.google.gson.Gson;
 import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.BoardState;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Replay;
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.ui.WebServer;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -30,8 +33,10 @@ public class PostPreviousTurnRoute implements Route {
 //    if (replay.isBeginningOfGame()){
 //
 //    }
-    BoardState bs = replay.getPreviousBoardState();
-    return bs;
+    replay.getPreviousBoardState();
+    response.redirect(WebServer.REQUEST_REPLAY_URL);
+    halt();
+    return null;
 
 
   }
