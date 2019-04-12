@@ -7,6 +7,7 @@ import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Position;
 import com.webcheckers.model.checkers.Turn;
 import com.webcheckers.model.checkers.Turn.TurnResponse;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AITurnUtil {
@@ -15,26 +16,28 @@ public class AITurnUtil {
    * Get the first simple move that a given player can make
    * @param game The game to the get the move from
    * @param color The color of the player making the turn
-   * @return A move that is the simple move, null if there are no simple moves
+   * @return A list of possible simple moves that a player can make
    */
-  public Move getSimpleMove(Game game, PieceColor color) {
-    Turn testTurn = new Turn(color);
+  public List<Move> getSimpleMoves(Game game, PieceColor color) {
     List<Position> piecePositions = game.getPiecePositions(color);
+
+    List<Move> possibleMoves = new LinkedList<>();
+    Turn utilTurn = new Turn(color);
 
     // Go through all of the possible starting positions
     for(Position startPosition: piecePositions) {
-      Piece currentPiece = testTurn.getPiece(game, startPosition);
-      List<Position> endPositions = testTurn.getPossibleSimpleMoves(startPosition);
+      List<Position> endPositions = utilTurn.getPossibleSimpleMoves(startPosition);
       // Go through all of the end positions
       for(Position endPosition: endPositions) {
         Move testMove = new Move(startPosition, endPosition);
+        Turn testTurn = new Turn(color);
         // If a valid simple move is found, then return it
         if(testTurn.addMove(game, testMove) == TurnResponse.VALID_TURN)
-          return testMove;
+          possibleMoves.add(testMove);
       }
     }
 
-    return null;
+    return possibleMoves;
   }
 
   /**

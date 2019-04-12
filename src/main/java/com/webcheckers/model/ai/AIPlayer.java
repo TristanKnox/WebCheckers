@@ -7,6 +7,7 @@ import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Position;
 import com.webcheckers.model.checkers.Turn;
 import java.util.List;
+import java.util.Random;
 import sun.security.krb5.internal.EncASRepPart;
 
 /**
@@ -41,11 +42,17 @@ public class AIPlayer extends Player {
     this.difficulty = difficulty;
   }
 
+  private Move getRandomMove(List<Move> moves) {
+    Random r = new Random();
+    return moves.get(r.nextInt(r.nextInt(moves.size())));
+  }
+
   private void makeEasyMove(Game game) {
     AITurnUtil util = new AITurnUtil();
-    Move move = util.getSimpleMove(game, color);
-    if(move != null) {
-      game.addMove(move);
+    List<Move> possibleMoves = util.getSimpleMoves(game, color);
+    if(possibleMoves.size() > 0) {
+      Random r = new Random();
+      game.addMove(getRandomMove(possibleMoves));
       game.executeTurn();
     }
   }
