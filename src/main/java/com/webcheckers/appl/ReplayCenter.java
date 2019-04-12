@@ -74,4 +74,12 @@ public class ReplayCenter {
   public List<Replay> getReplayList(){
     return new ArrayList<>(archivedReplays.values());
   }
+
+  /**
+   * returns if there are no replays or not
+   * @return the hashmap empty or not.
+   */
+  public boolean isEmpty(){
+    return activeReplays.isEmpty();
+  }
 }
