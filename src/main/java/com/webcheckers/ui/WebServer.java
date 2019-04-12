@@ -198,7 +198,7 @@ public class WebServer {
     
     post(REQUEST_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
 
-    post(REPLAY_NEXT_TURN_URL, PostNextTurnRoute(replayCenter));
+    post(REPLAY_NEXT_TURN_URL, new PostNextTurnRoute(replayCenter));
 
 
     get(REPLAY_URL, new GetReplayHomeRoute(replayCenter, playerLobby, templateEngine));
