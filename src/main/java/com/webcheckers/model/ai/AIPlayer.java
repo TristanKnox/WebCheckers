@@ -44,14 +44,18 @@ public class AIPlayer extends Player {
 
   private Move getRandomMove(List<Move> moves) {
     Random r = new Random();
-    return moves.get(r.nextInt(r.nextInt(moves.size())));
+    return moves.get(r.nextInt(moves.size()));
   }
 
   private void makeEasyMove(Game game) {
     AITurnUtil util = new AITurnUtil();
-    List<Move> possibleMoves = util.getSimpleMoves(game, color);
+    List<Move> possibleMoves = util.getSingleJump(game, color);
     if(possibleMoves.size() > 0) {
-      Random r = new Random();
+      game.addMove(getRandomMove(possibleMoves));
+      game.executeTurn();
+    }
+    possibleMoves = util.getSimpleMoves(game, color);
+    if(possibleMoves.size() > 0) {
       game.addMove(getRandomMove(possibleMoves));
       game.executeTurn();
     }
