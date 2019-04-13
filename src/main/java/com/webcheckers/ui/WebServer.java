@@ -198,7 +198,7 @@ public class WebServer {
 
     post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, replayCenter, templateEngine));
 
-    post(REQUEST_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
+    get(REQUEST_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
 
     post(REPLAY_NEXT_TURN_URL, new PostNextTurnRoute(replayCenter));
 

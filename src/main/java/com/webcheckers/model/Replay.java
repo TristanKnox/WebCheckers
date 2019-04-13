@@ -31,7 +31,7 @@ public class Replay {
     }
     convertTurnsToBoardStates(turnList);
     currentTurnIndex =0;
-    boardStateList.get(currentTurnIndex);
+    //boardStateList.get(currentTurnIndex);
   }
 
   /**

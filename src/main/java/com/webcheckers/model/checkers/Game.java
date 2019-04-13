@@ -93,7 +93,12 @@ public class Game implements Iterable<Row> {
    * @return Copied list of the rows
    */
   public List<Row> getCopyRows() {
-    return new ArrayList<>(rows);
+    List<Row> copy = new ArrayList<>();
+    for(Row row: rows) {
+      copy.add(new Row(row));
+    }
+    return copy;
+    //return new ArrayList<>(rows);
   }
 
   /**

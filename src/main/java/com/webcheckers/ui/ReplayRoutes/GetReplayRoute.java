@@ -43,10 +43,14 @@ public class GetReplayRoute implements Route {
 
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
-
+        Boolean x = true;
+        if(1==1)
+            x = false;
         int replayId = Integer.parseInt(request.queryParams("replayID"));
 
         replayCenter.startReplay(player, replayId);
+
+
         Replay replay = replayCenter.getReplay(player);
 
         Map<String, Object> vm  = new HashMap<>();
@@ -54,8 +58,8 @@ public class GetReplayRoute implements Route {
         vm.put("currentUser",player);
         vm.put("viewMode", "REPLAY");
         Map<String,Object> modeOptions = new HashMap<>();
-        modeOptions.put("hasNext",true);//TODO must not hard code this
-        modeOptions.put("hasPrevious",true);//TODO must not hard code this
+        modeOptions.put("hasNext",replay.hasNext());
+        modeOptions.put("hasPrevious",replay.hasPrev());
         Gson gson = new Gson();
         vm.put("modeOptionsAsJSON",gson.toJson(modeOptions));
         vm.put("redPlayer", replay.getPlayer1());

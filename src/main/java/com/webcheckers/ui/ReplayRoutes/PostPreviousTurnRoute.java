@@ -8,6 +8,7 @@ import com.webcheckers.model.BoardState;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Replay;
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.ui.WebServer;
 import spark.Request;
 import spark.Response;
@@ -27,7 +28,7 @@ public class PostPreviousTurnRoute implements Route {
   @Override
   public Object handle(Request request, Response response) throws Exception {
     Session session = request.session();
-    Player player = session.attribute(GetReplayHomeRoute.CURRENT_USER_ATTR);
+    Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Replay replay = replayCenter.getReplay(player);
     replay.getPreviousBoardState();
     response.redirect(WebServer.REQUEST_REPLAY_URL);

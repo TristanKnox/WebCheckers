@@ -20,6 +20,8 @@ public class BoardState {
     public BoardState(Game game){
         this.rows = game.getCopyRows();
         this.activePlayer = game.getActiveColor();
+        this.gameOver = game.isGameOver();
+        this.endGameCondition = game.getEndGameCondition();
     }
 
     /**
