@@ -254,7 +254,11 @@ username. The main use of Player is through the passing of the Player
 between the front-end and the back-end. Here the player represents how 
 a given user is associated with a given Game. The Player does not handle 
 any functionality directly. See PlayerLobby in the application tier to 
-see more uses of the Player.
+see more uses of the Player. The Player also keeps track of a list of badges
+that the player has been awarded. The badges are displayed in the toString
+of player, but does not impact the name or the getName of the player. Each
+Badge has a string value which is how the badge is displayed.
+
 ##### AI Player
 ![The Player UML](ai_player_uml.png)
 The AI Player extends the regular player so that it includes the same equals
