@@ -40,6 +40,10 @@ public class Piece implements Serializable {
     this.color = color;
   }
 
+  /**
+   * Copy Constuctor
+   * @param piece - the piece to copy
+   */
   public Piece(Piece piece){
     this.color = piece.getColor();
     this.type = piece.getType();

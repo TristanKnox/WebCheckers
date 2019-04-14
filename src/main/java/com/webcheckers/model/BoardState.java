@@ -7,6 +7,10 @@ import com.webcheckers.model.checkers.Row;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * A Class that can hold the state or a game at any given point. Tracks the state of the board, active player, and endGameCondition
+ * @author Tristan Knox
+ */
 public class BoardState implements Serializable {
 
   private List<Row> rows;
@@ -37,7 +41,16 @@ public class BoardState implements Serializable {
    */
   public Piece.PieceColor getActivePlayer(){ return activePlayer; }
 
+  /**
+   * Checks if game is over
+   * @return - true if game is over false if not
+   */
   public boolean isGameOver(){ return gameOver; }
+
+  /**
+   * Getter for end game condition
+   * @return - the end game condition
+   */
   public Game.EndGameCondition getEndGameCondition(){ return endGameCondition; }
 
   public void setEndGameCondition(Game.EndGameCondition condition){

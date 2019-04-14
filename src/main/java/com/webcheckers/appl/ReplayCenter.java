@@ -88,6 +88,10 @@ public class ReplayCenter {
     activeReplays.remove(player);
   }
 
+  /**
+   *
+   * @param player
+   */
   public void resetReplay(Player player){
     activeReplays.get(player).resetReplay();
   }
