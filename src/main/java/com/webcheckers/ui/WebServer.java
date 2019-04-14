@@ -86,6 +86,8 @@ public class WebServer {
 
   public static final String REPLAY_PREVIOUS_TURN_URL = "/replay/previousTurn";
 
+  public static final String EXIT_REPLAY_URL = "/replay/stopWatching";
+
 
 
   //
@@ -210,6 +212,8 @@ public class WebServer {
     post(POST_REPLAY_REQUEST_URL,new PostRequestReplayRoute(replayCenter));
 
     post(REPLAY_PREVIOUS_TURN_URL, new PostPreviousTurnRoute(replayCenter, templateEngine));
+
+    get(EXIT_REPLAY_URL, new PostExitReplayRoute(replayCenter));
 
     LOG.config("WebServer is initialized.");
   }

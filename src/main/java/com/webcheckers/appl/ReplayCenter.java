@@ -80,6 +80,13 @@ public class ReplayCenter {
     activeReplays.put(watcher,replay);
   }
 
+  /**
+   * Ends a replay when the exit button is pressed
+   * @param player - the player with whom the replay is associated
+   */
+  public void endReplay(Player player){
+    activeReplays.remove(player);
+  }
 
   /**
    * Will return a list of replays which users can select to watch
