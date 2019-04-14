@@ -38,6 +38,16 @@ public class Space {
   }
 
   /**
+   * Copy constructor
+   * @param original - the space to copy
+   */
+  public Space(Space original){
+    this.cellIdx = original.getCellIdx();
+    this.piece = original.getPiece();
+    this.type = original.getType();
+  }
+
+  /**
    * Get the current column number of this space
    * @return the current column number
    */

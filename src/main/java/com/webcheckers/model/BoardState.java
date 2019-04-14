@@ -10,6 +10,8 @@ public class BoardState {
 
     private List<Row> rows;
     private Piece.PieceColor activePlayer;
+    private boolean gameOver;
+    private Game.EndGameCondition endGameCondition;
 
     /**
      * Constructor
@@ -18,6 +20,8 @@ public class BoardState {
     public BoardState(Game game){
         this.rows = game.getCopyRows();
         this.activePlayer = game.getActiveColor();
+        this.gameOver = game.isGameOver();
+        this.endGameCondition = game.getEndGameCondition();
     }
 
     /**
@@ -31,4 +35,7 @@ public class BoardState {
      * @return - activePlayer
      */
     public Piece.PieceColor getActivePlayer(){ return activePlayer; }
+
+    public boolean isGameOver(){ return gameOver; }
+    public Game.EndGameCondition getEndGameCondition(){ return endGameCondition; }
 }

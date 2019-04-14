@@ -75,13 +75,12 @@ public class Game implements Iterable<Row> {
    * @param playerTwo the second player
    * @param turns the list of turns.
    */
-  public Game(Player playerOne, Player playerTwo, List<Turn> turns){
+  public Game(Player playerOne, Player playerTwo, BoardState boardState){
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
-    this.activeColor = PieceColor.RED;
+    this.activeColor = boardState.getActivePlayer();
     this.gameOver=false;
-    rows = new ArrayList<>();
-    this.turns = turns;
+    rows = boardState.getRows();
   }
 
   /**
@@ -105,7 +104,12 @@ public class Game implements Iterable<Row> {
    * @return Copied list of the rows
    */
   public List<Row> getCopyRows() {
-    return new ArrayList<>(rows);
+    List<Row> copy = new ArrayList<>();
+    for(Row row: rows) {
+      copy.add(new Row(row));
+    }
+    return copy;
+    //return new ArrayList<>(rows);
   }
 
   /**

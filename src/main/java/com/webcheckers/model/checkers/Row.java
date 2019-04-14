@@ -32,6 +32,12 @@ public class Row implements Iterable<Space> {
     initializeSpaces();
   }
 
+  public Row(Row original){
+    this.index = original.getIndex();
+    spaces = new ArrayList<>();
+    for(Space space: original.getSpaces())
+      spaces.add(new Space(space));
+  }
   /**
    * Creates a row object with predefined order of spaces
    * @param spaces list of spaces in the desired order

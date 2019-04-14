@@ -14,7 +14,7 @@ import java.util.List;
  * @Author Evan
  */
 public class ReplayCenter {
-  private HashMap<Player, Game> activeReplays;
+  private HashMap<Player, Replay> activeReplays;
   private HashMap<Integer,Replay> archivedReplays;
 
   /**
@@ -49,9 +49,7 @@ public class ReplayCenter {
    * @param player the player in question
    * @return the game paired to the player.
    */
-  public Game getReplay(Player player){
-    return activeReplays.get(player);
-  }
+  public Replay getReplay(Player player){ return activeReplays.get(player);  }
 
   /**
    * returns true if there are replays available to watch
@@ -70,9 +68,10 @@ public class ReplayCenter {
    */
   public void startReplay(Player watcher, int replayID){
     Replay replay = getReplay(replayID);
-  //  Game game = new Game(replay.getPlayer1(), replay.getPlayer2(), replay.getTurnList());
-   // activeReplays.put(watcher,game);
+    //Game game = new Game(replay.getPlayer1(), replay.getPlayer2(), replay.getNextBoardState());
+    activeReplays.put(watcher,replay);
   }
+
 
   /**
    * Will return a list of replays which users can select to watch
@@ -81,5 +80,13 @@ public class ReplayCenter {
    */
   public List<Replay> getReplayList(){
     return new ArrayList<>(archivedReplays.values());
+  }
+
+  /**
+   * returns if there are no replays or not
+   * @return the hashmap empty or not.
+   */
+  public boolean isEmpty(){
+    return activeReplays.isEmpty();
   }
 }
