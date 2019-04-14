@@ -40,16 +40,11 @@ public class GetReplayRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-
+        System.out.println("GetGameRoute");
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
-        Boolean x = true;
-        if(1==1)
-            x = false;
-        int replayId = Integer.parseInt(request.queryParams("replayID"));
 
-        replayCenter.startReplay(player, replayId);
-
+        System.out.println("GetReplayRoute: "+ replayCenter.getReplay(player));
 
         Replay replay = replayCenter.getReplay(player);
 
@@ -67,6 +62,7 @@ public class GetReplayRoute implements Route {
         Game game = new Game(replay.getPlayer1(),replay.getPlayer2(), replay.getCurrentBoardState());
         vm.put("activeColor", game.getActiveColor());
         vm.put("board",ViewGenerator.getView(game, Piece.PieceColor.RED));
+        System.out.println("GetReplay: Render now");
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }

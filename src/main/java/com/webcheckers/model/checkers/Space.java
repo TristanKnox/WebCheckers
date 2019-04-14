@@ -2,13 +2,15 @@ package com.webcheckers.model.checkers;
 
 import com.webcheckers.model.checkers.Piece;
 
+import java.io.Serializable;
+
 /**
  * Each space represents a single location on the board. It also keeps track of the piece currently
  * on it as well as if the space is a valid location to move to.
  *
  * @author Collin Bolles
  */
-public class Space {
+public class Space implements Serializable {
 
   /**
    * Represents the two types of spaces, white or black

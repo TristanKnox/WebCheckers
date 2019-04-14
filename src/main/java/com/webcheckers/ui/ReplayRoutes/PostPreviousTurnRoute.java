@@ -31,7 +31,7 @@ public class PostPreviousTurnRoute implements Route {
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Replay replay = replayCenter.getReplay(player);
     replay.getPreviousBoardState();
-    response.redirect(WebServer.REQUEST_REPLAY_URL);
+    response.redirect(WebServer.GET_REPLAY_URL);
     halt();
     return null;
 

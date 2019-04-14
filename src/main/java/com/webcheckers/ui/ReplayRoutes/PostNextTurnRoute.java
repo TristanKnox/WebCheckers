@@ -6,13 +6,10 @@ import static spark.Spark.halt;
 import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Replay;
-import com.webcheckers.ui.GetGameRoute;
 import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.ui.WebServer;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
+import com.webcheckers.util.Message;
+import spark.*;
 
 public class PostNextTurnRoute implements Route {
   private ReplayCenter replayCenter;
@@ -32,8 +29,12 @@ public class PostNextTurnRoute implements Route {
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Replay replay = replayCenter.getReplay(player);
     replay.getNextBoardState();
-    response.redirect(WebServer.REQUEST_REPLAY_URL);
+
+    System.out.println("Before Redirect");//TODO remove
+    response.redirect(WebServer.GET_REPLAY_URL);
+    System.out.println("After Redirect");//TODO remove
     halt();
-    return null;
+    System.out.println("After halt");
+    return Message.info("true");
   }
 }

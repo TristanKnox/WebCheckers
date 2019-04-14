@@ -29,7 +29,7 @@
           </p>
 
           <!-- Add clickable buttons with available replays. -->
-          <form action="/replay/game" method="GET">
+          <form action="/replay/request" method="POST">
             <#list replays as replay>
                 <button class = "replay grid-item" name = "replayID" type="submit" value = ${replay.hashCode()}>${replay.toString()}</button>
             </#list>

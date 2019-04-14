@@ -3,6 +3,8 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Replay;
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.util.ReplaySerializer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,6 +25,11 @@ public class ReplayCenter {
   public ReplayCenter(){
     activeReplays = new HashMap<>();
     archivedReplays = new HashMap<>();
+    Replay replay = ReplaySerializer.deserialize("replay.ser");
+    if(replay != null) {
+      System.out.println("Replay loaded");
+      archivedReplays.put(replay.hashCode(), replay);
+    }
   }
 
   /**
@@ -32,6 +39,7 @@ public class ReplayCenter {
   public void storeReplay(Game game){
     Replay replay = new Replay(game);
     archivedReplays.put(replay.hashCode(),replay);
+    ReplaySerializer.serialize(replay);
   }
 
   /**
@@ -59,7 +67,7 @@ public class ReplayCenter {
    * @param replayID - the id of the replay to watch
    */
   public void startReplay(Player watcher, int replayID){
-    Replay replay = getReplay(replayID);
+    Replay replay = new Replay(getReplay(replayID));
     //Game game = new Game(replay.getPlayer1(), replay.getPlayer2(), replay.getNextBoardState());
     activeReplays.put(watcher,replay);
   }

@@ -4,9 +4,10 @@ import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Piece;
 import com.webcheckers.model.checkers.Row;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class BoardState {
+public class BoardState implements Serializable {
 
     private List<Row> rows;
     private Piece.PieceColor activePlayer;
