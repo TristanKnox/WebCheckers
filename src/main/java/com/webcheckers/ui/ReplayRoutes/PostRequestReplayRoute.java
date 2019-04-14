@@ -12,7 +12,7 @@ import spark.Session;
 import static spark.Spark.halt;
 
 /**
- *
+ * Requests a replay to be started.
  * @author Tristan Knox
  */
 public class PostRequestReplayRoute implements Route {
