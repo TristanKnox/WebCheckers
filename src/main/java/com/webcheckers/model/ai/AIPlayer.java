@@ -44,4 +44,12 @@ public class AIPlayer extends Player {
     public synchronized void makeMove(Game game) {
 
     }
+
+  /**
+   * Get the difficulty of the AIPlayer
+   * @return The difficulty of the AIPlayer
+   */
+  public Difficulty getDifficulty() {
+    return difficulty;
+  }
 }
