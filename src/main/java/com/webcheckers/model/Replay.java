@@ -2,16 +2,17 @@ package com.webcheckers.model;
 
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Turn;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *A class which is a less cumbersome version of a game,
+ * used to render replays of games which have already been played.
  *
+ * @author Andrew Bado, Tristan Knox, Evan Nolan
  */
 public class Replay implements Serializable {
-  private static int replayCount = 0;
   private int id;
   private Player player1;
   private Player player2;
@@ -19,7 +20,7 @@ public class Replay implements Serializable {
   private int currentTurnIndex;
 
   /**
-   * runs through a replayed games turns to get the board state to making a replay
+   * runs through a replayed game's turns to get the board state to make a replay
    * @param game the game to be turned into a replay.
    */
   public Replay(Game game){
@@ -30,7 +31,6 @@ public class Replay implements Serializable {
     id = game.getID();
     convertTurnsToBoardStates(turnList);
     currentTurnIndex = 0;
-    // boardStateList.get(currentTurnIndex);
   }
 
   /**

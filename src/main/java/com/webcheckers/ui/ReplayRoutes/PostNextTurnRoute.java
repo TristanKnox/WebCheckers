@@ -32,11 +32,9 @@ public class PostNextTurnRoute implements Route {
     replay.getNextBoardState();
 
     System.out.println(request.queryString());
-
-    System.out.println("before*****************");
+    
     GetReplayRoute route = new GetReplayRoute(replayCenter, templateEngine);
     route.handle(request, response);
-    System.out.println("after**************");
     return Message.info("true");
   }
 }
