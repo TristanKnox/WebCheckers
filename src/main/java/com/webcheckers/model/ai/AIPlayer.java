@@ -42,23 +42,31 @@ public class AIPlayer extends Player {
     this.difficulty = difficulty;
   }
 
-  private Move getRandomMove(List<Move> moves) {
+  /**
+   * Utility method for getting a random move from a list of possible moves.
+   * @return A random turn from the list of turns
+   */
+  private Turn getRandomTurn(List<Turn> turns) {
     Random r = new Random();
-    return moves.get(r.nextInt(moves.size()));
+    return turns.get(r.nextInt(turns.size()));
   }
 
   private void makeEasyMove(Game game) {
-    AITurnUtil util = new AITurnUtil();
-    List<Move> possibleMoves = util.getSingleJump(game, color);
-    if(possibleMoves.size() > 0) {
-      game.addMove(getRandomMove(possibleMoves));
-      game.executeTurn();
+    AITurnUtil utilTurn = new AITurnUtil(game, color);
+    Turn turn;
+    if(utilTurn.getPossibleSingleJumps().size() > 0) {
+      turn = getRandomTurn(utilTurn.getPossibleSingleJumps());
     }
-    possibleMoves = util.getSimpleMoves(game, color);
-    if(possibleMoves.size() > 0) {
-      game.addMove(getRandomMove(possibleMoves));
-      game.executeTurn();
+    else if(utilTurn.getPossibleMultiJumps().size() > 0) {
+      turn = getRandomTurn(utilTurn.getPossibleMultiJumps());
     }
+    else {
+      turn = getRandomTurn(utilTurn.getPossibleSimpleTurn());
+    }
+
+    for(Move move: turn.getMoves())
+      game.addMove(move);
+    game.executeTurn();
   }
 
   private void makeHardMove(Game game) {
