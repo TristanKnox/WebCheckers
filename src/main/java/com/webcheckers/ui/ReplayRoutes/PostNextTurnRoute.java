@@ -30,11 +30,13 @@ public class PostNextTurnRoute implements Route {
     Replay replay = replayCenter.getReplay(player);
     replay.getNextBoardState();
 
+    System.out.println(request.queryParams("gameID"));
+
     System.out.println("Before Redirect");//TODO remove
     response.redirect(WebServer.GET_REPLAY_URL);
     System.out.println("After Redirect");//TODO remove
-    halt();
+   // halt();
     System.out.println("After halt");
-    return Message.info("true");
+    return Message.info("This is a test");
   }
 }
