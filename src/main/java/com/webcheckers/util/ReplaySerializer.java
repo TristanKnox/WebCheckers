@@ -8,7 +8,7 @@ public class ReplaySerializer {
 
   public static void serialize(Replay replay){
     try {
-      FileOutputStream fileOut = new FileOutputStream("appl/replay.txt");
+      FileOutputStream fileOut = new FileOutputStream("replay.ser");
       ObjectOutputStream out = new ObjectOutputStream(fileOut);
       out.writeObject(replay);
       out.close();
