@@ -62,7 +62,6 @@ public class GetReplayRoute implements Route {
         Game game = new Game(replay.getPlayer1(),replay.getPlayer2(), replay.getCurrentBoardState());
         vm.put("activeColor", game.getActiveColor());
         vm.put("board",ViewGenerator.getView(game, Piece.PieceColor.RED));
-        System.out.println("GetReplay: Render now");
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }

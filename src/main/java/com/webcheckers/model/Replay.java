@@ -72,8 +72,6 @@ public class Replay implements Serializable {
 
   public List<BoardState> getBoardStateList(){ return boardStateList; }
 
-//  public List<Turn> getTurnList(){return turnStates;}
-
   /**
    * Gets the total number of turns in a replay
    * @return the total number of boardstates
@@ -85,9 +83,11 @@ public class Replay implements Serializable {
   public boolean isEndOfGame(){
     return currentTurnIndex == getTotalTurns()-1;
   }
+
   public boolean isBeginingOfGame(){
     return currentTurnIndex == 0;
   }
+
   /**
    *the hash code function
    * @return the hash
@@ -116,6 +116,7 @@ public class Replay implements Serializable {
   }
 
   public BoardState getCurrentBoardState(){ return getBoardState(currentTurnIndex); }
+
   /**
    * gets the board state at a given turn
    * @param turn the TURRRN
