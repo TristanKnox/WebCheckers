@@ -45,7 +45,8 @@ public class Space implements Serializable {
    */
   public Space(Space original){
     this.cellIdx = original.getCellIdx();
-    this.piece = original.getPiece();
+    if(original.getPiece() != null)
+      this.piece = new Piece(original.getPiece());
     this.type = original.getType();
   }
 

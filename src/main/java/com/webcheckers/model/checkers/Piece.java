@@ -40,6 +40,11 @@ public class Piece implements Serializable {
     this.color = color;
   }
 
+  public Piece(Piece piece){
+    this.color = piece.getColor();
+    this.type = piece.getType();
+  }
+
   /**
    * Get the type of the piece either king or single
    * @return The type of the piece
