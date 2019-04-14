@@ -59,6 +59,14 @@ public class ReplayCenter {
    */
   public Replay getReplay(Player player){ return activeReplays.get(player);  }
 
+  /**
+   * returns true if there are replays available to watch
+   * @return true if replays are available, false otherwise
+   */
+  public Boolean hasReplays(){
+    return archivedReplays.size() > 0;
+  }
+
 
 
   /**

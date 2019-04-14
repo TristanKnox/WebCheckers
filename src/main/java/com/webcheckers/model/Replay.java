@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Replay implements Serializable {
   private static int replayCount = 0;
+
   private int id;
   private Player player1;
   private Player player2;
@@ -27,10 +28,7 @@ public class Replay implements Serializable {
     player2 = game.getWhitePlayer();
     boardStateList = new ArrayList<>();
     List<Turn> turnList = game.getTurnList();
-    synchronized (Replay.class) {
-
-      replayCount++;
-    }
+    id = game.getID();
     convertTurnsToBoardStates(turnList);
     currentTurnIndex =0;
     //boardStateList.get(currentTurnIndex);

@@ -61,7 +61,7 @@ public class PostSignOutRoute implements Route {
 
     Player player = httpSession.attribute(PLAYER_KEY);
 
-    if(playerLobby.isInGame(player)){
+    if(gameCenter.playerInGame(player)){
       PostResignationRoute route = new PostResignationRoute(playerLobby, gameCenter, replayCenter);
 
       route.handle(request,response);
