@@ -13,6 +13,8 @@ import java.util.List;
  * @author Andrew Bado, Tristan Knox, Evan Nolan
  */
 public class Replay implements Serializable {
+
+  // attributes
   private int id;
   private Player player1;
   private Player player2;
@@ -20,6 +22,7 @@ public class Replay implements Serializable {
   private int currentTurnIndex;
 
   /**
+   * constructor 1
    * runs through a replayed game's turns to get the board state to make a replay
    * @param game the game to be turned into a replay.
    */
@@ -64,8 +67,13 @@ public class Replay implements Serializable {
   }
 
   /**
+<<<<<<< HEAD
    * Stores a boardState of the current state of the given game
    * @param game - the game to store the state of
+=======
+   * takes a game and stores its board as a boardstate
+   * @param game
+>>>>>>> ffc8863adafbf5e280217d7aea018ccde08dbbee
    */
   private void storeBoardState(Game game){
     BoardState boardState = new BoardState(game);
@@ -73,28 +81,49 @@ public class Replay implements Serializable {
   }
 
   /**
+<<<<<<< HEAD
    * Getter for playerOne
    * @return - playerOne
+=======
+   * returns player 1
+   * @return player1
+>>>>>>> ffc8863adafbf5e280217d7aea018ccde08dbbee
    */
   public Player getPlayer1(){return player1;}
 
   /**
+<<<<<<< HEAD
    * Getter for playerTwo
    * @return - playerTwo
+=======
+   * returns player 2
+   * @return player2
+>>>>>>> ffc8863adafbf5e280217d7aea018ccde08dbbee
    */
   public Player getPlayer2(){return player2;}
 
   /**
+<<<<<<< HEAD
    * Getter for Id
    * @return - id
+=======
+   * returns the unique id for this replay
+   * @return id
+>>>>>>> ffc8863adafbf5e280217d7aea018ccde08dbbee
    */
   public int getId(){return id;}
 
+  /**
+   * returns the turn number which this replay is currently on
+   * @return currentTurnIndex
+   */
   public int getCurrentTurnIndex(){ return currentTurnIndex; }
 
-  public List<BoardState> getBoardStateList(){ return boardStateList; }
+  public void resetReplay(){
+    this.currentTurnIndex = 0;
+  }
 
-//  public List<Turn> getTurnList(){return turnStates;}
+  public List<BoardState> getBoardStateList(){ return boardStateList; }
 
   /**
    * Gets the total number of turns in a replay
@@ -107,9 +136,11 @@ public class Replay implements Serializable {
   public boolean isEndOfGame(){
     return currentTurnIndex == getTotalTurns()-1;
   }
+
   public boolean isBeginingOfGame(){
     return currentTurnIndex == 0;
   }
+
   /**
    *the hash code function
    * @return the hash
@@ -137,8 +168,10 @@ public class Replay implements Serializable {
     return getBoardState(currentTurnIndex);
   }
 
-  public BoardState getCurrentBoardState(){
-    return getBoardState(currentTurnIndex); }
+
+  public BoardState getCurrentBoardState(){ return getBoardState(currentTurnIndex); }
+
+
   /**
    * gets the board state at a given turn
    * @param turn the TURRRN
