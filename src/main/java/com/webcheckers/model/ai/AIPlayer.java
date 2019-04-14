@@ -44,7 +44,7 @@ public class AIPlayer extends Player {
    * Utility method for getting a random move from a list of possible moves.
    * @return A random turn from the list of turns
    */
-  private Turn getRandomTurn(List<Turn> turns) {
+  protected Turn getRandomTurn(List<Turn> turns) {
     Random r = new Random();
     return turns.get(r.nextInt(turns.size()));
   }
