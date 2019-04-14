@@ -255,6 +255,17 @@ between the front-end and the back-end. Here the player represents how
 a given user is associated with a given Game. The Player does not handle 
 any functionality directly. See PlayerLobby in the application tier to 
 see more uses of the Player.
+##### AI Player
+![The Player UML](ai_player_uml.png)
+The AI Player extends the regular player so that it includes the same equals
+method and hash methods. In addition to the abilities that a player has, AI
+player has the ability to store a difficulty. This stored enum Difficulty
+is used when determining what move to make when it is executing a turn. The AI
+player takes in a game in the makeMove method which the AI executes a turn on. 
+By having AI take in a game for each method call, a single AI can play multiple
+games at once by simply getting different games passed into it. For determining
+the possible moves, AITurnUtil is used which simply returns lists of possible
+moves.
 
 #### Turn
 ![The Turn UML](turn_uml.png)
