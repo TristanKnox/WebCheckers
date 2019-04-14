@@ -9,7 +9,9 @@ import static org.mockito.Mockito.verify;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Replay;
 import com.webcheckers.model.checkers.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,7 @@ public class PostSignOutRouteTest {
   private Session session;
   private GameCenter gameCenter;
   private PlayerLobby playerLobby;
+  private ReplayCenter replayCenter;
   private Gson gson;
   private Player player1;
   private Player player2;
@@ -42,6 +45,7 @@ public class PostSignOutRouteTest {
     session = mock(Session.class);
     gameCenter = mock(GameCenter.class);
     playerLobby = mock(PlayerLobby.class);
+    replayCenter = mock(ReplayCenter.class);
     templateEngine =mock(TemplateEngine.class);
     player1 = new Player("KAKAKAAK");
     when(playerLobby.isInGame(player1)).thenReturn(Boolean.TRUE);
@@ -49,8 +53,7 @@ public class PostSignOutRouteTest {
     when(request.session()).thenReturn(session);
     when(session.attribute(any())).thenReturn(null);
     gson = new Gson();
-    CuT = new PostSignOutRoute(playerLobby,gameCenter,templateEngine);
-    //
+    CuT = new PostSignOutRoute(playerLobby,gameCenter,replayCenter,templateEngine);
   }
 
   /**
@@ -58,13 +61,13 @@ public class PostSignOutRouteTest {
    */
   @Test
   public void testConstructor(){
-    PostSignOutRoute routey = new PostSignOutRoute(playerLobby,gameCenter,templateEngine);
-    assertNotNull(routey);
+    PostSignOutRoute route = new PostSignOutRoute(playerLobby,gameCenter,replayCenter,templateEngine);
+    assertNotNull(route);
   }
 
   @Test
   public void testHandle(){
-    CuT = new PostSignOutRoute(playerLobby,gameCenter,templateEngine);
+    CuT = new PostSignOutRoute(playerLobby,gameCenter,replayCenter,templateEngine);
     try{
       CuT.handle(request,responce);
     }catch(Exception e){}

@@ -62,6 +62,7 @@ public class PostGameRequestRoute implements Route {
     //Adding data to vm
     vm.put("title", GetGameRoute.GAME_TITLE);
 
+    //TODO refactor
     vm.put("currentUser", playerOne);
     vm.put("redPlayer", game.getRedPlayer());
     vm.put("whitePlayer", game.getWhitePlayer());

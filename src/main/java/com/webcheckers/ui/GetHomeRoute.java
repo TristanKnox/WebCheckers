@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -34,10 +36,13 @@ public class GetHomeRoute implements Route {
   // values for use in the session attribute map
   public static final String PLAYER_KEY = "player";
   public static final String IN_GAME_ERROR_FLAG = "inGameError";
+  public static final String VIEW_MODE_ATTR = "viewMode";
+  public static final String NO_REPLAYS_ERROR_FLAG = "noReplays";
 
   // Attributes
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
+  private final GameCenter gameCenter;
 
   /**
   * Create the Spark Route (UI controller) to handle all GET / HTTP requests.
@@ -47,10 +52,11 @@ public class GetHomeRoute implements Route {
   * @param playerLobby
   *   responsible of keeping track of all active players
   */
-  public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+  public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby, final GameCenter gameCenter) {
     // neither parameter may be null
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     this.playerLobby = Objects.requireNonNull(playerLobby, "playerLobby is required");
+    this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
     LOG.config("GetHomeRoute is initialized.");
   }
 
@@ -80,7 +86,7 @@ public class GetHomeRoute implements Route {
       vm.put("message", Message.info(String.format(WELCOME_MSG, playerLobby.getNumberOfUsers())));
     }
     // check that you have not been put in a game
-    else if(playerLobby.isInGame(httpSession.attribute(PLAYER_KEY))){
+    else if(gameCenter.playerInGame(httpSession.attribute(PLAYER_KEY))){
       // if the player is in a game, redirect them to that game page
       response.redirect(WebServer.GAME_URL);
       halt();
@@ -96,13 +102,28 @@ public class GetHomeRoute implements Route {
       vm.put("message", Message.error("User has joined another game. Pick another user."));
       httpSession.attribute(IN_GAME_ERROR_FLAG, false);
     }
+    else if(httpSession.attribute(NO_REPLAYS_ERROR_FLAG) == (Boolean)true){
+      // build vm case: there is a player, and they have just tried to enter
+      // the replay center when no replays are available
+      vmBuilderHelper(vm, httpSession);
+
+      // give the home page an error message
+      vm.put("message", Message.error("No replays currently available. Check back later."));
+      httpSession.attribute(NO_REPLAYS_ERROR_FLAG, false);
+    }
     // default home view
     else{
+      // get the player
+      Player p = httpSession.attribute(PLAYER_KEY);
+
+      // if they aren't available, this means they are viewing replays, so re-add them.
+      if(playerLobby.isInGame(p))
+        playerLobby.makeAvailable(p);
+
       // build the vm case: there is a player, and they are 'idling' on the home page
       vmBuilderHelper(vm, httpSession);
 
       // give the home page a personalized welcome message
-      Player p = httpSession.attribute(PLAYER_KEY);
       vm.put("message", Message.info(String.format(PERSONAL_WELCOME, p.getName())));
     }
 

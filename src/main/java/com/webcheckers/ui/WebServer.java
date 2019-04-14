@@ -1,14 +1,13 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.ui.ReplayRoutes.*;
 import static spark.Spark.*;
-
 import com.webcheckers.appl.GameCenter;
 import java.util.Objects;
 import java.util.logging.Logger;
-
 import com.google.gson.Gson;
-
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayCenter;
 import spark.TemplateEngine;
 
 
@@ -67,7 +66,6 @@ public class WebServer {
   
   public static final String RESIGNATION_URL = "/resignGame";
 
-
   public static final String REQUEST_MOVE_URL = "/validateMove";
 
   public static final String REQUEST_TURN_SUBMISSION = "/submitTurn";
@@ -78,6 +76,16 @@ public class WebServer {
 
   public static final String SIGN_OUT_URL = "/signout";
 
+  public static final String REPLAY_URL = "/replay";
+
+  public static final String GET_REPLAY_URL = "/replay/game";
+
+  public static final String POST_REPLAY_REQUEST_URL = "/replay/request";
+
+  public static final String REPLAY_NEXT_TURN_URL = "/replay/nextTurn";
+
+  public static final String REPLAY_PREVIOUS_TURN_URL = "/replay/previousTurn";
+
 
 
   //
@@ -87,7 +95,8 @@ public class WebServer {
   private final TemplateEngine templateEngine;
   private final Gson gson;
   private final PlayerLobby playerLobby;
-  private GameCenter gameCenter;
+  private final GameCenter gameCenter;
+  private final ReplayCenter replayCenter;
 
   //
   // Constructor
@@ -113,6 +122,7 @@ public class WebServer {
     this.gson = gson;
     this.playerLobby = new PlayerLobby();
     this.gameCenter = new GameCenter();
+    this.replayCenter = new ReplayCenter();
   }
 
   //
@@ -168,7 +178,7 @@ public class WebServer {
 
     // Shows the Checkers game Home page.
 
-    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
+    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby, gameCenter));
 
     get(SIGN_IN_URL, new GetSigninRoute(templateEngine));
 
@@ -176,9 +186,9 @@ public class WebServer {
 
     post(TRY_USERNAME_URL, new PostSignInAttemptRoute(playerLobby,templateEngine));
 
-    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter, playerLobby,replayCenter));
 
-    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter));
+    post(RESIGNATION_URL, new PostResignationRoute(playerLobby, gameCenter, replayCenter));
 
     post(REQUEST_MOVE_URL, new PostMoveRequestRoute(gameCenter));
 
@@ -188,7 +198,19 @@ public class WebServer {
 
     post(BACKUP_URL, new PostBackupMoveRoute(gson, gameCenter));
 
-    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby,gameCenter,templateEngine));
+    post(SIGN_OUT_URL, new PostSignOutRoute(playerLobby, gameCenter, replayCenter, templateEngine));
+
+    //Replay Routes
+    get(REPLAY_URL, new GetReplayHomeRoute(replayCenter, playerLobby, templateEngine));
+
+    get(GET_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
+
+    post(REPLAY_NEXT_TURN_URL, new PostNextTurnRoute(replayCenter));
+
+    post(POST_REPLAY_REQUEST_URL,new PostRequestReplayRoute(replayCenter));
+
+    post(REPLAY_PREVIOUS_TURN_URL, new PostPreviousTurnRoute(replayCenter));
+
     LOG.config("WebServer is initialized.");
   }
 

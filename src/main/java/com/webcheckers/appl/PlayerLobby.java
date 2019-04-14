@@ -13,7 +13,6 @@ public class PlayerLobby {
   private Map<String, Player> currentUsers;
   private Map<String, Player> avalUsers;
 
-
     //Constructor
   public PlayerLobby() {
     currentUsers = new HashMap<>();
@@ -111,7 +110,7 @@ public class PlayerLobby {
       return false;
   }
 
-/**
+  /**
  *
  * Gets the Player Object
  *

@@ -2,12 +2,14 @@ package com.webcheckers.model;
 
 import com.webcheckers.model.checkers.Piece.PieceColor;
 
+import java.io.Serializable;
+
 /**
  * Represents the player of the game. Each player is defined by a unique name
  *
  * @author Collin Bolles
  */
-public class Player {
+public class Player implements Serializable {
   /** The unique name of the player **/
   private final String name;
 

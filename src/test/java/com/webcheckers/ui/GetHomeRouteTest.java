@@ -64,7 +64,7 @@ public class GetHomeRouteTest {
     gameCenter = mock(GameCenter.class);
 
     // create a unique CuT for each test
-    CuT = new GetHomeRoute(engine, playerLobby);
+    CuT = new GetHomeRoute(engine, playerLobby, gameCenter);
   }
 
   /**

@@ -1,5 +1,6 @@
 package com.webcheckers.model.checkers;
 
+import com.webcheckers.model.BoardState;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.model.checkers.Piece.PieceColor;
@@ -31,16 +32,17 @@ public class Game implements Iterable<Row> {
   /** Represents each row of the board **/
   private List<Row> rows;
   /** The color of the player whose turn it is **/
-
   private PieceColor activeColor;
   /** whether the game has ended **/
   private Boolean gameOver;
-
   /** Why the game has ended */
   private EndGameCondition endGameCondition;
-
   /** Represents all of the turns made through out the duration of the game */
   private List<Turn> turns;
+  /** The unique game id **/
+  private int gameID;
+  /** The total number of games constructed - used to get the id of this game **/
+  private static int totalgames;
 
   /**
    * Constructor - this will create a new game with a given board type
@@ -61,9 +63,33 @@ public class Game implements Iterable<Row> {
     gameOver = false;
     //Take initialized board and refactor it based on board type given
     rows = BoardBuilder.getTestBoard(rows,boardType);
-
+    synchronized (Game.class){
+      totalgames++;
+      gameID = totalgames;
+    }
   }
 
+  /**
+   * An overloaded constructor for the creation of a replay
+   * @param playerOne the first player
+   * @param playerTwo the second player
+   * @param turns the list of turns.
+   */
+  public Game(Player playerOne, Player playerTwo, BoardState boardState){
+    this.redPlayer = playerOne;
+    this.whitePlayer = playerTwo;
+    this.activeColor = boardState.getActivePlayer();
+    this.gameOver=false;
+    rows = boardState.getRows();
+  }
+
+  /**
+   * geturns the game's unique ID
+   * @return id
+   */
+  public int getID(){
+    return gameID;
+  }
   /**
    * Handles initializing the boards. Each row initializes its own state
    */
@@ -78,7 +104,12 @@ public class Game implements Iterable<Row> {
    * @return Copied list of the rows
    */
   public List<Row> getCopyRows() {
-    return new ArrayList<>(rows);
+    List<Row> copy = new ArrayList<>();
+    for(Row row: rows) {
+      copy.add(new Row(row));
+    }
+    return copy;
+    //return new ArrayList<>(rows);
   }
 
   /**
@@ -332,4 +363,10 @@ public class Game implements Iterable<Row> {
   public void flipActiveColor(){
     this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
   }
+
+  /**
+   * Returns the list of turns stored in this game
+   * @return list of turns
+   */
+  public List<Turn> getTurnList(){return this.turns;}
 }
