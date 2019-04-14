@@ -13,6 +13,8 @@ import java.util.List;
  * @author Andrew Bado, Tristan Knox, Evan Nolan
  */
 public class Replay implements Serializable {
+
+  // attributes
   private int id;
   private Player player1;
   private Player player2;
@@ -20,6 +22,7 @@ public class Replay implements Serializable {
   private int currentTurnIndex;
 
   /**
+   * constructor 1
    * runs through a replayed game's turns to get the board state to make a replay
    * @param game the game to be turned into a replay.
    */
@@ -57,18 +60,43 @@ public class Replay implements Serializable {
         storeBoardState(newGame);
     }
   }
+
+  /**
+   * takes a game and stores its board as a boardstate
+   * @param game
+   */
   private void storeBoardState(Game game){
     BoardState boardState = new BoardState(game);
     boardStateList.add(boardState);
   }
 
+  /**
+   * returns player 1
+   * @return player1
+   */
   public Player getPlayer1(){return player1;}
 
+  /**
+   * returns player 2
+   * @return player2
+   */
   public Player getPlayer2(){return player2;}
 
+  /**
+   * returns the unique id for this replay
+   * @return id
+   */
   public int getId(){return id;}
 
+  /**
+   * returns the turn number which this replay is currently on
+   * @return currentTurnIndex
+   */
   public int getCurrentTurnIndex(){ return currentTurnIndex; }
+
+  public void resetReplay(){
+    this.currentTurnIndex = 0;
+  }
 
   public List<BoardState> getBoardStateList(){ return boardStateList; }
 

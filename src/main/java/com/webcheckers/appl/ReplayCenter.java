@@ -88,6 +88,10 @@ public class ReplayCenter {
     activeReplays.remove(player);
   }
 
+  public void resetReplay(Player player){
+    activeReplays.get(player).resetReplay();
+  }
+
   /**
    * Will return a list of replays which users can select to watch
    *

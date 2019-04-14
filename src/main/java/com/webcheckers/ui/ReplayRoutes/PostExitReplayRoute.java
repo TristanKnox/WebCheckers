@@ -39,6 +39,7 @@ public class PostExitReplayRoute implements Route {
   @Override
   public String handle(Request request, Response response){
     // remove the player and replay from the active replays map
+    replayCenter.resetReplay(request.session().attribute(GetHomeRoute.PLAYER_KEY));
     replayCenter.endReplay(request.session().attribute(GetHomeRoute.PLAYER_KEY));
 
     // redirect to to replay home page

@@ -29,20 +29,24 @@ public class PostNextTurnRoute implements Route {
 
   /**
    * Tells the replay to be incremented, and then has the page re-rendered
-   * @param request
-   * @param response
-   * @return
+   * @param request the http request
+   * @param response the http response
+   * @return a message to notify the JS that this action was a success
    * @throws Exception
    */
   @Override
   public Object handle(Request request, Response response) throws Exception {
+    // get the session
     Session session = request.session();
+
+    // get the player
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
+
+    // get and increment the replay
     Replay replay = replayCenter.getReplay(player);
     replay.getNextBoardState();
 
-    System.out.println(request.queryString());
-
+    // have the page rendered, and return a message
     GetReplayRoute route = new GetReplayRoute(replayCenter, templateEngine);
     route.handle(request, response);
     return Message.info("true");
