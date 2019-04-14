@@ -30,6 +30,8 @@ public class Replay implements Serializable {
     List<Turn> turnList = game.getTurnList();
     id = game.getID();
     convertTurnsToBoardStates(turnList);
+    BoardState lastState = boardStateList.get(boardStateList.size()-1);
+    lastState.setEndGameCondition(game.getEndGameCondition());
     currentTurnIndex = 0;
   }
 
@@ -52,20 +54,40 @@ public class Replay implements Serializable {
   private void convertTurnsToBoardStates(List<Turn> turnList){
     Game newGame = new Game(player1,player2, BoardBuilder.BoardType.STANDARD);
     storeBoardState(newGame);
-    for (Turn turn : turnList) {
-        turn.execute(newGame);
-        storeBoardState(newGame);
+    for (int index = 0; index < turnList.size(); index ++) {
+      Turn turn = turnList.get(index);
+      turn.execute(newGame);
+      newGame.toggleActiveColor();
+      newGame.checkEndGame();
+      storeBoardState(newGame);
     }
   }
+
+  /**
+   * Stores a boardState of the current state of the given game
+   * @param game - the game to store the state of
+   */
   private void storeBoardState(Game game){
     BoardState boardState = new BoardState(game);
     boardStateList.add(boardState);
   }
 
+  /**
+   * Getter for playerOne
+   * @return - playerOne
+   */
   public Player getPlayer1(){return player1;}
 
+  /**
+   * Getter for playerTwo
+   * @return - playerTwo
+   */
   public Player getPlayer2(){return player2;}
 
+  /**
+   * Getter for Id
+   * @return - id
+   */
   public int getId(){return id;}
 
   public int getCurrentTurnIndex(){ return currentTurnIndex; }
@@ -115,7 +137,8 @@ public class Replay implements Serializable {
     return getBoardState(currentTurnIndex);
   }
 
-  public BoardState getCurrentBoardState(){ return getBoardState(currentTurnIndex); }
+  public BoardState getCurrentBoardState(){
+    return getBoardState(currentTurnIndex); }
   /**
    * gets the board state at a given turn
    * @param turn the TURRRN

@@ -4,6 +4,7 @@ import com.webcheckers.model.BoardBuilder.BoardType;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.model.checkers.Game;
+import com.webcheckers.model.checkers.Piece;
 
 import java.util.HashMap;
 
@@ -118,12 +119,17 @@ public class GameCenter {
    * resigns a player and no longer keeps track of their game.
    * @param player the player who has resigned.
    */
-  public void resignation(Player player){
+  public Game resignation(Player player){
     Game game = getGame(player);
-    game.endGame(Game.EndGameCondition.OPPONENT_RESIGNED);
+    Piece.PieceColor color = game.getPlayerColor(player);
+    if(color == Piece.PieceColor.RED)
+      game.endGame(Game.EndGameCondition.RED_RESIGNED);
+    if(color == Piece.PieceColor.WHITE)
+      game.endGame(Game.EndGameCondition.WHITE_RESIGNED);
 
     game.resignationEnabler(player);
     removePlayerFromGame(player);
+    return game;
   }
 
   /**

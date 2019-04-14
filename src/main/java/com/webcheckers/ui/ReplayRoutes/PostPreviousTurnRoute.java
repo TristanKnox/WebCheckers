@@ -30,8 +30,11 @@ public class PostPreviousTurnRoute implements Route {
     Replay replay = replayCenter.getReplay(player);
     replay.getPreviousBoardState();
 
-    GetReplayRoute route = new GetReplayRoute(replayCenter, templateEngine);
+    //GetReplayRoute route = new GetReplayRoute(replayCenter, templateEngine);
 
-    return Message.info("true");
+    //return Message.info("true");
+    response.redirect(WebServer.GET_REPLAY_URL);
+    halt();
+    return null;
   }
 }

@@ -43,10 +43,14 @@ define(function(require){
     this._controller.disableAllControls();
     //
     const actionURL = args[0];
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST",actionURL,true);
+    xhttp.send();
+    window.location = window.location;
     // perform the action on the server
-    AjaxUtils.callServer(actionURL,
+   // AjaxUtils.callServer(actionURL,
         // the handler method should be run in the context of 'this' State object
-        handleResponse, this);
+    //    handleResponse, this);
   };
 
   //

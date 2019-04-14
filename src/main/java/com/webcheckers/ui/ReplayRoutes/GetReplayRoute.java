@@ -40,7 +40,6 @@ public class GetReplayRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        System.out.println("GetReplayRoute");
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
 
@@ -62,6 +61,51 @@ public class GetReplayRoute implements Route {
         Game game = new Game(replay.getPlayer1(),replay.getPlayer2(), replay.getCurrentBoardState());
         vm.put("activeColor", game.getActiveColor());
         vm.put("board",ViewGenerator.getView(game, Piece.PieceColor.RED));
+        if(game.isGameOver()){
+            Map<String, Object> modeOptions2 = new HashMap<String, Object>();
+            modeOptions2.put("isGameOver", true);
+            modeOptions2.put("gameOverMessage", getEndGameMessage(game, player));
+            System.out.println("Game Over: " + game.getEndGameCondition());
+            vm.put("modeOptionsAsJSON", gson.toJson(modeOptions2));
+        }
+        System.out.println("Render replay");
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+    }
+    /**
+     * Hleper method to build the end game message
+     * @param game - the game the message is for
+     * @param player - the player the message is for
+     * @return - the message fro the player
+     */
+    public String getEndGameMessage(Game game, Player player){
+        String msg = "Game Over: ";
+        String oponentsName = game.getOpponent(player).getName();
+        Piece.PieceColor playerColor = game.getPlayerColor(player);
+        switch (game.getEndGameCondition()){
+            case RED_RESIGNED:
+                msg += game.getRedPlayer().getName() + " has resigned";
+                break;
+
+            case WHITE_RESIGNED:
+                msg += game.getWhitePlayer().getName() + " has resigned";
+                break;
+
+            case RED_OUT_OF_MOVES:
+                    msg += game.getRedPlayer().getName()+ " is out of moves. " + game.getWhitePlayer().getName()+" WINS";
+                    break;
+
+            case RED_OUT_OF_PIECES:
+                    msg += game.getRedPlayer().getName()+ " is out of pieces. " + game.getWhitePlayer().getName()+" WINS";
+
+                break;
+            case WHITE_OUT_OF_MOVES:
+                msg += game.getWhitePlayer().getName()+ " is out of moves. " + game.getRedPlayer().getName()+" WINS";
+                break;
+            case WHITE_OUT_OF_PIECES:
+                msg += game.getWhitePlayer().getName()+ " is out of pieces. " + game.getRedPlayer().getName()+" WINS";
+                break;
+        }
+        return msg;
+
     }
 }

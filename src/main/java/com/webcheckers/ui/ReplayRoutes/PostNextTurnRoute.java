@@ -31,10 +31,13 @@ public class PostNextTurnRoute implements Route {
     Replay replay = replayCenter.getReplay(player);
     replay.getNextBoardState();
 
-    System.out.println(request.queryString());
+    System.out.println("PostNextTurnRoute " + request.queryString());
     
-    GetReplayRoute route = new GetReplayRoute(replayCenter, templateEngine);
-    route.handle(request, response);
-    return Message.info("true");
+   // GetReplayRoute route = new GetReplayRoute(replayCenter, templateEngine);
+    //route.handle(request, response);
+    response.redirect(WebServer.GET_REPLAY_URL);
+    halt();
+    return null;
+    // Message.info("true");
   }
 }

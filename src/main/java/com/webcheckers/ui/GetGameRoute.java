@@ -119,7 +119,8 @@ public class GetGameRoute implements Route {
     String oponentsName = game.getOpponent(player).getName();
     Piece.PieceColor playerColor = game.getPlayerColor(player);
     switch (game.getEndGameCondition()){
-      case OPPONENT_RESIGNED:
+      case WHITE_RESIGNED:
+      case RED_RESIGNED:
         msg += oponentsName + " has resigned";
         break;
       case RED_OUT_OF_MOVES:

@@ -19,7 +19,7 @@ import java.util.List;
 public class Game implements Iterable<Row> {
 
   public static enum EndGameCondition{
-    OPPONENT_RESIGNED, RED_OUT_OF_PIECES, WHITE_OUT_OF_PIECES, RED_OUT_OF_MOVES, WHITE_OUT_OF_MOVES
+    RED_RESIGNED, WHITE_RESIGNED, RED_OUT_OF_PIECES, WHITE_OUT_OF_PIECES, RED_OUT_OF_MOVES, WHITE_OUT_OF_MOVES
   }
 
   /** Max 8 rows per board **/
@@ -79,8 +79,9 @@ public class Game implements Iterable<Row> {
     this.redPlayer = playerOne;
     this.whitePlayer = playerTwo;
     this.activeColor = boardState.getActivePlayer();
-    this.gameOver=false;
-    rows = boardState.getRows();
+    this.gameOver = boardState.isGameOver();
+    this.rows = boardState.getRows();
+    this.endGameCondition = boardState.getEndGameCondition();
   }
 
   /**
@@ -275,10 +276,17 @@ public class Game implements Iterable<Row> {
     currentTurn.execute(this);
 
     // Flip active color
-    this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
+    toggleActiveColor();
     turns.add(new Turn(activeColor));
 
     checkEndGame();
+  }
+
+  /**
+   * Switches active Color to the next player
+   */
+  public void toggleActiveColor(){
+    this.activeColor = this.activeColor == PieceColor.RED ? PieceColor.WHITE : PieceColor.RED;
   }
 
   /**
