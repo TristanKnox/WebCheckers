@@ -81,10 +81,12 @@ public class Player {
   public void addBadge(Badge badge) {
     if(badge == Badge.HARD_AI_DEFEATED) {
       badges.remove(Badge.EASY_AI_DEFEATED);
-      badges.add(Badge.HARD_AI_DEFEATED);
+      if(!badges.contains(Badge.HARD_AI_DEFEATED))
+        badges.add(Badge.HARD_AI_DEFEATED);
     }
     if(badge == Badge.EASY_AI_DEFEATED && !badges.contains(Badge.HARD_AI_DEFEATED))
-      badges.add(badge);
+      if(!badges.contains(Badge.EASY_AI_DEFEATED))
+        badges.add(badge);
   }
 
   public String toString() {
