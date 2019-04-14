@@ -287,7 +287,7 @@ public class Turn {
    * @param pos - the position the move will be made from
    * @return - list of 4 possible move positions
    */
-  private List<Position> getPossibleSimpleMoves(Position pos){
+  public List<Position> getPossibleSimpleMoves(Position pos){
     List<Position> movePositions = new ArrayList<>();
     for(int row = pos.getRow() -1; row <= pos.getRow() +1; row += 2){
       for(int col = pos.getCell() -1; col <= pos.getCell() +1; col +=2){
