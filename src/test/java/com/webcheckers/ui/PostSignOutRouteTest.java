@@ -50,6 +50,7 @@ public class PostSignOutRouteTest {
     when(session.attribute(any())).thenReturn(null);
     gson = new Gson();
     CuT = new PostSignOutRoute(playerLobby,gameCenter,templateEngine);
+    //
   }
 
   /**
