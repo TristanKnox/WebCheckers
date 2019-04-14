@@ -50,6 +50,13 @@ public class GetReplayHomeRoute implements Route {
     // retrieve the player
     Player currentPlayer = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
+    if(!replayCenter.hasReplays()) {
+      httpSession.attribute(GetHomeRoute.NO_REPLAYS_ERROR_FLAG, true);
+      response.redirect(WebServer.HOME_URL);
+      halt();
+      return null;
+    }
+
     // create the view-model bucket
     Map<String, Object> vm = new HashMap<>();
     vm.put(TITLE_ATTR, "Replay Center");
