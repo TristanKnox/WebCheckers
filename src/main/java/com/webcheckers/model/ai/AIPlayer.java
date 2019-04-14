@@ -4,11 +4,9 @@ import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Move;
 import com.webcheckers.model.checkers.Piece.PieceColor;
-import com.webcheckers.model.checkers.Position;
 import com.webcheckers.model.checkers.Turn;
 import java.util.List;
 import java.util.Random;
-import sun.security.krb5.internal.EncASRepPart;
 
 /**
  * The AIPlayer represents the AI that humans can play against. The AIPlayer
@@ -51,6 +49,11 @@ public class AIPlayer extends Player {
     return turns.get(r.nextInt(turns.size()));
   }
 
+  /**
+   * Easy moves are defined as always making a single jump when possible and only making
+   * multi-jumps if it legally has to
+   * @param game The game to make the move on
+   */
   private void makeEasyMove(Game game) {
     AITurnUtil utilTurn = new AITurnUtil(game, color);
     Turn turn;
@@ -69,8 +72,27 @@ public class AIPlayer extends Player {
     game.executeTurn();
   }
 
+  /**
+   * Hard moves are defined as making multi-jumps whenever possible and only single jumping
+   * when it has to
+   * @param game The game to make the move on
+   */
   private void makeHardMove(Game game) {
+    AITurnUtil utilTurn = new AITurnUtil(game, color);
+    Turn turn;
+    if(utilTurn.getPossibleMultiJumps().size() > 0) {
+      turn = getRandomTurn(utilTurn.getPossibleMultiJumps());
+    }
+    else if(utilTurn.getPossibleSingleJumps().size() > 0) {
+      turn = getRandomTurn(utilTurn.getPossibleSingleJumps());
+    }
+    else {
+      turn = getRandomTurn(utilTurn.getPossibleSimpleTurn());
+    }
 
+    for(Move move: turn.getMoves())
+      game.addMove(move);
+    game.executeTurn();
   }
 
   /**

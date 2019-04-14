@@ -10,15 +10,32 @@ import com.webcheckers.model.checkers.Turn.TurnResponse;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The AIUtil contains helper methods for making various turns as an AI player. It has the ability
+ * to get lists of different move types that can be used as seen fit by the AI/
+ *
+ * @author Collin Bolles
+ */
 public class AITurnUtil {
 
+  /** The game that the move will be made on */
   private Game game;
+  /** The color of the player making the move */
   private PieceColor color;
 
+  /** A list of legal turns that only make simple turns */
   private List<Turn> possibleSimpleTurns;
+  /** A list of legal single jump moves */
   private List<Turn> possibleSingleJumps;
+  /** A list of legal multi-jump moves */
   private List<Turn> possibleMultiJumps;
 
+  /**
+   * Create a util with the given game and color making the move. Populates the lists with the
+   * different moves that are possible
+   * @param game The game the move will be made on
+   * @param color The color of the player making the turn
+   */
   public AITurnUtil(Game game, PieceColor color) {
     this.game = game;
     this.color = color;
@@ -81,6 +98,12 @@ public class AITurnUtil {
     return possibleTurns;
   }
 
+  /**
+   * Utility method for getting the next legal jump move for the given turn. If there is another
+   * jump to be made, the first one is returned. If no new move is possible, then null is returned
+   * @param turn The turn to add the next jump onto
+   * @return A move representing the next jump
+   */
   private Move getNextJump(Turn turn) {
     Move firstMove = turn.getMoves().get(0);
     Move recentMove = turn.getMoves().get(turn.getMoves().size() - 1);
@@ -95,6 +118,9 @@ public class AITurnUtil {
     return null;
   }
 
+  /**
+   * Handles populating both the list of possible single jumps and multi-jumps
+   */
   private void setJumpMoves() {
     List<Turn> allJumps = getAllJumps();
     for(Turn turn: allJumps) {
@@ -109,14 +135,26 @@ public class AITurnUtil {
     }
   }
 
+  /**
+   * Get the list of possible simple turns
+   * @return The list of possible simple turns
+   */
   public List<Turn> getPossibleSimpleTurn() {
     return possibleSimpleTurns;
   }
 
+  /**
+   * Get the list of possible single jumps
+   * @return The list of possible single jumps
+   */
   public List<Turn> getPossibleSingleJumps() {
     return possibleSingleJumps;
   }
 
+  /**
+   * Get the list of possible multi-jumps
+   * @return The list of possible multi-jumps
+   */
   public List<Turn> getPossibleMultiJumps() {
     return possibleMultiJumps;
   }
