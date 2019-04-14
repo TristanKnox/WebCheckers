@@ -1,6 +1,7 @@
 package com.webcheckers.appl;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import com.webcheckers.model.checkers.Game;
@@ -22,7 +23,7 @@ public class ReplayCenterTest {
   }
   public void testStoreReplay(){
     CuT.storeReplay(game);
-    assertTrue
+    assertTrue(CuT.hasReplays());
   }
 
 }
