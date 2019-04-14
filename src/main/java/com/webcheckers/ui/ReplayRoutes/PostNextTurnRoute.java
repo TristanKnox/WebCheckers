@@ -13,14 +13,15 @@ import spark.*;
 
 public class PostNextTurnRoute implements Route {
   private ReplayCenter replayCenter;
+  private TemplateEngine templateEngine;
 
 
   /**
    * the constructor for PostNextRoute for replay mode
    */
-  public PostNextTurnRoute(ReplayCenter replayas){
-    replayCenter = replayas;
-
+  public PostNextTurnRoute(ReplayCenter replayCenter, TemplateEngine templateEngine){
+    this.replayCenter = replayCenter;
+    this.templateEngine = templateEngine;
   }
 
   @Override
@@ -30,13 +31,12 @@ public class PostNextTurnRoute implements Route {
     Replay replay = replayCenter.getReplay(player);
     replay.getNextBoardState();
 
-    System.out.println(request.queryParams("gameID"));
+    System.out.println(request.queryString());
 
-    System.out.println("Before Redirect");//TODO remove
-    response.redirect(WebServer.GET_REPLAY_URL);
-    System.out.println("After Redirect");//TODO remove
-   // halt();
-    System.out.println("After halt");
-    return Message.info("This is a test");
+    System.out.println("before*****************");
+    GetReplayRoute route = new GetReplayRoute(replayCenter, templateEngine);
+    route.handle(request, response);
+    System.out.println("after**************");
+    return Message.info("true");
   }
 }

@@ -40,7 +40,7 @@ public class GetReplayRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        System.out.println("GetGameRoute");
+        System.out.println("GetReplayRoute");
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
 

@@ -60,7 +60,6 @@
             <legend>Controls</legend>
             <div class="toolbar"></div>
           </fieldset>
-          
         </div>
   
         <div class="game-board">

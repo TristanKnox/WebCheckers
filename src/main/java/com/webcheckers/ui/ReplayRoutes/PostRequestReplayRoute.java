@@ -22,15 +22,15 @@ public class PostRequestReplayRoute implements Route {
   @Override
   public Object handle(Request request, Response response) throws Exception {
     Session session = request.session();
+
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
-    System.out.println(replayCenter.getReplay(player));
+
     int replayId = Integer.parseInt(request.queryParams("replayID"));
+
     replayCenter.startReplay(player, replayId);
-System.out.println("PostRequestRplayRoute redirecting to Replay Now");
     response.redirect(WebServer.GET_REPLAY_URL);
-System.out.println("After Redirect in PostRequestReplayRoute");
     halt();
-System.out.println("After halt in PostRequestReplayRoute");
+
     return null;
   }
 }

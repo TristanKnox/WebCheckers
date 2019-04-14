@@ -25,11 +25,11 @@ public class ReplayCenter {
   public ReplayCenter(){
     activeReplays = new HashMap<>();
     archivedReplays = new HashMap<>();
-    Replay replay = ReplaySerializer.deserialize("replay.ser");
-    if(replay != null) {
-      System.out.println("Replay loaded");
-      archivedReplays.put(replay.hashCode(), replay);
-    }
+     Replay replay = ReplaySerializer.deserialize("replay.ser");
+     if(replay != null) {
+       System.out.println("Replay loaded");
+       archivedReplays.put(replay.hashCode(), replay);
+     }
   }
 
   /**

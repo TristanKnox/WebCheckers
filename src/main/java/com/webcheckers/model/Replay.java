@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class Replay implements Serializable {
   private static int replayCount = 0;
-
   private int id;
   private Player player1;
   private Player player2;
@@ -30,8 +29,8 @@ public class Replay implements Serializable {
     List<Turn> turnList = game.getTurnList();
     id = game.getID();
     convertTurnsToBoardStates(turnList);
-    currentTurnIndex =0;
-    //boardStateList.get(currentTurnIndex);
+    currentTurnIndex = 0;
+    // boardStateList.get(currentTurnIndex);
   }
 
   /**
@@ -147,6 +146,6 @@ public class Replay implements Serializable {
    */
   @Override
   public String toString(){
-    return getPlayer1().getName() + " vs. " + getPlayer2().getName() + ": " + boardStateList.size() + " Turns";
+    return getPlayer1().getName() + " vs. " + getPlayer2().getName() + ": " + (boardStateList.size()-1) + " Turns";
   }
 }

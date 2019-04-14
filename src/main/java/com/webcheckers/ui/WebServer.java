@@ -205,11 +205,11 @@ public class WebServer {
 
     get(GET_REPLAY_URL, new GetReplayRoute(replayCenter,templateEngine));
 
-    post(REPLAY_NEXT_TURN_URL, new PostNextTurnRoute(replayCenter));
+    post(REPLAY_NEXT_TURN_URL, new PostNextTurnRoute(replayCenter, templateEngine));
 
     post(POST_REPLAY_REQUEST_URL,new PostRequestReplayRoute(replayCenter));
 
-    post(REPLAY_PREVIOUS_TURN_URL, new PostPreviousTurnRoute(replayCenter));
+    post(REPLAY_PREVIOUS_TURN_URL, new PostPreviousTurnRoute(replayCenter, templateEngine));
 
     LOG.config("WebServer is initialized.");
   }

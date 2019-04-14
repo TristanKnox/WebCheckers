@@ -10,19 +10,17 @@ import com.webcheckers.model.Replay;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.ui.WebServer;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
+import com.webcheckers.util.Message;
+import spark.*;
 
 public class PostPreviousTurnRoute implements Route {
 
   private ReplayCenter replayCenter;
+  private TemplateEngine templateEngine;
 
-  public PostPreviousTurnRoute(ReplayCenter rCenter){
-    replayCenter = rCenter;
-
-
+  public PostPreviousTurnRoute(ReplayCenter replayCenter, TemplateEngine templateEngine){
+    this.replayCenter = replayCenter;
+    this.templateEngine = templateEngine;
   }
 
   @Override
@@ -31,10 +29,9 @@ public class PostPreviousTurnRoute implements Route {
     Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
     Replay replay = replayCenter.getReplay(player);
     replay.getPreviousBoardState();
-    response.redirect(WebServer.GET_REPLAY_URL);
-    halt();
-    return null;
 
+    GetReplayRoute route = new GetReplayRoute(replayCenter, templateEngine);
 
+    return Message.info("true");
   }
 }
