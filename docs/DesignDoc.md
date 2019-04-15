@@ -276,6 +276,14 @@ no validation takes place here. Pieces are captured and others flipped to
 king pieces as needed.
 
 ### Design Improvements
+Should we continue development one area of particular refactoring or reusing might be Game.
+It could be split its functionality to give it more of a single purpose. As seen it has the highest
+Coupling, and method complexity. The addition of rules would nearly half the method complexity.
+Another place for improvement could be in ui and package refactoring, into GameRoutes and LobbyRoutes.
+Replay itself could be dependency injected to reduce its complexity. Perhaps add also be injected
+into game. 
+![codeMetrics1](codeMetrics1.PNG)
+![CodeMetrics2](codeMetrics2.PNG)
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
 > analysis of where there are problems in the code base which could be
