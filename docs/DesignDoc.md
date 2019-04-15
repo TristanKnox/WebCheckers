@@ -206,13 +206,13 @@ The resignation method flags the game associated with the given player as over a
 ### Application Tier
 
 The application tier contains three pieces to it. The playerLobby which has all the signed in users
- as well as players that are available to play a game. The game center which takes care of all 
- active games. Then a Replay Center that holds a list of saved games and a player to a game mapping
-  that keeps track of the games state. PlayerLobby is is the basic component for all player 
-  to player interactions excluding those that take place in the game. Those interactions are 
-  handled in the Game Center. Which handles all the things that happens in that checkers game 
-  like resignation, and end game and exiting back to the lobby and saving a game. Replay center 
-  hold the functionality of replays going back and forth between the game List. 
+as well as players that are available to play a game. The game center which takes care of all 
+active games. Then a Replay Center that holds a list of saved games and a player to a game mapping
+that keeps track of the games state. PlayerLobby is is the basic component for all player 
+to player interactions excluding those that take place in the game. Those interactions are 
+handled in the Game Center. Which handles all the things that happens in that checkers game 
+like resignation, and end game and exiting back to the lobby and saving a game. Replay center 
+hold the functionality of replays going back and forth between the game List. 
   
   The interaction between all Application tier components is exemplified here:
   
@@ -222,7 +222,7 @@ The application tier contains three pieces to it. The playerLobby which has all 
 
 
 ### Model Tier
-The model tier is made up of three main classes. The Game, Player, and 
+The model tier MVP is made up of three main classes. The Game, Player, and 
 Turn each represent major functionality of the application. The Game 
 handles representation of the checkers board over all including the 
 rows, pieces, and spaces on the board. The Player represents a user of
@@ -231,6 +231,8 @@ the process of a user going through and making a move in the checkers
 application. All interactions with the model tier during game play is 
 handled through the Game which then distributes the responsibility to 
 the other model tier classes.
+#### Model Enhancements
+The model tier newest additions: AI, and Replay. 
 
 #### Game
 ![The Game UML](game_uml.png)
@@ -307,7 +309,7 @@ functionality has been implemented. Typically done before integration testing.
 ![Over All Code Coverage](OverAllCoverage.png)
 
 #### Appl Tier
-As you can see the appl tier has the most coverage with 77%. This is because the 
+As you can see the application tier has the most coverage with 77%. This is because the 
 PlayerLobby and the GameCenter are the only two classes in this tier and contain relatively simple
 methods that are easily tested.
 
