@@ -325,10 +325,7 @@ unique functionality, Turn. With a stellar 94% coverage
 ![Turn Code Coverage](TurnCoverageNew.PNG)
 
 #### UI Tier
-The UI tier has a total of 56% coverage. One ove the main culprits for the lack of coverage in the UI
-tier is the WebServer, which we have not even considered writing tests for as its only responsibility
-is to hook up the post and get routes so that they can be found and created when the time is right.
-The other two major routs that are missing unit testing were not thought of during this sprint as they
-were completed in sprint one and not at all on our radar for this deliverable. 
+The UI has been braught up to a cleanly covered suite of tests. With the lowest being get SigninRoute
+with 48% Coverage.
  
-![UI Tier Code Coverage](UITierCoverage.PNG)
+![UI Tier Code Coverage](UiTierCoverage.png)
