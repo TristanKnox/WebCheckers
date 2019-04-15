@@ -83,7 +83,7 @@ public class GetHomeRoute implements Route {
 
       // begin filling the view bucket case: player not yet signed in
       vm.put(TITLE_ATTR, "Welcome!");
-      vm.put("message", Message.info(String.format(WELCOME_MSG, playerLobby.getNumberOfUsers())));
+      vm.put("message", Message.info(String.format(WELCOME_MSG, playerLobby.getNumberOfUsers()-2)));
     }
     // check that you have not been put in a game
     else if(gameCenter.playerInGame(httpSession.attribute(PLAYER_KEY))){
