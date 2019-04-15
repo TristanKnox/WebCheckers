@@ -16,15 +16,13 @@ import spark.*;
 public class PostNextTurnRoute implements Route {
   // attributes
   private ReplayCenter replayCenter;
-  private TemplateEngine templateEngine;
 
 
   /**
    * the constructor for PostNextRoute
    */
-  public PostNextTurnRoute(ReplayCenter replayCenter, TemplateEngine templateEngine){
+  public PostNextTurnRoute(ReplayCenter replayCenter){
     this.replayCenter = replayCenter;
-    this.templateEngine = templateEngine;
   }
 
   /**
