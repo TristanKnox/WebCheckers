@@ -214,7 +214,7 @@ The application tier contains three pieces to it. The playerLobby which has all 
   like resignation, and end game and exiting back to the lobby and saving a game. Replay center 
   hold the functionality of replays going back and forth between the game List. 
   
-  The interaction between all model tier components is exemplified here:
+  The interaction between all Application tier components is exemplified here:
   
   ![The application tier interaction chart](appl-tier-chart.png)
   
@@ -304,7 +304,7 @@ functionality has been implemented. Typically done before integration testing.
  However pressed for time we have not fully tested some of the enhancements.
  But it was enough to warrant a decent 80+% coverage.
 
-![Over All Code Coverage](OverAllCoverage.PNG) 
+![Over All Code Coverage](OverAllCoverage.png)
 
 #### Appl Tier
 As you can see the appl tier has the most coverage with 77%. This is because the 
@@ -320,9 +320,9 @@ for a large portion of the hole in thees tests.
 ![Model Tier Code Coverage](ModelTierCoverage.png)
 
 We made massive strides in coverage and improvements to our coverage of our most 
-unique functionality, Turn.
+unique functionality, Turn. With a stellar 94% coverage
 
-![Turn Code Coverage](TurnCoverage.PNG)
+![Turn Code Coverage](TurnCoverageNew.PNG)
 
 #### UI Tier
 The UI tier has a total of 56% coverage. One ove the main culprits for the lack of coverage in the UI
