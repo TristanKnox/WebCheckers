@@ -30,7 +30,7 @@ public class PostNextTurnRouteTest {
     when(request.session()).thenReturn(session);
     replayCenter = mock(ReplayCenter.class);
     replay = mock(Replay.class);
-    CuT = new PostNextTurnRoute(replayCenter,templateEngine);
+    CuT = new PostNextTurnRoute(replayCenter);
   }
   @Test
   public void testCtor(){
