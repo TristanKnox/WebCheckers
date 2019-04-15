@@ -42,9 +42,11 @@
           </div>
 
             <!-- Add a button to go to replay mode -->
-            <form action = "./replay" method = "GET">
-              <button class = "grid-item" id = "replay" type = "submit">Enter Replay Mode</button>
-            </form>
+            <div class = "replayHolder">
+              <form action = "./replay" method = "GET">
+                <button class = "grid-item" id = "replay" type = "submit">Enter Replay Mode</button>
+              </form>
+            </div>
         </div>
       </#if>
 
