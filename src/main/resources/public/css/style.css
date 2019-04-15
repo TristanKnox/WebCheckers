@@ -128,11 +128,12 @@ div.INFO {
 }
 
 /**
- * styling of a button used to start a game with a player
+ * styling of a button used to start a game with a player,
+ * or to start a replay
  */
-button.player {
+button.player, button.replay{
   background-color: #f1f1f1;
-  width: 100px;
+  width: 100%;
   margin: 10px;
   background: #DEE9FF;
   border: 1px solid #1057FF;
@@ -141,6 +142,28 @@ button.player {
   padding: 4px;
   font-size: 13px;
   display: block;
+  word-wrap: break-word;
+}
+
+/**
+ * style the button which takes you to the
+ * replay home
+ */
+button#replay {
+  background-color: #f1f1f1;
+  width: 100px;
+  height: 50px;
+  margin: 30px;
+  background: #DEE9FF;
+  border: 1px solid #1057FF;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  padding: 4px;
+  font-size: 13px;
+}
+
+.replayHolder {
+  grid-column-start: 3;
 }
 
 button.game {
@@ -152,10 +175,16 @@ button.game {
 /**
  * style the title for the available users list
  */
-#availableUsers{
-  width: 100px;
+#availableUsers, #availableReplays{
+  width: 100%;
   margin: 10px;
+  padding: 4px;
   border-bottom: 2px solid black;
   text-align: center;
   font-weight: bold;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
 }

@@ -4,12 +4,15 @@ import com.webcheckers.model.checkers.Piece.PieceColor;
 import java.util.LinkedList;
 import java.util.List;
 
+import java.io.Serializable;
+
 /**
  * Represents the player of the game. Each player is defined by a unique name
  *
  * @author Collin Bolles
  */
-public class Player {
+public class Player implements Serializable {
+
 
   public enum Badge {
     EASY_AI_DEFEATED("⭐"),

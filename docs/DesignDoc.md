@@ -145,7 +145,7 @@ Once a user has signed in the GetHomeRoute is responsible for providing a list o
 The user then has the ability to select another player from that list. 
 When an opponent is selected the PostRequestGameRoute is activated and the name of the opponent is posted to the server.
 
-![PostGameRequestRout_SequenceDiogram](PostRequestGameRoute_SequenceDiogram.png)
+![PostGameRequestRout_SequenceDiagram](PostRequestGameRoute_SequenceDiogram.png)
 
 First, the Player that made the request is accessed from the session. 
 Next, the posted username of the opponent is accessed via the request. 
@@ -206,15 +206,15 @@ The resignation method flags the game associated with the given player as over a
 ### Application Tier
 
 The application tier contains three pieces to it. The playerLobby which has all the signed in users
- as well as players that are available to play a game. The game center which takes care of all 
- active games. Then a Replay Center that holds a list of saved games and a player to a game mapping
-  that keeps track of the games state. PlayerLobby is is the basic component for all player 
-  to player interactions excluding those that take place in the game. Those interactions are 
-  handled in the Game Center. Which handles all the things that happens in that checkers game 
-  like resignation, and end game and exiting back to the lobby and saving a game. Replay center 
-  hold the functionality of replays going back and forth between the game List. 
+as well as players that are available to play a game. The game center which takes care of all 
+active games. Then a Replay Center that holds a list of saved games and a player to a game mapping
+that keeps track of the games state. PlayerLobby is is the basic component for all player 
+to player interactions excluding those that take place in the game. Those interactions are 
+handled in the Game Center. Which handles all the things that happens in that checkers game 
+like resignation, and end game and exiting back to the lobby and saving a game. Replay center 
+hold the functionality of replays going back and forth between the game List. 
   
-  The interaction between all model tier components is exemplified here:
+  The interaction between all Application tier components is exemplified here:
   
   ![The application tier interaction chart](appl-tier-chart.png)
   
@@ -222,7 +222,7 @@ The application tier contains three pieces to it. The playerLobby which has all 
 
 
 ### Model Tier
-The model tier is made up of three main classes. The Game, Player, and 
+The model tier MVP is made up of three main classes. The Game, Player, and 
 Turn each represent major functionality of the application. The Game 
 handles representation of the checkers board over all including the 
 rows, pieces, and spaces on the board. The Player represents a user of
@@ -231,6 +231,8 @@ the process of a user going through and making a move in the checkers
 application. All interactions with the model tier during game play is 
 handled through the Game which then distributes the responsibility to 
 the other model tier classes.
+#### Model Enhancements
+The model tier newest additions: AI, and Replay. 
 
 #### Game
 ![The Game UML](game_uml.png)
@@ -289,6 +291,14 @@ no validation takes place here. Pieces are captured and others flipped to
 king pieces as needed.
 
 ### Design Improvements
+Should we continue development one area of particular refactoring or reusing might be Game.
+It could be split its functionality to give it more of a single purpose. As seen it has the highest
+Coupling, and method complexity. The addition of rules would nearly half the method complexity.
+Another place for improvement could be in ui and package refactoring, into GameRoutes and LobbyRoutes.
+Replay itself could be dependency injected to reduce its complexity. Perhaps add also be injected
+into game. 
+![codeMetrics1](codeMetrics1.PNG)
+![CodeMetrics2](codeMetrics2.PNG)
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
 > analysis of where there are problems in the code base which could be
@@ -302,50 +312,45 @@ king pieces as needed.
 
 
 ### Acceptance Testing
-31 of the 33 acceptance tests pass. The current passing acceptance
-criteria includes the ability to start a game, player sign in, sign
-out, resignation, and most of the move logic. Currently the ability 
-to reach an game scenarios through one of the opponents losing all 
-of their pieces has not passed the acceptance tests yet. The plane 
-for completion of that acceptance criteria has been moved back to 
-Sprint 3 where it will be addressed along with the rest of the end
-game scenarios. 
+33 of the 33 acceptance tests pass. The current release is seen as
+the complete MVP, with two enhancements. Criteria includes the ability 
+to start a game, player sign in, sign out, resignation, and the ability
+ to play a full game. These games are also stored in a replay mode. Where any
+ Online player can: go forward a turn, go back a turn, or exit. Additionally
+ there are two AI that are always ready for people to play against them. Beating
+ them warrants a badge for the entire server to see. 
 
 
 ### Unit Testing and Code Coverage
 
 
 Our goal for unit testing has been to write unit test any time new 
-functionality has been implemented. Unfortunately just because a test 
-is written for a feature does not mean that the coverage offerd by a test
-is complete. As our code coverage shows our strategy has left holes in code coverage.
+functionality has been implemented. Typically done before integration testing.
+ However pressed for time we have not fully tested some of the enhancements.
+ But it was enough to warrant a decent 80+% coverage.
 
-![Over All Code Coverage](OverAllCoverage.PNG) 
+![Over All Code Coverage](OverAllCoverage.png)
 
 #### Appl Tier
-As you can see the appl tier has the most coverage with 77%. This is because the 
+As you can see the application tier has the most coverage with 77%. This is because the 
 PlayerLobby and the GameCenter are the only two classes in this tier and contain relatively simple
 methods that are easily tested.
 
-![Appl Tier Code Coverage](ApplTierCoverage.PNG)
+![Appl Tier Code Coverage](ApplTierCoverage.png)
 
 #### Model Tier
 Our model tier has a total of 61% coverage. Looking closer you can see that Turn is responsible 
 for a large portion of the hole in thees tests.
 
-![Model Tier Code Coverage](ModelTierCoverage.PNG)
+![Model Tier Code Coverage](ModelTierCoverage.png)
 
-However if you look specifically at the coverage of the Turn class the reson for the lack of coverage 
-is due to the top two methods. Both of thees methods rely heavily on all of the helper methods listed below
-which are clearly fully tested
+We made massive strides in coverage and improvements to our coverage of our most 
+unique functionality, Turn. With a stellar 94% coverage
 
-![Turn Code Coverage](TurnCoverage.PNG)
+![Turn Code Coverage](TurnCoverageNew.PNG)
 
 #### UI Tier
-The UI tier has a total of 56% coverage. One ove the main culprits for the lack of coverage in the UI
-tier is the WebServer, which we have not even considered writing tests for as its only responsibility
-is to hook up the pots and get routes so that they can be found and created when the time is right.
-The other two major routs that are missing unit testing were not thought of during this sprint as they
-were completed in sprint one and not at all on our radar for this deliverable. 
+The UI has been braught up to a cleanly covered suite of tests. With the lowest being get SigninRoute
+with 48% Coverage.
  
-![UI Tier Code Coverage](UITierCoverage.PNG)
+![UI Tier Code Coverage](UiTierCoverage.png)

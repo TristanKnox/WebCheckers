@@ -2,7 +2,9 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Replay;
 import spark.*;
 import java.util.Objects;
 
@@ -22,7 +24,8 @@ public class PostSignOutRoute implements Route {
   // Attributes
   private final PlayerLobby playerLobby;
   private final GameCenter gameCenter;
-   private final TemplateEngine templateEngine;
+  private final ReplayCenter replayCenter;
+  private final TemplateEngine templateEngine;
 
   /**
    * The constructor for the POST /signinattempt route handler.
@@ -30,7 +33,7 @@ public class PostSignOutRoute implements Route {
    * @param playerLobby playerLobby, which keeps track of all current players
    * // @param templateEngine template engine to use for rendering HTML page
    */
-  PostSignOutRoute(PlayerLobby playerLobby, GameCenter gameCenter , TemplateEngine templateEngine) {
+  PostSignOutRoute(PlayerLobby playerLobby, GameCenter gameCenter, ReplayCenter replayCenter, TemplateEngine templateEngine) {
     // neither parameter may be null
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(playerLobby, "gameCenter must not be null");
@@ -38,6 +41,7 @@ public class PostSignOutRoute implements Route {
 
     this.playerLobby = playerLobby;
     this.gameCenter = gameCenter;
+    this.replayCenter = replayCenter;
     this.templateEngine = templateEngine;
   }
 
@@ -57,9 +61,8 @@ public class PostSignOutRoute implements Route {
 
     Player player = httpSession.attribute(PLAYER_KEY);
 
-    if(playerLobby.isInGame(player)){
-      // TODO need a method that does this
-      PostResignationRoute route = new PostResignationRoute(playerLobby, gameCenter);
+    if(gameCenter.playerInGame(player)){
+      PostResignationRoute route = new PostResignationRoute(playerLobby, gameCenter, replayCenter);
 
       route.handle(request,response);
     }

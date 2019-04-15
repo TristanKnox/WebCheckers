@@ -3,7 +3,9 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.checkers.Game;
 import com.webcheckers.util.Message;
 import spark.*;
 import java.util.Objects;
@@ -22,6 +24,7 @@ public class PostResignationRoute implements Route {
   // Attributes
   private final PlayerLobby playerLobby;
   private final GameCenter gameCenter;
+  private final ReplayCenter replayCenter;
 
 
   /**
@@ -30,13 +33,15 @@ public class PostResignationRoute implements Route {
    * @param playerLobby playerLobby, which keeps track of all current players
    * @param gameCenter gameCenter keeps track of all games going on
    */
-  PostResignationRoute(PlayerLobby playerLobby, GameCenter gameCenter) {
+  PostResignationRoute(PlayerLobby playerLobby, GameCenter gameCenter, ReplayCenter replayCenter) {
     // neither parameter may be null
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+    Objects.requireNonNull(replayCenter, "replayCenter must not be null");
 
     this.playerLobby = playerLobby;
     this.gameCenter = gameCenter;
+    this.replayCenter = replayCenter;
 
   }
 
@@ -58,11 +63,16 @@ public class PostResignationRoute implements Route {
     //retrieve the current player object
     Player player = httpSession.attribute(GetHomeRoute.PLAYER_KEY);
 
+    // resign them from the game center.
+    Game game = gameCenter.resignation(player);
+
+    // store the replay of the game
+    replayCenter.storeReplay(game);
+
     // list the player as available, and end their game.
     // then switch whose turn it is if need be
     playerLobby.makeAvailable(player);
-    //resign them from the game center.
-    gameCenter.resignation(player);
+
 
 
     Gson gson = new Gson();

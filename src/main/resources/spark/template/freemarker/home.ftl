@@ -20,23 +20,38 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl">
 
-    <!-- Check if there is a player signed in. -->
-    <#if currentUser??>
-      <br/>
-      <p id = "availableUsers">
-        Available Users
-      </p>
+
+      <!-- Check if there is a player signed in. -->
+      <#if currentUser??>
+
+        <div class = "grid-container">
+
+          <div>
+            <br/>
+            <p id = "availableUsers">
+              Available Users
+            </p>
+
+            <!-- Add clickable buttons with available users. -->
+            <form action="./requestgame" method="POST">
+              <#list players as player>
+                <#if currentUser != player>
+                  <button class = "player grid-item" name = "otherUser" type="submit" value = ${player.getName()}>${player.toString()}</button>
+                </#if>
+              </#list>
+            </form>
+          </div>
+
+            <!-- Add a button to go to replay mode -->
+            <div class = "replayHolder">
+              <form action = "./replay" method = "GET">
+                <button class = "grid-item" id = "replay" type = "submit">Enter Replay Mode</button>
+              </form>
+            </div>
+        </div>
+      </#if>
 
 
-      <!-- Add clickable buttons with available users. -->
-      <form action="./requestgame" method="POST">
-        <#list players as player>
-          <#if currentUser != player>
-            <button class = "player" name = "otherUser" type="submit" value = "${player.getName()}">${player.toString()}</button>
-          </#if>
-        </#list>
-      </form>
-    </#if>
     <!-- TODO: future content on the Home:
             spectating active games,
             or replay archived games

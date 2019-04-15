@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.checkers.Piece.PieceColor;
@@ -44,6 +45,7 @@ public class GetGameRouteTest {
   private TemplateEngine engine;
   private GameCenter gameCenter;
   private PlayerLobby playerLobby;
+  private ReplayCenter replayCenter;
   private Game game;
   private Player playerOne;
   private Player playerTwo;
@@ -57,13 +59,14 @@ public class GetGameRouteTest {
     engine = mock(TemplateEngine.class);
     gameCenter = mock(GameCenter.class);
     playerLobby = mock(PlayerLobby.class);
+    replayCenter = mock(ReplayCenter.class);
     game = mock(Game.class);
     playerOne = new Player("sam");
     playerTwo = new Player("bob");
 
 
     // create a unique CuT for each test
-    CuT = new GetGameRoute(engine, gameCenter, playerLobby);
+    CuT = new GetGameRoute(engine, gameCenter,playerLobby,replayCenter);
   }
 
   /**
@@ -122,7 +125,7 @@ public class GetGameRouteTest {
     when(game.isGameOver()).thenReturn(true);
 
     when(game.getOpponent(playerOne)).thenReturn(playerTwo);
-    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.OPPONENT_RESIGNED);
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.WHITE_RESIGNED);
 
     Gson gson = new Gson();
     Map<String, Object> modeOptions = new HashMap<String, Object>();
@@ -156,7 +159,7 @@ public class GetGameRouteTest {
     when(game.getPlayerColor(playerTwo)).thenReturn(PieceColor.WHITE);
     String endGameMsg;
     //Test Resigned msg
-    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.OPPONENT_RESIGNED);
+    when(game.getEndGameCondition()).thenReturn(Game.EndGameCondition.WHITE_RESIGNED);
     endGameMsg = CuT.getEndGameMessage(game,playerOne);
     assertEquals("Game Over: " + playerTwo.getName() + " has resigned",endGameMsg);
     //Test Red out of moves

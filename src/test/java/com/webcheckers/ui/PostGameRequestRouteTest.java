@@ -65,14 +65,15 @@ public class PostGameRequestRouteTest {
         CuT = new PostGameRequestRoute(engine,playerLobby,gameCenter);
     }
 
-    /**
-     *
-     */
-    @Test
+  /**
+   * tests the constructors are not null.
+   */
+  @Test
     public void testCtor(){
         PostGameRequestRoute route = new PostGameRequestRoute(engine,playerLobby,gameCenter);
         assertNotNull(route);
     }
+
 
     /**
      * Tests PostRequestGameRout when the selected player is not available for a game

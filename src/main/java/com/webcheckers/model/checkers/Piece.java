@@ -1,11 +1,13 @@
 package com.webcheckers.model.checkers;
 
+import java.io.Serializable;
+
 /**
  * Represents a piece on the board as well as the type of piece that it is
  *
  * @author Collin Bolles
  */
-public class Piece {
+public class Piece implements Serializable {
 
   /**
    * Represents the types of pieces, either single or king
@@ -36,6 +38,15 @@ public class Piece {
   public Piece(PieceType type, PieceColor color) {
     this.type = type;
     this.color = color;
+  }
+
+  /**
+   * Copy Constuctor
+   * @param piece - the piece to copy
+   */
+  public Piece(Piece piece){
+    this.color = piece.getColor();
+    this.type = piece.getType();
   }
 
   /**

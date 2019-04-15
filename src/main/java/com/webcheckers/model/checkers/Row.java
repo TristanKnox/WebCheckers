@@ -3,6 +3,8 @@ package com.webcheckers.model.checkers;
 import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Piece.PieceType;
 import com.webcheckers.model.checkers.Space.SpaceType;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  *
  * @author Collin Bolles
  */
-public class Row implements Iterable<Space> {
+public class Row implements Iterable<Space>, Serializable {
   /** Each row has 8 spaces **/
   private static final int MAX_SIZE = 8;
 
@@ -32,6 +34,12 @@ public class Row implements Iterable<Space> {
     initializeSpaces();
   }
 
+  public Row(Row original){
+    this.index = original.getIndex();
+    spaces = new ArrayList<>();
+    for(Space space: original.getSpaces())
+      spaces.add(new Space(space));
+  }
   /**
    * Creates a row object with predefined order of spaces
    * @param spaces list of spaces in the desired order
