@@ -39,7 +39,8 @@ public class ReplayCenter {
   public void storeReplay(Game game){
     Replay replay = new Replay(game);
     archivedReplays.put(replay.hashCode(),replay);
-   // ReplaySerializer.serialize(replay);
+    //Serializes a game
+    //ReplaySerializer.serialize(replay);
   }
 
   /**
