@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Player.Badge;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -72,5 +73,31 @@ public class PlayerTest {
     // Test with different player objects, equal
     Player testPlayerFour = new Player(nameOne);
     assertEquals(testPlayerOne, testPlayerFour);
+  }
+
+  /**
+   * Tests to make sure the logic for adding badges to the player
+   * works correctly.
+   */
+  @Test
+  public void testBadges() {
+    Player CuT = new Player("Bob");
+    assertEquals("Bob", CuT.toString());
+
+    // Add an easy badge to the player
+    CuT.addBadge(Badge.EASY_AI_DEFEATED);
+    assertEquals("Bob ⭐", CuT.toString());
+
+    // Add a hard badge to the player
+    CuT.addBadge(Badge.HARD_AI_DEFEATED);
+    assertEquals("Bob ⭐⭐", CuT.toString());
+
+    // Add multiple hard badges
+    CuT.addBadge(Badge.HARD_AI_DEFEATED);
+    assertEquals("Bob ⭐⭐", CuT.toString());
+
+    // Add an easy badge after hard
+    CuT.addBadge(Badge.EASY_AI_DEFEATED);
+    assertEquals("Bob ⭐⭐", CuT.toString());
   }
 }

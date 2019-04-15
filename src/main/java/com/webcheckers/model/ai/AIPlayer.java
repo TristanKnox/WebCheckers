@@ -112,4 +112,12 @@ public class AIPlayer extends Player {
         //Should not get here
     }
   }
+
+  /**
+   * Get the difficulty of the AIPlayer
+   * @return The difficulty of the AIPlayer
+   */
+  public Difficulty getDifficulty() {
+    return difficulty;
+  }
 }
