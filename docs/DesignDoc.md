@@ -145,7 +145,7 @@ Once a user has signed in the GetHomeRoute is responsible for providing a list o
 The user then has the ability to select another player from that list. 
 When an opponent is selected the PostRequestGameRoute is activated and the name of the opponent is posted to the server.
 
-![PostGameRequestRout_SequenceDiogram](PostRequestGameRoute_SequenceDiogram.png)
+![PostGameRequestRout_SequenceDiagram](PostRequestGameRoute_SequenceDiogram.png)
 
 First, the Player that made the request is accessed from the session. 
 Next, the posted username of the opponent is accessed via the request. 
@@ -319,7 +319,7 @@ for a large portion of the hole in thees tests.
 
 ![Model Tier Code Coverage](ModelTierCoverage.PNG)
 
-However if you look specifically at the coverage of the Turn class the reson for the lack of coverage 
+However if you look specifically at the coverage of the Turn class the reason for the lack of coverage 
 is due to the top two methods. Both of thees methods rely heavily on all of the helper methods listed below
 which are clearly fully tested
 
@@ -328,7 +328,7 @@ which are clearly fully tested
 #### UI Tier
 The UI tier has a total of 56% coverage. One ove the main culprits for the lack of coverage in the UI
 tier is the WebServer, which we have not even considered writing tests for as its only responsibility
-is to hook up the pots and get routes so that they can be found and created when the time is right.
+is to hook up the post and get routes so that they can be found and created when the time is right.
 The other two major routs that are missing unit testing were not thought of during this sprint as they
 were completed in sprint one and not at all on our radar for this deliverable. 
  
