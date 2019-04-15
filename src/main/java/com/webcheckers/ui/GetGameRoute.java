@@ -4,17 +4,19 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.ReplayCenter;
+import com.webcheckers.model.Player.Badge;
+import com.webcheckers.model.ai.AIPlayer;
+import com.webcheckers.model.ai.AIPlayer.Difficulty;
 import com.webcheckers.model.checkers.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.checkers.Game.EndGameCondition;
 import com.webcheckers.model.checkers.Piece;
-import com.webcheckers.ui.GetHomeRoute;
 import com.webcheckers.ui.ViewObjects.ViewGenerator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import com.webcheckers.util.Message;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -91,6 +93,18 @@ public class GetGameRoute implements Route {
       modeOptions.put("isGameOver", true);
       modeOptions.put("gameOverMessage", getEndGameMessage(game, player));
       vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+
+      // Add badges as needed
+      Player opponent = game.getOpponent(player);
+      EndGameCondition end = game.getEndGameCondition();
+      boolean playingAgainstAI = opponent instanceof AIPlayer;
+      boolean playerWon = end == EndGameCondition.WHITE_OUT_OF_PIECES || end == EndGameCondition.WHITE_OUT_OF_MOVES;
+
+      if(playingAgainstAI && playerWon) {
+        Badge badge = ((AIPlayer)opponent).getDifficulty() == Difficulty.HARD ?
+            Badge.HARD_AI_DEFEATED : Badge.EASY_AI_DEFEATED;
+        player.addBadge(badge);
+      }
     }
 
     vm.put("currentUser", player);

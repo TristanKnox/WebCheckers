@@ -20,6 +20,7 @@
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl">
 
+
       <!-- Check if there is a player signed in. -->
       <#if currentUser??>
 
@@ -35,7 +36,7 @@
             <form action="./requestgame" method="POST">
               <#list players as player>
                 <#if currentUser != player>
-                  <button class = "player grid-item" name = "otherUser" type="submit" value = ${player.getName()}>${player.getName()}</button>
+                  <button class = "player grid-item" name = "otherUser" type="submit" value = ${player.getName()}>${player.toString()}</button>
                 </#if>
               </#list>
             </form>
@@ -49,6 +50,7 @@
             </div>
         </div>
       </#if>
+
 
     <!-- TODO: future content on the Home:
             spectating active games,

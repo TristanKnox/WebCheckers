@@ -3,6 +3,7 @@ package com.webcheckers.model.checkers;
 import com.webcheckers.model.BoardState;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.BoardBuilder;
+import com.webcheckers.model.ai.AIPlayer;
 import com.webcheckers.model.checkers.Piece.PieceColor;
 import com.webcheckers.model.checkers.Piece.PieceType;
 import com.webcheckers.model.checkers.Turn.TurnResponse;
@@ -278,6 +279,13 @@ public class Game implements Iterable<Row> {
     // Flip active color
     toggleActiveColor();
     turns.add(new Turn(activeColor));
+
+    // If player two is an AIPlayer, then have AI make a move
+    if(whitePlayer instanceof AIPlayer && activeColor == PieceColor.WHITE) {
+      AIPlayer ai = (AIPlayer)whitePlayer;
+      Thread moveThread = new Thread(()-> ai.makeMove(this));
+      moveThread.start();
+    }
 
     checkEndGame();
   }
