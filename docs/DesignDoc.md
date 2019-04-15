@@ -287,23 +287,22 @@ king pieces as needed.
 
 
 ### Acceptance Testing
-31 of the 33 acceptance tests pass. The current passing acceptance
-criteria includes the ability to start a game, player sign in, sign
-out, resignation, and most of the move logic. Currently the ability 
-to reach an game scenarios through one of the opponents losing all 
-of their pieces has not passed the acceptance tests yet. The plane 
-for completion of that acceptance criteria has been moved back to 
-Sprint 3 where it will be addressed along with the rest of the end
-game scenarios. 
+33 of the 33 acceptance tests pass. The current release is seen as
+the complete MVP, with two enhancements. Criteria includes the ability 
+to start a game, player sign in, sign out, resignation, and the ability
+ to play a full game. These games are also stored in a replay mode. Where any
+ Online player can: go forward a turn, go back a turn, or exit. Additionally
+ there are two AI that are always ready for people to play against them. Beating
+ them warrants a badge for the entire server to see. 
 
 
 ### Unit Testing and Code Coverage
 
 
 Our goal for unit testing has been to write unit test any time new 
-functionality has been implemented. Unfortunately just because a test 
-is written for a feature does not mean that the coverage offerd by a test
-is complete. As our code coverage shows our strategy has left holes in code coverage.
+functionality has been implemented. Typically done before integration testing.
+ However pressed for time we have not fully tested some of the enhancements.
+ But it was enough to warrant a decent 80+% coverage.
 
 ![Over All Code Coverage](OverAllCoverage.PNG) 
 

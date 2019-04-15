@@ -26,10 +26,19 @@ public class ReplayCenterTest {
     replay = mock(Replay.class);
     when(watcher.getName()).thenReturn(watcherName);
   }
+
+  /**
+   * tests construction
+   */
   @Test
   public void testCtor(){
     assertNotNull(new ReplayCenter());
   }
+
+  /**
+   * test the store replay function
+   */
+  @Test
   public void testStoreReplay(){
     CuT.storeReplay(game);
     assertTrue(CuT.hasReplays());
