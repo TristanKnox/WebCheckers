@@ -311,17 +311,16 @@ As you can see the appl tier has the most coverage with 77%. This is because the
 PlayerLobby and the GameCenter are the only two classes in this tier and contain relatively simple
 methods that are easily tested.
 
-![Appl Tier Code Coverage](ApplTierCoverage.PNG)
+![Appl Tier Code Coverage](ApplTierCoverage.png)
 
 #### Model Tier
 Our model tier has a total of 61% coverage. Looking closer you can see that Turn is responsible 
 for a large portion of the hole in thees tests.
 
-![Model Tier Code Coverage](ModelTierCoverage.PNG)
+![Model Tier Code Coverage](ModelTierCoverage.png)
 
-However if you look specifically at the coverage of the Turn class the reason for the lack of coverage 
-is due to the top two methods. Both of thees methods rely heavily on all of the helper methods listed below
-which are clearly fully tested
+We made massive strides in coverage and improvements to our coverage of our most 
+unique functionality, Turn.
 
 ![Turn Code Coverage](TurnCoverage.PNG)
 
