@@ -39,7 +39,7 @@ public class GetReplayRoute implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response){
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_KEY);
 
@@ -64,23 +64,20 @@ public class GetReplayRoute implements Route {
         if(game.isGameOver()){
             Map<String, Object> modeOptions2 = new HashMap<String, Object>();
             modeOptions2.put("isGameOver", true);
-            modeOptions2.put("gameOverMessage", getEndGameMessage(game, player));
+            modeOptions2.put("gameOverMessage", getEndGameMessage(game));
             System.out.println("Game Over: " + game.getEndGameCondition());
             vm.put("modeOptionsAsJSON", gson.toJson(modeOptions2));
         }
-        System.out.println("Render replay");
+        System.out.println("Render replayfd");
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
     /**
      * Hleper method to build the end game message
      * @param game - the game the message is for
-     * @param player - the player the message is for
      * @return - the message fro the player
      */
-    public String getEndGameMessage(Game game, Player player){
+    public String getEndGameMessage(Game game){
         String msg = "Game Over: ";
-        String oponentsName = game.getOpponent(player).getName();
-        Piece.PieceColor playerColor = game.getPlayerColor(player);
         switch (game.getEndGameCondition()){
             case RED_RESIGNED:
                 msg += game.getRedPlayer().getName() + " has resigned";

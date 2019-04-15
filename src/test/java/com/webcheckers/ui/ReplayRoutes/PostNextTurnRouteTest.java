@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import spark.Request;
 import spark.Response;
 import spark.Session;
+import spark.TemplateEngine;
 
 public class PostNextTurnRouteTest {
   private Request request;
@@ -18,16 +19,18 @@ public class PostNextTurnRouteTest {
   private Response response;
   private ReplayCenter replayCenter;
   private Replay replay;
+  private TemplateEngine templateEngine;
   private PostNextTurnRoute CuT;
 
   @BeforeEach
   public void setUp(){
     request = mock(Request.class);
     session = mock(Session.class);
+    templateEngine = mock(TemplateEngine.class);
     when(request.session()).thenReturn(session);
     replayCenter = mock(ReplayCenter.class);
     replay = mock(Replay.class);
-    CuT = new PostNextTurnRoute(replayCenter);
+    CuT = new PostNextTurnRoute(replayCenter,templateEngine);
   }
   @Test
   public void testCtor(){

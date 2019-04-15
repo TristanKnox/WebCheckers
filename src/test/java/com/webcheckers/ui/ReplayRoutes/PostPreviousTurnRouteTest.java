@@ -8,9 +8,7 @@ import com.webcheckers.appl.ReplayCenter;
 import com.webcheckers.model.Replay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import spark.Request;
-import spark.Response;
-import spark.Session;
+import spark.*;
 
 public class PostPreviousTurnRouteTest {
 
@@ -21,15 +19,17 @@ public class PostPreviousTurnRouteTest {
   private ReplayCenter replayCenter;
   private Replay replay;
   private PostPreviousTurnRoute CuT;
+  private TemplateEngine templateEngine;
 
   @BeforeEach
   public void setUp(){
     request = mock(Request.class);
     session = mock(Session.class);
+    templateEngine = mock(TemplateEngine.class);
     when(request.session()).thenReturn(session);
     replayCenter = mock(ReplayCenter.class);
     replay = mock(Replay.class);
-    CuT = new PostPreviousTurnRoute(replayCenter);
+    CuT = new PostPreviousTurnRoute(replayCenter,templateEngine);
   }
   @Test
   public void testCtor(){
