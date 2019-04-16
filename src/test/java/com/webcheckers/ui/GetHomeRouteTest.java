@@ -88,7 +88,7 @@ public class GetHomeRouteTest {
     //   * model contains all necessary View-Model data
     testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, "Welcome!");
     testHelper.assertViewModelAttribute("message",  Message.info("Welcome to the world of online Checkers.\n" +
-            "0 players are currently logged in."));
+            "-2 players are currently logged in."));
     //   * test view name
     testHelper.assertViewName(GetHomeRoute.VIEW_NAME);
   }
