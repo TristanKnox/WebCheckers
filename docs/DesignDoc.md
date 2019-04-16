@@ -299,14 +299,7 @@ Replay itself could be dependency injected to reduce its complexity. Perhaps add
 into game. 
 ![codeMetrics1](codeMetrics1.PNG)
 ![CodeMetrics2](codeMetrics2.PNG)
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+
 
 ## Testing
 
