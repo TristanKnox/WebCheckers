@@ -173,14 +173,12 @@ When a piece is dropped onto a new location the PostMoveRequestRout is activated
 
 ![ValidateMove_SequenceDiogram](ValidateMove_SequenceDiogram.png)
 
-First, JSON string is retrieved from the request. 
-The JSON string is then decoded and turned into a Move object using Gson. 
-Next, the game can be accessed by getting the player from the session and passing the player to the game center. 
-Once the game has been retrieved the move can be verified. 
-The move is passed to the game, if the move is valid it is added to a turned object which keeps track of all moves made 
-for a given turn and an info message is generated to inform the user the move is valid. 
-Otherwise, an error message is generated containing info on why the move is not valid. Either way, the message generated 
-is converted to JSON and then returned to the user and the Java Script updates the users view acordingly.
+When making a move, the player and the move is passed into the server from the client side
+code. The player is used along side the game center to get the game associated with the given
+player. Once the game is found. The move can be converted from json to a move object. This 
+object is passed into the game model object which returns a turn response based on the 
+validation of the move. If the move is invalid, an error message with the broken rule is
+returned. If the move is valid, an info message is returned to the client.
 
 #### SignOut
 
