@@ -6,6 +6,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.ui.WebServer;
 
 import spark.TemplateEngine;
@@ -56,8 +57,14 @@ public final class Application {
     // response to Ajax requests.
     final Gson gson = new Gson();
 
+
+
     // inject the game center and freemarker engine into web server
     final WebServer webServer = new WebServer(templateEngine, gson);
+
+    //Grab command line arg this should be a Board Type
+    BoardBuilder.BoardType boardType = setBoardType(args);
+    webServer.setBoardType(boardType);
 
     // inject web server into application
     final Application app = new Application(webServer);
@@ -96,6 +103,35 @@ public final class Application {
     // other applications might have additional services to configure
 
     LOG.config("WebCheckers initialization complete.");
+  }
+
+  private static BoardBuilder.BoardType setBoardType(String[] args){
+    LOG.config("Processing args and setting BoardType");
+    BoardBuilder.BoardType boardType;
+    String arg;
+    String logMsg;
+    if(args.length > 0){
+      arg = args[0];
+      System.out.println("Arg receved: "+ arg);
+      boardType = BoardBuilder.convertStringToBoardType(arg);
+      if(boardType == null) {
+        logMsg = "\nInvalid BoardType given: Will default to STANDARD\n";
+        //System.out.println("\nInvalid BoardType given: Will default to STANDARD\n");
+        boardType = BoardBuilder.BoardType.STANDARD;
+      }
+      else {
+        logMsg = "\n Given BoardType: " + boardType;
+        //System.out.println("\n Given BoardType: " + boardType);
+      }
+    }
+    else {
+      logMsg = "\nNo BoardType given: Will default to STANDARD\n";
+      //System.out.println("\nNo BoardType given: Will default to STANDARD\n");
+      boardType = BoardBuilder.BoardType.STANDARD;
+    }
+    System.out.println(logMsg);
+    LOG.config(logMsg);
+    return boardType;
   }
 
 }

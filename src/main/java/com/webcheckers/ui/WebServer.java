@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.ui.ReplayRoutes.*;
 import static spark.Spark.*;
 import com.webcheckers.appl.GameCenter;
@@ -125,6 +126,11 @@ public class WebServer {
     this.playerLobby = new PlayerLobby();
     this.gameCenter = new GameCenter();
     this.replayCenter = new ReplayCenter();
+  }
+
+  public void setBoardType(BoardBuilder.BoardType boardType){
+    gameCenter.setBoardType(boardType);
+
   }
 
   //

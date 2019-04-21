@@ -145,4 +145,13 @@ public class BoardBuilder {
         space.setPiece(null);
     return rows;
   }
+
+  public static BoardType convertStringToBoardType(String string){
+    for(BoardType boardType : BoardType.values()){
+      //System.out.println(boardType + " = " + string + ": " + boardType.toString().equals(string));
+      if(string.equals(boardType.toString()))
+        return boardType;
+    }
+    return null;
+  }
 }
