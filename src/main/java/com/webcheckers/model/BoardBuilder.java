@@ -72,6 +72,8 @@ public class BoardBuilder {
   private static List<Row> multyJumpSetUp(List<Row> rows){
     rows = removeAllPieces(rows);
     rows.get(1).getSpace(2).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.RED));
+    rows.get(1).getSpace(6).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));
+    rows.get(6).getSpace(5).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));
     int col = 3;
     for(int row = 2; row < 5; row +=2){
         rows.get(row).getSpace(col).setPiece(new Piece(Piece.PieceType.SINGLE, Piece.PieceColor.WHITE));

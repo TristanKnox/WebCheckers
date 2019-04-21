@@ -49,7 +49,7 @@ public class GameCenter {
   */
   public Game spawnGame(Player playerOne, Player playerTwo){
     //By changing the BoardType here you can test different game scenarios
-    Game game = new Game(playerOne,playerTwo, BoardType.STANDARD);
+    Game game = new Game(playerOne,playerTwo, BoardType.KING_MULTY_JUMP);
     addPlayersToMatch(playerOne,playerTwo);
     addPlayerToGame(playerOne,game);
     addPlayerToGame(playerTwo,game);

@@ -309,12 +309,54 @@ king pieces as needed.
 
 ### Design Improvements
 Should we continue development one area of particular refactoring or reusing might be Game.
-It could delegate out some of its functionality to other classes (potentially new ones) to give it more of a single purpose. As seen below, it has the highest
-Coupling, and method complexity. The addition of rules would nearly halve the method complexity.
+It could delegate out some of its functionality to other classes (potentially new ones) to give it more of a single purpose. 
+Like wise, the addition of rules Class would drastically help to reduce the complexity of the Turn Class.
 Another place for improvement could be in ui and package refactoring, into GameRoutes and LobbyRoutes.
 Replay itself could be dependency injected to reduce its complexity.
-![codeMetrics1](codeMetrics1.PNG)
-![CodeMetrics2](codeMetrics2.PNG)
+
+#####Coupling
+Player and Game are the two classes that have the highest coupling. 
+Lowering the coupling of these two classes would probably not be an easy task as they are both passed around a lot. 
+To do so a refactoring of Turn would probably be necessary, as many methods, in Turn, require the game to be passed in.
+
+![Chidamberer-Kemerer Metrics](Chidamber-Kemerer_Metrics.PNG)
+
+#####Complexity
+As far as complexity goes Game and Turn are the obvious choices for simplifying. 
+As you can see below both Game and Turn were flagged for weighted method complexity.
+
+![Class Complexity Metrics](ClassComplexityMetrics.PNG)
+
+If you take a look at the method metrics there are 4 methods in the Turn Class that have been flagged for their Essential cyclomatic complexity, 
+addMove(Game, Move) being one of the most complete methods in the whole project. 
+If addMove could be simplified it might make a big difference in the weighted complexity for the Turn Class.
+
+![Method Complexity Metrics](MethodComplexityMetrics.PNG)
+
+#####Javadoc Coverage
+For the most part, most things have been well commented in this project with a few exceptions. 
+Many of the exceptions seem to be either getter and setters or Get and Post Route handle methods. 
+This would be an easy place to make improvements as many of the things that do not already have Javadoc comments are relatively self-explanatory 
+and would not need much to document. In all, we have a total of 1,062 lines of Javadoc lines of code.
+
+#####Lines of Code
+In all, it seems that we have added roughly 4,000 lines of code to what was given to use at the beginning of this project. 
+I believe that we are responsible for nearly 100% of the 3,829 lines of Java code as well as most of the 204 lines of the FreeMarker template. 
+A little bit of the Cascading style sheet was added by users as well.
+
+![Lines of Code Metrics](LinesOfCodeMetrics.PNG)
+
+#####Instability
+The most unstable package is our UI package, this instability is due to how dependent this package is on other packages. 
+This would be a very difficult area to improve because of the fact that the purpose of the UI package is to communicate with the other arias of the program. 
+I could, however, be reduced by creating a layer of abstraction between the model and the UI. 
+This could allow the UI and model to communicate without the UI needing to know anything about the model. 
+As you can see below the UI ranks highest in Efferent coupling (depends on other packages) and the Model ranks highest in 
+Afferent coupling (other packages depend on this).
+
+![Martine Packaging Metrics](MartinPackagingMetrics.PNG)
+
+
 
 
 ## Testing
