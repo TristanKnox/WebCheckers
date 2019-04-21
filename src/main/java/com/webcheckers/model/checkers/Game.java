@@ -280,14 +280,15 @@ public class Game implements Iterable<Row> {
     toggleActiveColor();
     turns.add(new Turn(activeColor));
 
+    checkEndGame();
+
     // If player two is an AIPlayer, then have AI make a move
-    if(whitePlayer instanceof AIPlayer && activeColor == PieceColor.WHITE) {
+    if(!gameOver && whitePlayer instanceof AIPlayer && activeColor == PieceColor.WHITE) {
       AIPlayer ai = (AIPlayer)whitePlayer;
       Thread moveThread = new Thread(()-> ai.makeMove(this));
       moveThread.start();
     }
 
-    checkEndGame();
   }
 
   /**
