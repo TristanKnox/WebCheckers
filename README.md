@@ -33,6 +33,7 @@ By default the server sets its self to STANDARD.
 <p>To start the server with a specific BoardType
 
 Execute `mvn compile exec:java -Dexec.args="<BoardType>"`
+
 Available BoardTypes
 1. STANDARD
 2. KING_PIECE
