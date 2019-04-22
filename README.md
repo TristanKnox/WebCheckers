@@ -26,6 +26,23 @@ a web micro-framework.
 3. Open in your browser `http://localhost:4567/`
 4. Start a game and begin playing.
 
+####Special BoardTypes
+
+The ability to generate special board scenarios exists for the purpose of testing various features.
+By default the server sets its self to STANDARD. 
+<p>To start the server with a specific BoardType
+
+Execute `mvn compile exec:java -Dexec.args="<BoardType>"`
+
+Available BoardTypes
+1. STANDARD
+2. KING_PIECE
+3. MULTY_JUMP
+4. KING_MULTY_JUMP
+5. OUT_OF_MOVES
+6. OUT_OF_PIECES
+
+
 
 ## How to test it
 

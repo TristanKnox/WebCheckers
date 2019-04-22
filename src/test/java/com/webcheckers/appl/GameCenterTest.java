@@ -1,6 +1,7 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.Application;
+import com.webcheckers.model.BoardBuilder;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

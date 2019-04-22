@@ -14,6 +14,7 @@ import java.util.HashMap;
 */
 public class GameCenter {
 
+  BoardType boardType;
   private HashMap<Player, Game> activeGames; //player name to Game obj
   private HashMap<Player, Player> playersInMatch; //player to player for matches
 
@@ -37,8 +38,19 @@ public class GameCenter {
   * creates the game-center object for the server application.
   */
   public GameCenter(){
+    //Default to standard
+    this.boardType = BoardType.STANDARD;
     activeGames= new HashMap<>();
     playersInMatch = new HashMap<>();
+  }
+
+  /**
+   * Sets the board type if this method is not called when starting the server it will default to Standard
+   * @param boardType - the given board type
+   */
+  public void setBoardType(BoardType boardType){
+    this.boardType = boardType;
+    System.out.println("BoardType set to: " + boardType);
   }
 
   /**
@@ -49,7 +61,7 @@ public class GameCenter {
   */
   public Game spawnGame(Player playerOne, Player playerTwo){
     //By changing the BoardType here you can test different game scenarios
-    Game game = new Game(playerOne,playerTwo, BoardType.STANDARD);
+    Game game = new Game(playerOne,playerTwo, boardType);
     addPlayersToMatch(playerOne,playerTwo);
     addPlayerToGame(playerOne,game);
     addPlayerToGame(playerTwo,game);
